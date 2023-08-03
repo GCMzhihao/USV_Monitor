@@ -1,0 +1,159 @@
+﻿using MavLink;
+using Steema.TeeChart.Editors.Series;
+using Steema.TeeChart.Styles;
+using System;
+using System.Windows;
+namespace 地面站
+{
+    class LOS//船的初始位置必须为期望路径中的点。如果不是期望路径中的点，需要给x,y,Ze等需要积分算出的变量赋初值
+    {
+        public double w;//期望路径的参数方程自变量
+        double w_deriv;//期望路径的参数方程自变量的导数
+        public double x, y;//实际位置
+        double x_F, y_F;//期望路径的参数方程因变量
+        string x_F_expression, y_F_expression;//表达式
+        double U;//航速
+        public double psi;//艏向角ψ
+        double psi_F;//期望路径切向角ψF
+        double psi_F_last;//上一时刻期望路径切向角ψF
+        double psi_F_deriv;//期望路径切向角ψF的导数
+        double psi_d;//输出设定航向
+        double beta;//漂角β（航向角-艏向角）
+        //double beta_est;//漂角估计
+        //double beta_est_deriv;//漂角估计的导数
+        public double x_err, y_err;//位置误差
+        //double x_err_est, y_err_est;//位置误差估计
+        //double x_err_est_deriv, y_err_est_deriv;//位置误差估计的导数
+        //double x_err_est_err, y_err_est_err;//位置误差估计的误差
+        double gamma1;//设计参数Γ1
+        double kp;//设计参数kp
+        double kx;//设计参数kx
+        double ky;//设计参数ky
+        double delta;//设计参数△
+        public void LOS_Clear()
+        {
+            w = 0;
+            w_deriv = 0;
+            x = 20;
+            y = 0;
+            x_F = 0;
+            y_F = 0;
+            U = 0;
+            psi = 0;
+            psi_F = 0;
+            psi_F_last = 0;
+            psi_F_deriv = 0;
+            //beta_est = 0;
+            //beta_est_deriv = 0;
+            x_err = 0;
+            y_err = 0;
+            //x_err_est = 0;
+            //y_err_est = 0;
+            //x_err_est_deriv = 0;
+            //y_err_est_deriv = 0;
+            //x_err_est_err = 0;
+            //y_err_est_err = 0;
+        }
+        public LOS(string x,string y, double kp_, double kx_, double ky_, double gamma_, double delta_)
+        {
+            UpdateExpectedPath(x, y);
+            LOS_Clear();
+            kp = kp_;
+            kx = kx_;
+            ky = ky_;
+            gamma1 = gamma_;
+            delta = delta_;
+        }
+        public void UpadataParam(double kp_, double kx_, double ky_,double gamma_,double delta_)
+        {
+            kp = kp_;
+            kx = kx_;
+            ky = ky_;
+            gamma1 = gamma_;
+            delta = delta_;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x_">实际坐标x</param>
+        /// <param name="y_">实际坐标y</param>
+        /// <param name="heading">艏向角</param>
+        /// <param name="course">航向角</param>
+        /// <param name="speed">航速</param>
+        public void UpdateData(double x_,double y_, double heading, double course, double speed)//heading艏向角；course航向角；speed船速
+        {
+            x = x_;
+            y = y_;
+            psi = heading;
+            U = speed;
+            beta = course - heading;
+            while (beta > Math.PI)
+                beta -= Math.PI * 2;
+            while(beta<-Math.PI)
+                beta += Math.PI * 2;
+        }
+        public void UpdateExpectedPath(string x, string y)
+        {
+            x_F_expression = "var x=" + x + ";";
+            y_F_expression = "var y=" + y + ";";
+        }
+        //输入：T为周期
+        //输出:期望航向
+        public double Calculate(double T)
+        {
+            double h = 0.0001;
+            double x_F_1, y_F_1;
+            double x_F_deriv_w, y_F_deriv_w;
+            double x_sig;
+            double y_sig;
+
+            x_F = Eval.Calculate(w, x_F_expression);
+            y_F = Eval.Calculate(w, y_F_expression); 
+            x_F_1 = Eval.Calculate(w + h, x_F_expression);
+            y_F_1 = Eval.Calculate(w + h, y_F_expression);
+            x_F_deriv_w = (x_F_1 - x_F) / h;//对参数w求导
+            y_F_deriv_w = (y_F_1 - y_F) / h;//对参数w求导
+            psi_F = Math.Atan2(y_F_deriv_w, x_F_deriv_w);
+            psi_F_deriv = (psi_F - psi_F_last) / T;
+            x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) *(y - y_F);
+            y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
+
+            
+
+            //x_err_est_err = x_err_est - x_err;
+            //y_err_est_err = y_err_est - y_err;
+            //beta_est_deriv = gamma1 * (U * Math.Sin(psi - psi_F) * x_err_est_err - U * Math.Cos(psi - psi_F) * y_err_est_err);
+            //beta_est += beta_est_deriv * T;
+            //x_err_est_deriv = psi_F_deriv * y_err_est - kp * x_err_est - kx * x_err_est_err;
+            //y_err_est_deriv = U * Math.Sin(psi - psi_F) + U * Math.Cos(psi - psi_F) * beta_est - psi_F_deriv * x_err_est - ky * y_err_est_err;
+            //x_err_est += x_err_est_deriv * T;
+            //y_err_est += y_err_est_deriv * T;
+
+            x_sig = Math.Pow(Math.Abs(x_err), 1.2) * Math.Sign(x_err)+Math.Pow(Math.Abs(x_err), 0.8) * Math.Sign(x_err);
+            y_sig = Math.Pow(Math.Abs(y_err), 1.2) * Math.Sign(y_err)+Math.Pow(Math.Abs(y_err),0.8) * Math.Sign(y_err);
+            //los
+            //psi_d = psi_F + Math.Atan(-y_err / delta - beta);
+            //w_deriv = (U * Math.Cos(psi - psi_F) - U * Math.Sin(psi - psi_F) * beta + kp * x_err) / (Math.Sqrt(x_F_deriv_w * x_F_deriv_w + y_F_deriv_w * y_F_deriv_w));
+
+            //固定时间los
+            psi_d = psi_F + Math.Atan(-y_sig / delta - beta);
+            w_deriv = (U * Math.Cos(psi - psi_F) - U * Math.Sin(psi - psi_F) * beta + kp * x_sig) / (Math.Sqrt(x_F_deriv_w * x_F_deriv_w + y_F_deriv_w * y_F_deriv_w));
+
+            w += w_deriv * T;//更新路径参数
+            psi_F_last = psi_F;
+
+            return psi_d;
+        }
+        /// <summary>
+        /// 更新仿真位置，仅仿真LOS算法时使用
+        /// </summary>
+        /// <param name="psi_">艏向角</param>
+        /// <param name="beta_">漂角</param>
+        /// <param name="T">采样周期</param>
+        public void UpdateSimulationPosition(double psi_,double beta_,double T)//仅仿真LOS算法时使用
+        {
+            x += U * Math.Cos(psi_ + beta_) * T;
+            y += U * Math.Sin(psi_ + beta_) * T;
+        }
+    }
+}

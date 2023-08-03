@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<mavlink>
+  <version>3</version>
+  <enums>
+	<enum name="SYS_TYPE">
+		<entry value="0" name="SYS_ALL">
+			<description>全系统</description>
+		</entry>	
+		<entry value="1" name="SYS_UAV">
+			<description>无人机</description>
+		</entry>
+		<entry value="2" name="SYS_USV">
+			<description>无人船</description>
+		</entry>
+		<entry value="3" name="SYS_UGV">
+			<description>无人车</description>
+		</entry>
+		<entry value="254" name="SYS_ROCKER">
+			<description>摇杆</description>
+		</entry>
+		<entry value="255" name="SYS_GSTATION">
+			<description>地面站</description>
+		</entry>
+	</enum>
+	<enum name="PARAM_TYPE">
+		<entry value="0" name="PARAM_LIST_REQUEST">
+		</entry>
+		<entry name="PARAM_USV_SPEED_P">
+		</entry>
+		<entry name="PARAM_USV_SPEED_I">
+		</entry>
+		<entry name="PARAM_USV_SPEED_D">
+		</entry>
+		<entry name="PARAM_USV_HEADING_P">
+		</entry>
+		<entry name="PARAM_USV_HEADING_I">
+		</entry>
+		<entry name="PARAM_USV_HEADING_D">
+		</entry>
+		<entry name="PARAM_USV_LEFT_RUDDER_MID">
+		</entry>
+		<entry name="PARAM_USV_RIGHT_RUDDER_MID">
+		</entry>
+	</enum>
+	<enum name="CMD_TYPE">
+		<entry value="1" name="CMD_UNLOCK">
+		</entry>
+		<entry name="CMD_LOCK">
+		</entry>	
+		<entry name="CMD_AUTO_DRIVE">
+		</entry>	
+	</enum>
+	<enum name="CMD_ACK_FLAG">
+		<entry value="1" name="CMD_ACK_WRITE_SUCESSED">
+		</entry>
+		<entry name="CMD_ACK_WRITE_FAILED">
+		</entry>
+		<entry name="CMD_ACK_WRITE_FINISHED">
+		</entry>
+	</enum>
+  </enums>
+  <messages>
+    <message id="0" name="ROCKER">
+	  <field type="int16_t" name="leftX"></field>
+	  <field type="int16_t" name="leftY"></field>
+	  <field type="int16_t" name="rightX"></field>
+	  <field type="int16_t" name="rightY"></field>
+	  <field type="int16_t" name="switchA"></field>
+	  <field type="int16_t" name="switchB"></field>
+	  <field type="int16_t" name="switchC"></field>
+	  <field type="int16_t" name="switchD"></field>
+	  <field type="int16_t" name="switchE"></field>
+	  <field type="int16_t" name="switchF"></field>
+	  <field type="int16_t" name="switchG"></field>
+    </message>
+    <message id="1" name="PARAM_READ">
+    	<field type="uint8_t" name="param_id" enum="PARAM_TYPE">参数类型，详见参数定义</field>
+    </message>
+    <message id="2" name="PARAM_READ_ACK">
+	  <field type="uint8_t" name="param_id" enum="PARAM_TYPE">参数类型，详见参数定义</field>
+	  <field type="float" name="value"></field>
+    </message>   
+    <message id="3" name="PARAM_WRITE">
+		<field type="uint8_t" name="param_id" enum="PARAM_TYPE">参数类型，详见参数定义</field>
+		<field type="float" name="value"></field>
+    </message>
+    <message id="4" name="PARAM_WRITE_ACK">
+	  <field type="uint8_t" name="param_id" enum="PARAM_TYPE">参数类型，详见参数定义</field>
+    </message>   
+    <message id="5" name="CMD_WRITE">
+		<field type="uint8_t" name="SYS_TYPE"></field>
+		<field type="uint8_t" name="DEV_ID"></field>
+		<field type="uint8_t" name="cmd_id" enum="CMD_TYPE">命令类型，详见命令定义</field>
+    </message>
+    <message id="6" name="CMD_ACK">
+	  <field type="uint8_t" name="cmd_id" enum="CMD_TYPE">命令类型，详见命令定义</field>
+	  <field type="uint8_t" name="cmd_ack_id" enum="CMD_ACK_FALG">命令应答标志，详见命令应答标志定义</field>
+    </message>
+    <message id="7" name="USV_STATE">
+		<field type="double" name="longitude"></field>
+		<field type="double" name="latitude"></field>
+		<field type="float" name="speed"></field>
+		<field type="float" name="heading"></field>
+		<field type="float" name="Track"></field>
+		<field type="float" name="battery_voltage"></field>
+    </message>
+	<message id="8" name="USV_SET">
+		<field type="uint8_t" name="SYS_TYPE"></field>
+		<field type="uint8_t" name="DEV_ID"></field>
+		<field type="float" name="Speed"></field>
+		<field type="float" name="Heading"></field>
+    </message>
+  </messages>
+</mavlink>
