@@ -387,15 +387,7 @@ namespace 地面站
         }
         public void _Click()//坐标矫正
         {
-            X_Standard0 += System.Convert.ToDouble(form1.x1.Text);
-            Y_Standard0 += System.Convert.ToDouble(form1.y1.Text);
-            X_Standard1 += System.Convert.ToDouble(form1.x2.Text);
-            Y_Standard1 += System.Convert.ToDouble(form1.y2.Text);
-            X_Standard2 += System.Convert.ToDouble(form1.x3.Text);
-            Y_Standard2 += System.Convert.ToDouble(form1.y3.Text);
-            form1.horizLine21.Clear();
-            form1.horizLine22.Clear();
-            form1.horizLine23.Clear();
+            
         }
 
 

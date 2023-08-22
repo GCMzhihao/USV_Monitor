@@ -26,7 +26,7 @@ namespace 地面站
         private Mavlink mavlink;
         private MavlinkProxy mavlinkProxy;
         public string CB_MsgSelText;
-        private MavlinkPacket mavlinkPacket ;
+        public MavlinkPacket mavlinkPacket ;
         private Msg_param_write msg_Param_Write ;
         private Msg_param_read msg_Param_Read;
         private Msg_cmd_write msg_Cmd_Write;
@@ -42,6 +42,9 @@ namespace 地面站
 
         private StreamWriter usv_sw;
 
+        public USV_State_Info USV1_State_Info;
+        public USV_State_Info USV2_State_Info;
+        public USV_State_Info USV3_State_Info;
 
         LOS LOS_PathTracking;
         Norbbin norbbin;
@@ -72,6 +75,14 @@ namespace 地面站
         static readonly byte UWB_Tag_Num = 10;
         private VirtualLeader VirtualLeader;
         readonly UAV_Followers[] UAV_Followers = new UAV_Followers[UWB_Tag_Num];
+
+        static readonly byte USV_NUM = 6;
+        public USV[] USVs = new USV[USV_NUM];
+        public LOS[] USVs_LOS=new LOS[USV_NUM];
+        public Mavlink[] USVs_Mavlink=new Mavlink[USV_NUM];
+        public List<byte> USV_ID_List = new List<byte>();
+
+
 
         List<byte> UWB_TagUsed = new List<byte>();
 
@@ -499,6 +510,20 @@ namespace 地面站
             horizLine11.Legend.Visible = true;
             horizLine12.Active = true;
             horizLine12.Legend.Visible = true;
+            horizLine13.Active = true;
+            horizLine13.Legend.Visible = true;
+            horizLine14.Active = true;
+            horizLine14.Legend.Visible = true;
+            horizLine15.Active = true;
+            horizLine15.Legend.Visible = true;
+
+            USV1_State_Info = new USV_State_Info(label_USV1_ID, label_USV1_VEL, label_USV1_VOL, label_USV1_X, label_USV1_Y, textBox_USV1_L, textBox_USV1_angle,textBox_USV1_kp,textBox_USV1_delta);
+            USV2_State_Info = new USV_State_Info(label_USV2_ID, label_USV2_VEL, label_USV2_VOL, label_USV2_X, label_USV2_Y, textBox_USV2_L, textBox_USV2_angle, textBox_USV2_kp, textBox_USV2_delta);
+            USV3_State_Info = new USV_State_Info(label_USV3_ID, label_USV3_VEL, label_USV3_VOL, label_USV3_X, label_USV3_Y, textBox_USV3_L, textBox_USV3_angle, textBox_USV3_kp, textBox_USV3_delta);
+
+            USVs[0].Init(USV1_State_Info);
+
+
             VirtualLeader.horizLine = HorizLines[0];
             
             VirtualLeader.horizLine.Legend.Visible = true;
@@ -554,7 +579,7 @@ namespace 地面站
                             Convert.ToDouble(textBox8.Text),
                             Convert.ToDouble(textBox7.Text),
                             Convert.ToDouble(textBox6.Text));
-            DrawExpectedPath();
+            DrawExpectedPath(horizLine11);
 
 
 
@@ -1378,14 +1403,16 @@ namespace 地面站
         {
             double dt;
             dt = timer2.Interval * 0.001;
+            
             LOS_Control(dt);
-
-           // SF_Control(timer2.Interval * 0.001);
-            if (radioButton5.Checked)//实船
+            
+            if (radioButton1.Checked)
             {
-
-
+                LOS_PathTracking.track_time++;
+                DrawExpectedTrack(horizLine11);
+                
             }
+
 
         }
         private void Button1_Click(object sender, EventArgs e)//编队开始
@@ -1673,17 +1700,143 @@ namespace 地面站
             double beta = 0 * Math.PI / 180;
             double x0 = 0;
             double y0 = 0;
+            if (button3.Text == "开始实验")
+            {
+                button3.Text = "结束实验";
 
-            DrawExpectedPath();
+                timer2.Enabled = true;
+
+                textBox10.Enabled = false;
+                textBox11.Enabled = false;
+                textBox12.Enabled = false;
+                textBox13.Enabled = false;
+
+                groupBox16.Enabled=false;
+                groupBox17.Enabled=false;
+                groupBox19.Enabled=false;
+                if (radioButton5.Checked)//单船
+                {
+                    if (radioButton2.Checked)//路径
+                    {
+                        DrawExpectedPath(horizLine11);
+                        if (radioButton3.Checked)//路径仿真
+                        {
+
+
+                        }
+                        else if (radioButton4.Checked)//路径实船
+                        {
+                            if (serialPort1.IsOpen == false)//串口未打开
+                            {
+                                SystemInfo("请打开串口！");
+                                timer2.Enabled=false;
+                                return;
+                            }
+
+
+
+                        }
+
+
+                    }
+                    else if (radioButton1.Checked)//轨迹
+                    {
+                        horizLine11.Clear();
+
+                        if (radioButton3.Checked)//轨迹仿真
+                        {
+
+
+                        }
+                        else if (radioButton4.Checked)//轨迹实船
+                        {
+
+                            if (serialPort1.IsOpen == false)//串口未打开
+                            {
+                                SystemInfo("请打开串口！");
+                                timer2.Enabled = false;
+                                return;
+                            }
+
+
+
+
+                        }
+                    }
+                }
+                else if (radioButton8.Checked)//编队
+                {
+
+                    if (radioButton3.Checked)//编队仿真
+                    {
+
+
+                    }
+                    else if (radioButton4.Checked)//编队实船
+                    {
+
+                        if (serialPort1.IsOpen == false)//串口未打开
+                        {
+                            SystemInfo("请打开串口！");
+                            timer2.Enabled = false;
+                            return;
+                        }
+
+
+
+
+                    }
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+            else if (button3.Text == "结束实验")
+            {
+                button3.Text = "开始实验";
+                textBox10.Enabled = true;
+                textBox11.Enabled = true;
+                textBox12.Enabled = true;
+                textBox13.Enabled = true;
+
+                groupBox16.Enabled = true;
+                groupBox17.Enabled = true;
+                groupBox19.Enabled = true;
+
+                LOS_PathTracking.track_time = 0;
+
+
+
+
+
+
+
+
+
+
+
+            }
+
+
 
             if (radioButton3.Checked)//地面站仿真
             {
                 if (button3.Text == "开始实验")
                 {
-                    button3.Text = "结束实验";
                     horizLine12.Clear();
-                    groupBox13.Enabled = false;
-                    groupBox16.Enabled = false;
                     LOS_PathTracking.LOS_Clear();
                     timer2.Enabled = true;
                 }
@@ -1694,13 +1847,11 @@ namespace 地面站
                     groupBox6.Enabled = true;
                     groupBox13.Enabled = true;
                     groupBox16.Enabled = true;
+
+                    LOS_PathTracking.track_time = 0;
                 }
             }
-            else if (radioButton4.Checked)//虚拟平台仿真
-            {
-                
-            }
-            else if (radioButton5.Checked)//实船
+            else if (radioButton4.Checked)//实船
             {
                 if (serialPort1.IsOpen == false)//串口未打开
                 {
@@ -1712,17 +1863,21 @@ namespace 地面站
                     string path = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "/实验数据/";
                     if (Directory.Exists(path) == false)
                         Directory.CreateDirectory(path);
-
+                    
                     msg_Cmd_Write.cmd_id = (byte)MavLink.CMD_TYPE.CMD_UNLOCK;
                     mavlinkPacket.Message = msg_Cmd_Write;
                     SendMavMsgToRocker(mavlinkPacket);
+
                     horizLine2.Clear();
                     LOS_PathTracking.LOS_Clear();
+
                     timer2.Enabled = true;
                     button3.Text = "结束实验";
                     LongitudeStart = msg_usv_state.longitude;
                     LatitudeStart = msg_usv_state.latitude;
-                  //  SF_PathTracking.Clear(10, 0, usv_state.Heading * Math.PI / 180, usv_state.Course * Math.PI / 180, 10);
+                    //  SF_PathTracking.Clear(10, 0, usv_state.Heading * Math.PI / 180, usv_state.Course * Math.PI / 180, 10);
+
+                    
                 }
                 else
                 {
@@ -1731,6 +1886,8 @@ namespace 地面站
                     SendMavMsgToRocker(mavlinkPacket);
                     timer2.Enabled = false;
                     button3.Text = "开始实验";
+                    LOS_PathTracking.track_time = 0;
+
                 }
             }
         }
@@ -1745,34 +1902,56 @@ namespace 地面站
             double heading;
             double rudder;
             double course;
+            LOS.Result result;
             if (radioButton3.Checked)//地面站仿真
             {
                 beta = 0.1;
-                u = 1.5;
+               
                 x = LOS_PathTracking.x;
                 y = LOS_PathTracking.y;
                 heading = LOS_PathTracking.psi;
                 course = heading + beta;
-                LOS_PathTracking.UpdateData(x, y, heading, course, u);
-                heading_set = LOS_PathTracking.Calculate(T);
-                LOS_PathTracking.UpdateSimulationPosition(heading_set, beta, T);//调试LOS时，假定自动舵能让船始终跟上设定角
+                
+                if (radioButton8.Checked == true)
+                {
+                    u = 1.5;
+                    LOS_PathTracking.UpdateData(x, y, heading, course, u);
+                    heading_set = LOS_PathTracking.Calculate(T);
+                    LOS_PathTracking.UpdateSimulationPosition(heading_set, beta, T);//调试LOS时，假定自动舵能让船始终跟上设定角
+                }
+                else if (radioButton1.Checked == true)
+                {
+                    result = LOS_PathTracking.Calculate_trajectory(T);
+                    LOS_PathTracking.UpdateData(x, y, heading, course, result.vel);
+                    LOS_PathTracking.UpdateSimulationPosition(result.psi_d, beta, T);
+                    
+                }
+                
                 Tchart6_Draw(horizLine12,x, y);
 
             }
-            else if (radioButton4.Checked)//虚拟仿真
-            {
-
-            }
-            else if (radioButton5.Checked)//实船
+            else if (radioButton4.Checked)//实船
             {
                 heading = msg_usv_state.heading / 180 * Math.PI;//弧度
                 u = msg_usv_state.speed;
                 course = msg_usv_state.Track / 180 * Math.PI;//弧度
                 Tchart6_Draw(horizLine12,Usv_Position.X-X_Standard,Usv_Position.Y-Y_Standard);
                 LOS_PathTracking.UpdateData(Usv_Position.X- X_Standard, Usv_Position.Y-Y_Standard, heading, course, u);
-                heading_set = LOS_PathTracking.Calculate(T)*180/Math.PI;//计算设定艏向角
-                msg_Usv_Set.Heading = (float)heading_set;
-                msg_Usv_Set.Speed = 2.5f;
+                if (radioButton8.Checked == true)
+                {
+                    heading_set = LOS_PathTracking.Calculate(T) * 180 / Math.PI;//计算设定艏向角
+                    msg_Usv_Set.Heading = (float)heading_set;
+                    msg_Usv_Set.Speed = 2.5f;
+                }
+                else if (radioButton1.Checked==true)
+                {
+                    result = LOS_PathTracking.Calculate_trajectory(T);
+                    result.psi_d=result.psi_d*180/Math.PI;
+                    msg_Usv_Set.Heading = (float)result.psi_d;
+                    msg_Usv_Set.Speed = (float)result.vel; 
+
+                }
+                
                 msg_Usv_Set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
                 msg_Usv_Set.DEV_ID = 15;
                 mavlinkPacket.Message = msg_Usv_Set;
@@ -1780,8 +1959,17 @@ namespace 地面站
             }
 
         }
-        private void DrawExpectedPath()//绘制期望路径
+        private void DrawExpectedTrack(HorizLine horizLine)
         {
+            double x, y;
+            x = Eval.Calculate(LOS_PathTracking.track_time*0.2, "var x=" + textBox13.Text + ";");
+            y = Eval.Calculate(LOS_PathTracking.track_time*0.2, "var y=" + textBox12.Text + ";");
+            horizLine.Add(x, y);
+
+        }
+        private void DrawExpectedPath(HorizLine horizLine)//绘制期望路径
+        {
+            
             double min, max, pionts;
             pionts = 500;//绘制点数
             try
@@ -1794,24 +1982,32 @@ namespace 地面站
                 MessageBox.Show("w的取值范围输入错误！");
                 return;
             }
-            horizLine11.Clear();
+            horizLine.Clear();
             for (int i = 0; i < pionts; i++)
             {
                 double x, y;
                 x = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var x=" + textBox13.Text + ";");
                 y = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var y=" + textBox12.Text + ";");
-                horizLine11.Add(x, y);
+            horizLine.Add(x, y);
             }
         }
         private void UpdateExpectedPath(object sender, EventArgs e)//更新期望路径
         {
+            
             LOS_PathTracking.UpdateExpectedPath(textBox13.Text, textBox12.Text);
             LOS_PathTracking.UpadataParam(Convert.ToDouble(textBox1.Text),
                                             Convert.ToDouble(textBox9.Text),
                                             Convert.ToDouble(textBox8.Text),
                                             Convert.ToDouble(textBox7.Text),
                                             Convert.ToDouble(textBox6.Text));
-            DrawExpectedPath();
+            horizLine11.Clear();
+            LOS_PathTracking.track_time = 0;
+            if (radioButton2.Checked)
+            {
+                DrawExpectedPath(horizLine11);
+            }
+
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -1912,12 +2108,22 @@ namespace 地面站
 
         private void button14_Click(object sender, EventArgs e)
         {
-            tcpserver._Click();
+           
         }
 
         private void timer4_Tick(object sender, EventArgs e)
         {
             tcpserver.drawtrack();
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_clear_t6_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

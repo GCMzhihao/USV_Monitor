@@ -1,11 +1,13 @@
 ﻿using MavLink;
 using Steema.TeeChart.Editors.Series;
 using Steema.TeeChart.Styles;
+using Steema.TeeChart.Themes;
 using System;
+using System.Web.UI.WebControls;
 using System.Windows;
 namespace 地面站
 {
-    class LOS//船的初始位置必须为期望路径中的点。如果不是期望路径中的点，需要给x,y,Ze等需要积分算出的变量赋初值
+    public class LOS//船的初始位置必须为期望路径中的点。如果不是期望路径中的点，需要给x,y,Ze等需要积分算出的变量赋初值
     {
         public double w;//期望路径的参数方程自变量
         double w_deriv;//期望路径的参数方程自变量的导数
@@ -17,6 +19,16 @@ namespace 地面站
         double psi_F;//期望路径切向角ψF
         double psi_F_last;//上一时刻期望路径切向角ψF
         double psi_F_deriv;//期望路径切向角ψF的导数
+
+       
+
+        public int track_time;
+        public struct Result
+        {
+            public double psi_d;
+            public double vel;
+        }
+        Result result;//轨迹算法计算结果
         double psi_d;//输出设定航向
         double beta;//漂角β（航向角-艏向角）
         //double beta_est;//漂角估计
@@ -34,8 +46,8 @@ namespace 地面站
         {
             w = 0;
             w_deriv = 0;
-            x = 20;
-            y = 0;
+            x = 0;
+            y = 3;
             x_F = 0;
             y_F = 0;
             U = 0;
@@ -102,7 +114,7 @@ namespace 地面站
         public double Calculate(double T)
         {
             double h = 0.0001;
-            double x_F_1, y_F_1;
+            double x_F_1, y_F_1; //期望的xy坐标
             double x_F_deriv_w, y_F_deriv_w;
             double x_sig;
             double y_sig;
@@ -143,6 +155,106 @@ namespace 地面站
             psi_F_last = psi_F;
 
             return psi_d;
+        }
+
+        public Result Calculate_trajectory(double T)
+        {
+            double h = 0.0001;
+            double x_F_deriv_w, y_F_deriv_w;
+            double x_F_1, y_F_1; //期望的xy坐标
+            double U_d;
+            double U_p;
+            double t;
+            t = T * track_time;
+
+            x_F = Eval.Calculate(t, x_F_expression);
+            y_F = Eval.Calculate(t, y_F_expression);
+            x_F_1 = Eval.Calculate(t + h, x_F_expression);
+            y_F_1 = Eval.Calculate(t + h, y_F_expression);
+            x_F_deriv_w = (x_F_1 - x_F) / h;//对参数w求导
+            y_F_deriv_w = (y_F_1 - y_F) / h;//对参数w求导
+            psi_F = Math.Atan2(y_F_deriv_w, x_F_deriv_w);
+            psi_F_deriv = (psi_F - psi_F_last) / T;
+            x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) * (y - y_F);
+            y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
+
+            result.psi_d=psi_F+Math.Atan(-y_err/delta)-beta;
+            U_d = Math.Sqrt(x_F_deriv_w*x_F_deriv_w+y_F_deriv_w*y_F_deriv_w);
+            U_p = ((U_d-kp*x_err)*Math.Sqrt(y_err*y_err+delta*delta)) / delta;
+            result.vel = U_p*Math.Cos(beta);
+
+            psi_F_last = psi_F;
+
+            return result;
+
+
+
+        }
+
+        public Result Caculate_Follower(double T,double L,double Theta)
+        {
+            double h = 0.0001;
+            double t;
+            double x_L, y_L;//期望领航者的xy坐标
+            double x_L_1, y_L_1;
+            double x_L_deriv_w, y_L_deriv_w;//期望xy坐标的导数
+            double x_F_1, y_F_1; //期望的跟随者xy坐标
+            double x_F_deriv_w, y_F_deriv_w;//期望xy坐标的导数
+            double U_d;
+            double U_p;
+            double psi_F_deriv_W;
+            double psi_L, psi_L_1;
+            double theta;
+            t = T * track_time;
+
+            x_L = Eval.Calculate(t, x_F_expression);
+            y_L = Eval.Calculate(t, y_F_expression);
+            x_L_1 = Eval.Calculate(t + h, x_F_expression);
+            y_L_1 = Eval.Calculate(t + h, y_F_expression);
+            x_L_deriv_w = (x_L_1 - x_L) / h;//对参数w求导
+            y_L_deriv_w = (y_L_1 - y_L) / h;//对参数w求导
+            psi_L = Math.Atan2(y_L_deriv_w, x_L_deriv_w);
+
+
+            theta = Theta * Math.PI / 180;//弧度
+            psi_L = psi_L * Math.PI / 180;//弧度
+
+            x_F = x_L + L * Math.Cos(theta + psi_L);
+            y_F = y_L + L * Math.Sin(theta + psi_L);
+            //转换成跟随者的期望xy以及psi
+
+            
+            x_L = Eval.Calculate(t + h, x_F_expression);
+            y_L = Eval.Calculate(t + h, y_F_expression);
+            x_L_1 = Eval.Calculate(t + 2*h, x_F_expression);
+            y_L_1 = Eval.Calculate(t + 2*h, y_F_expression);
+            x_L_deriv_w = (x_L_1 - x_L) / h;//对参数w求导
+            y_L_deriv_w = (y_L_1 - y_L) / h;//对参数w求导
+            psi_L_1 = Math.Atan2(y_L_deriv_w, x_L_deriv_w);
+
+
+            theta = Theta * Math.PI / 180;//弧度
+            psi_L_1 = psi_L_1 * Math.PI / 180;//弧度
+
+            x_F_1 = x_L + L * Math.Cos(theta + psi_L_1);
+            y_F_1 = y_L + L * Math.Sin(theta + psi_L_1);
+
+
+            x_F_deriv_w = (x_F_1 - x_F) / h;
+            y_F_deriv_w = (y_F_1 - y_F) / h;//计算出跟随者的xy坐标的导数
+
+            psi_F_deriv = (psi_F - psi_F_last) / T;
+            x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) * (y - y_F);
+            y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
+
+            result.psi_d = psi_F + Math.Atan(-y_err / delta) - beta;
+            U_d = Math.Sqrt(x_F_deriv_w * x_F_deriv_w + y_F_deriv_w * y_F_deriv_w);
+            U_p = ((U_d - kp * x_err) * Math.Sqrt(y_err * y_err + delta * delta)) / delta;
+            result.vel = U_p * Math.Cos(beta);
+
+            psi_F_last = psi_F;
+
+            return result;
         }
         /// <summary>
         /// 更新仿真位置，仅仿真LOS算法时使用

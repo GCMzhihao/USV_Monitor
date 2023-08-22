@@ -213,9 +213,6 @@ namespace 地面站
             x_f_exp = x_f_d;
             y_f_exp = y_f_d;
 
-            vx_set = pid_x.Calculate(x_f_d, x_f, dt);
-            vy_set = pid_y.Calculate(y_f_d, y_f, dt);
-
         }
         public void Simulation(double dt)
         {

@@ -21,7 +21,8 @@ namespace 地面站
             try
             {
                 expression = "var w=" + t.ToString() + ";" + expression;
-                result = (double)Microsoft.JScript.Eval.JScriptEvaluate(expression, engine);
+                result = Convert.ToDouble(Microsoft.JScript.Eval.JScriptEvaluate(expression, engine));
+                
             }
             catch
             {

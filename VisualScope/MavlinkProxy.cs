@@ -54,6 +54,27 @@ namespace 地面站
                 string WaveName = ((SYS_TYPE)e.SystemId).ToString().Substring(4).ToLower() + e.ComponentId.ToString() + "." + msg + '.' + info.Name;
                 TChart1Display(WaveName, Convert.ToDouble(info.GetValue(e.Message).ToString()));
             }
+
+            if (!form1.USV_ID_List.Contains((byte)e.ComponentId))//已有的ID不包含新的USV_ID
+            {
+                form1.USV_ID_List.Add((byte)e.ComponentId);
+                form1.USVs[form1.USV_ID_List.Count - 1] = new USV(form1, (byte)e.ComponentId);
+                form1.USVs[form1.USV_ID_List.Count - 1].Init(form1.HorizLines[form1.USV_ID_List.Count + 10]);
+
+            }
+            else 
+            {
+                if (e.Message.ToString().Contains("Msg_usv_state"))
+                {
+                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state.latitude = ((Msg_usv_state)e.Message).latitude;
+                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state.longitude = ((Msg_usv_state)e.Message).longitude;
+                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state.speed = ((Msg_usv_state)e.Message).speed;
+                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state.heading = ((Msg_usv_state)e.Message).heading;
+                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state.Track = ((Msg_usv_state)e.Message).Track;
+
+                }
+            }
+
             if (e.Message.ToString().Contains("Msg_param_read_ack"))
             {
                 int index = 0;
