@@ -250,11 +250,11 @@
             this.horizLine10 = new Steema.TeeChart.Styles.HorizLine();
             this.tabPage16 = new System.Windows.Forms.TabPage();
             this.groupBox19 = new System.Windows.Forms.GroupBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.radioButton_Simulation = new System.Windows.Forms.RadioButton();
+            this.radioButton_Real_USV = new System.Windows.Forms.RadioButton();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton_Trace = new System.Windows.Forms.RadioButton();
+            this.radioButton_Trajectory = new System.Windows.Forms.RadioButton();
             this.tabControl6 = new System.Windows.Forms.TabControl();
             this.tabPage20 = new System.Windows.Forms.TabPage();
             this.groupBox24 = new System.Windows.Forms.GroupBox();
@@ -321,10 +321,10 @@
             this.textBox_USV3_L = new System.Windows.Forms.TextBox();
             this.btn_clear_t6 = new System.Windows.Forms.Button();
             this.label51 = new System.Windows.Forms.Label();
-            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.textBox_Speed_Set = new System.Windows.Forms.TextBox();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.radioButton8 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
+            this.radioButton_formation = new System.Windows.Forms.RadioButton();
+            this.radioButton_Single_USV = new System.Windows.Forms.RadioButton();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
@@ -6422,7 +6422,7 @@
             this.tabPage16.Controls.Add(this.tabControl6);
             this.tabPage16.Controls.Add(this.btn_clear_t6);
             this.tabPage16.Controls.Add(this.label51);
-            this.tabPage16.Controls.Add(this.textBox14);
+            this.tabPage16.Controls.Add(this.textBox_Speed_Set);
             this.tabPage16.Controls.Add(this.groupBox16);
             this.tabPage16.Controls.Add(this.groupBox13);
             this.tabPage16.Controls.Add(this.button3);
@@ -6442,67 +6442,67 @@
             // 
             // groupBox19
             // 
-            this.groupBox19.Controls.Add(this.radioButton3);
-            this.groupBox19.Controls.Add(this.radioButton4);
+            this.groupBox19.Controls.Add(this.radioButton_Simulation);
+            this.groupBox19.Controls.Add(this.radioButton_Real_USV);
             this.groupBox19.Location = new System.Drawing.Point(152, 513);
             this.groupBox19.Name = "groupBox19";
             this.groupBox19.Size = new System.Drawing.Size(175, 38);
             this.groupBox19.TabIndex = 61;
             this.groupBox19.TabStop = false;
             // 
-            // radioButton3
+            // radioButton_Simulation
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(103, 17);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(71, 16);
-            this.radioButton3.TabIndex = 50;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "仿真实验";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton_Simulation.AutoSize = true;
+            this.radioButton_Simulation.Checked = true;
+            this.radioButton_Simulation.Location = new System.Drawing.Point(103, 17);
+            this.radioButton_Simulation.Name = "radioButton_Simulation";
+            this.radioButton_Simulation.Size = new System.Drawing.Size(71, 16);
+            this.radioButton_Simulation.TabIndex = 50;
+            this.radioButton_Simulation.TabStop = true;
+            this.radioButton_Simulation.Text = "仿真实验";
+            this.radioButton_Simulation.UseVisualStyleBackColor = true;
             // 
-            // radioButton4
+            // radioButton_Real_USV
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(4, 17);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(71, 16);
-            this.radioButton4.TabIndex = 49;
-            this.radioButton4.Text = "实船实验";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton_Real_USV.AutoSize = true;
+            this.radioButton_Real_USV.Location = new System.Drawing.Point(4, 17);
+            this.radioButton_Real_USV.Name = "radioButton_Real_USV";
+            this.radioButton_Real_USV.Size = new System.Drawing.Size(71, 16);
+            this.radioButton_Real_USV.TabIndex = 49;
+            this.radioButton_Real_USV.Text = "实船实验";
+            this.radioButton_Real_USV.UseVisualStyleBackColor = true;
             // 
             // groupBox17
             // 
-            this.groupBox17.Controls.Add(this.radioButton1);
-            this.groupBox17.Controls.Add(this.radioButton2);
+            this.groupBox17.Controls.Add(this.radioButton_Trace);
+            this.groupBox17.Controls.Add(this.radioButton_Trajectory);
             this.groupBox17.Location = new System.Drawing.Point(251, 550);
             this.groupBox17.Name = "groupBox17";
             this.groupBox17.Size = new System.Drawing.Size(78, 68);
             this.groupBox17.TabIndex = 60;
             this.groupBox17.TabStop = false;
             // 
-            // radioButton1
+            // radioButton_Trace
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 45);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(47, 16);
-            this.radioButton1.TabIndex = 50;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "路径";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton_Trace.AutoSize = true;
+            this.radioButton_Trace.Checked = true;
+            this.radioButton_Trace.Location = new System.Drawing.Point(6, 45);
+            this.radioButton_Trace.Name = "radioButton_Trace";
+            this.radioButton_Trace.Size = new System.Drawing.Size(47, 16);
+            this.radioButton_Trace.TabIndex = 50;
+            this.radioButton_Trace.TabStop = true;
+            this.radioButton_Trace.Text = "路径";
+            this.radioButton_Trace.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // radioButton_Trajectory
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(7, 17);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(47, 16);
-            this.radioButton2.TabIndex = 49;
-            this.radioButton2.Text = "轨迹";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton_Trajectory.AutoSize = true;
+            this.radioButton_Trajectory.Location = new System.Drawing.Point(7, 17);
+            this.radioButton_Trajectory.Name = "radioButton_Trajectory";
+            this.radioButton_Trajectory.Size = new System.Drawing.Size(47, 16);
+            this.radioButton_Trajectory.TabIndex = 49;
+            this.radioButton_Trajectory.Text = "轨迹";
+            this.radioButton_Trajectory.UseVisualStyleBackColor = true;
             // 
             // tabControl6
             // 
@@ -7175,44 +7175,44 @@
             this.label51.TabIndex = 50;
             this.label51.Text = "速度设定";
             // 
-            // textBox14
+            // textBox_Speed_Set
             // 
-            this.textBox14.Location = new System.Drawing.Point(244, 488);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(61, 21);
-            this.textBox14.TabIndex = 49;
+            this.textBox_Speed_Set.Location = new System.Drawing.Point(244, 488);
+            this.textBox_Speed_Set.Name = "textBox_Speed_Set";
+            this.textBox_Speed_Set.Size = new System.Drawing.Size(61, 21);
+            this.textBox_Speed_Set.TabIndex = 49;
             // 
             // groupBox16
             // 
-            this.groupBox16.Controls.Add(this.radioButton8);
-            this.groupBox16.Controls.Add(this.radioButton5);
+            this.groupBox16.Controls.Add(this.radioButton_formation);
+            this.groupBox16.Controls.Add(this.radioButton_Single_USV);
             this.groupBox16.Location = new System.Drawing.Point(151, 550);
             this.groupBox16.Name = "groupBox16";
             this.groupBox16.Size = new System.Drawing.Size(96, 68);
             this.groupBox16.TabIndex = 48;
             this.groupBox16.TabStop = false;
             // 
-            // radioButton8
+            // radioButton_formation
             // 
-            this.radioButton8.AutoSize = true;
-            this.radioButton8.Checked = true;
-            this.radioButton8.Location = new System.Drawing.Point(3, 46);
-            this.radioButton8.Name = "radioButton8";
-            this.radioButton8.Size = new System.Drawing.Size(71, 16);
-            this.radioButton8.TabIndex = 50;
-            this.radioButton8.TabStop = true;
-            this.radioButton8.Text = "编队实验";
-            this.radioButton8.UseVisualStyleBackColor = true;
+            this.radioButton_formation.AutoSize = true;
+            this.radioButton_formation.Checked = true;
+            this.radioButton_formation.Location = new System.Drawing.Point(3, 46);
+            this.radioButton_formation.Name = "radioButton_formation";
+            this.radioButton_formation.Size = new System.Drawing.Size(71, 16);
+            this.radioButton_formation.TabIndex = 50;
+            this.radioButton_formation.TabStop = true;
+            this.radioButton_formation.Text = "编队实验";
+            this.radioButton_formation.UseVisualStyleBackColor = true;
             // 
-            // radioButton5
+            // radioButton_Single_USV
             // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(3, 17);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(71, 16);
-            this.radioButton5.TabIndex = 49;
-            this.radioButton5.Text = "单船实验";
-            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton_Single_USV.AutoSize = true;
+            this.radioButton_Single_USV.Location = new System.Drawing.Point(3, 17);
+            this.radioButton_Single_USV.Name = "radioButton_Single_USV";
+            this.radioButton_Single_USV.Size = new System.Drawing.Size(71, 16);
+            this.radioButton_Single_USV.TabIndex = 49;
+            this.radioButton_Single_USV.Text = "单船实验";
+            this.radioButton_Single_USV.UseVisualStyleBackColor = true;
             // 
             // groupBox13
             // 
@@ -8145,7 +8145,7 @@
             // 
             this.horizLine14.Pointer.SizeDouble = 0D;
             this.horizLine14.Pointer.SizeUnits = Steema.TeeChart.Styles.PointerSizeUnits.Pixels;
-            this.horizLine14.Title = "horizLine4";
+            this.horizLine14.Title = "USV_3";
             this.horizLine14.UseExtendedNumRange = false;
             // 
             // 
@@ -11879,9 +11879,9 @@
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.TextBox textBox13;
         private System.Windows.Forms.GroupBox groupBox16;
-        private System.Windows.Forms.RadioButton radioButton5;
+        private System.Windows.Forms.RadioButton radioButton_Single_USV;
         private System.Windows.Forms.Label label51;
-        private System.Windows.Forms.TextBox textBox14;
+        public System.Windows.Forms.TextBox textBox_Speed_Set;
         private System.Windows.Forms.TabPage tabPage17;
         public System.Windows.Forms.RichTextBox connectstate;
         public System.Windows.Forms.TextBox ipadress;
@@ -11965,13 +11965,13 @@
         private System.Windows.Forms.Label label85;
         private System.Windows.Forms.Label label86;
         private System.Windows.Forms.TextBox textBox_USV3_L;
-        public System.Windows.Forms.RadioButton radioButton8;
+        public System.Windows.Forms.RadioButton radioButton_formation;
         private System.Windows.Forms.GroupBox groupBox19;
-        public System.Windows.Forms.RadioButton radioButton3;
-        public System.Windows.Forms.RadioButton radioButton4;
+        public System.Windows.Forms.RadioButton radioButton_Simulation;
+        public System.Windows.Forms.RadioButton radioButton_Real_USV;
         private System.Windows.Forms.GroupBox groupBox17;
-        public System.Windows.Forms.RadioButton radioButton1;
-        public System.Windows.Forms.RadioButton radioButton2;
+        public System.Windows.Forms.RadioButton radioButton_Trace;
+        public System.Windows.Forms.RadioButton radioButton_Trajectory;
         private System.Windows.Forms.Label label_USV1_ID;
         private System.Windows.Forms.Label label_USV1_VOL;
         private System.Windows.Forms.Label label_USV1_VEL;

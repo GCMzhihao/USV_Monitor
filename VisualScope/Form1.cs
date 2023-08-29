@@ -39,16 +39,16 @@ namespace 地面站
 
         public double X_Standard;
         public double Y_Standard;
+        public int track_time;
+
 
         private StreamWriter usv_sw;
 
-        public USV_State_Info USV1_State_Info;
-        public USV_State_Info USV2_State_Info;
-        public USV_State_Info USV3_State_Info;
+
 
         LOS LOS_PathTracking;
         Norbbin norbbin;
-
+        Form form1;
         public class USV_Position
         {
             public double X;
@@ -76,11 +76,15 @@ namespace 地面站
         private VirtualLeader VirtualLeader;
         readonly UAV_Followers[] UAV_Followers = new UAV_Followers[UWB_Tag_Num];
 
+
+        /*USV相关初始化*/
         static readonly byte USV_NUM = 6;
         public USV[] USVs = new USV[USV_NUM];
         public LOS[] USVs_LOS=new LOS[USV_NUM];
         public Mavlink[] USVs_Mavlink=new Mavlink[USV_NUM];
         public List<byte> USV_ID_List = new List<byte>();
+        public USV_State_Info[] USVs_State_Info = new USV_State_Info[USV_NUM];
+
 
 
 
@@ -346,6 +350,7 @@ namespace 地面站
         private void Form1_Load(object sender, EventArgs e)
         {
             ParamLoad(sender);
+            form1 = (Form)sender;
             TChartInit(tChart1);
             mavlink = new MavLink.Mavlink();
             mavlinkPacket = new MavLink.MavlinkPacket();
@@ -408,8 +413,24 @@ namespace 地面站
             tchartzooms[6] = new TChartZoom(tChart9);
             tchartzooms[8] = new TChartZoom(tChart11);
 
-
             tchartscalings[0] = new TChartScaling(tChart4);
+
+
+            /******USV相关控件初始化*******/
+            USVs_State_Info[0] = new USV_State_Info(label_USV1_ID, label_USV1_VEL, label_USV1_VOL, label_USV1_X, label_USV1_Y, textBox_USV1_L, textBox_USV1_angle, textBox_USV1_kp, textBox_USV1_delta);
+            USVs_State_Info[1] = new USV_State_Info(label_USV2_ID, label_USV2_VEL, label_USV2_VOL, label_USV2_X, label_USV2_Y, textBox_USV2_L, textBox_USV2_angle, textBox_USV2_kp, textBox_USV2_delta);
+            USVs_State_Info[2] = new USV_State_Info(label_USV3_ID, label_USV3_VEL, label_USV3_VOL, label_USV3_X, label_USV3_Y, textBox_USV3_L, textBox_USV3_angle, textBox_USV3_kp, textBox_USV3_delta);
+
+            USVs_LOS[0] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox_USV1_kp.Text), Convert.ToDouble(textBox_USV1_delta.Text));
+            USVs_LOS[1] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox_USV2_kp.Text), Convert.ToDouble(textBox_USV2_delta.Text));
+            USVs_LOS[2] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox_USV3_kp.Text), Convert.ToDouble(textBox_USV3_delta.Text));
+
+
+            
+
+
+            //*************更新参数事件初始化**********************//
+            
 
             textBox1.Leave += new EventHandler(LOS_UpdateParam);
             textBox9.Leave += new EventHandler(LOS_UpdateParam);
@@ -419,6 +440,39 @@ namespace 地面站
 
             textBox12.Leave += new EventHandler(UpdateExpectedPath);
             textBox13.Leave += new EventHandler(UpdateExpectedPath);
+            textBox12.Enter += new EventHandler(UpdateExpectedPath);
+            textBox13.Enter += new EventHandler(UpdateExpectedPath);
+
+
+            USVs_State_Info[0].L.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[0].kp.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[0].angle.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[0].delta.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[0].L.Enter += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[0].kp.Enter += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[0].angle.Enter += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[0].delta.Enter += new EventHandler(LOS_UpdateParam);
+
+            USVs_State_Info[1].L.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[1].kp.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[1].angle.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[1].delta.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[1].L.Enter += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[1].kp.Enter += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[1].angle.Enter += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[1].delta.Enter += new EventHandler(LOS_UpdateParam);
+
+            USVs_State_Info[2].L.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[2].kp.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[2].angle.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[2].delta.Leave += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[2].L.Enter += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[2].kp.Enter += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[2].angle.Enter += new EventHandler(LOS_UpdateParam);
+            USVs_State_Info[2].delta.Enter += new EventHandler(LOS_UpdateParam);
+
+
+
 
 
             TrkBar_LeftX.ValueChanged += new System.EventHandler(TrackBarValueChanged);
@@ -517,17 +571,11 @@ namespace 地面站
             horizLine15.Active = true;
             horizLine15.Legend.Visible = true;
 
-            USV1_State_Info = new USV_State_Info(label_USV1_ID, label_USV1_VEL, label_USV1_VOL, label_USV1_X, label_USV1_Y, textBox_USV1_L, textBox_USV1_angle,textBox_USV1_kp,textBox_USV1_delta);
-            USV2_State_Info = new USV_State_Info(label_USV2_ID, label_USV2_VEL, label_USV2_VOL, label_USV2_X, label_USV2_Y, textBox_USV2_L, textBox_USV2_angle, textBox_USV2_kp, textBox_USV2_delta);
-            USV3_State_Info = new USV_State_Info(label_USV3_ID, label_USV3_VEL, label_USV3_VOL, label_USV3_X, label_USV3_Y, textBox_USV3_L, textBox_USV3_angle, textBox_USV3_kp, textBox_USV3_delta);
-
-            USVs[0].Init(USV1_State_Info);
-
-
             VirtualLeader.horizLine = HorizLines[0];
-            
+
             VirtualLeader.horizLine.Legend.Visible = true;
             VirtualLeader.horizLine.Active = true;
+
             for (int i = 0; i < 3; i++)
             {
                 UAV_Followers[i].HorizLines[0] = HorizLines[i * 2 + 1];//期望曲线
@@ -573,11 +621,8 @@ namespace 地面站
 
 
 
-            LOS_PathTracking = new LOS(textBox13.Text, textBox12.Text,
+            LOS_PathTracking = new LOS(sender, textBox13.Text, textBox12.Text,
                             Convert.ToDouble(textBox1.Text),
-                            Convert.ToDouble(textBox9.Text),
-                            Convert.ToDouble(textBox8.Text),
-                            Convert.ToDouble(textBox7.Text),
                             Convert.ToDouble(textBox6.Text));
             DrawExpectedPath(horizLine11);
 
@@ -1403,14 +1448,23 @@ namespace 地面站
         {
             double dt;
             dt = timer2.Interval * 0.001;
-            
-            LOS_Control(dt);
-            
-            if (radioButton1.Checked)
+
+            // LOS_Control(dt);
+            if (radioButton_Single_USV.Checked)//单船
             {
-                LOS_PathTracking.track_time++;
+                USVs[0].LOS_Control(dt);
+            }
+            else if(radioButton_formation.Checked)//编队
+            {
+                USVs[0].LOS_Follower(dt);
+                USVs[1].LOS_Follower(dt);
+                USVs[2].LOS_Follower(dt);
+            }
+            
+            if (radioButton_Trajectory.Checked|radioButton_formation.Checked)
+            {
+                track_time++;
                 DrawExpectedTrack(horizLine11);
-                
             }
 
 
@@ -1714,93 +1768,87 @@ namespace 地面站
                 groupBox16.Enabled=false;
                 groupBox17.Enabled=false;
                 groupBox19.Enabled=false;
-                if (radioButton5.Checked)//单船
+
+
+                horizLine12.Clear();
+                horizLine13.Clear();
+                horizLine14.Clear();
+
+                USVs_LOS[0].LOS_Clear();
+                USVs_LOS[1].LOS_Clear();
+                USVs_LOS[2].LOS_Clear();
+                timer2.Enabled = true;
+
+
+                if (radioButton_Real_USV.Checked)//实船
                 {
-                    if (radioButton2.Checked)//路径
+                    if (serialPort1.IsOpen == false)//串口未打开
+                    {
+                        SystemInfo("请打开串口！");
+                        track_time = 0;
+                        return;
+                    }
+
+                    try
+                    {
+                        USVs[0].UNLOCK();
+                        USVs[1].UNLOCK();
+                        USVs[2].UNLOCK();
+                    }
+                    catch
+                    { 
+                    
+                    }
+
+                }
+
+                if (radioButton_Single_USV.Checked)//单船
+                {
+                    if (radioButton_Simulation.Checked)//仿真
+                    {
+                        USVs[0] = new USV(form1, 0);
+                        USVs[0].Init(horizLine12);
+                        USVs[0].Init(USVs_LOS[0]);
+                        USVs[0].Init(USVs_State_Info[0]);
+                    }
+                    else if (radioButton_Real_USV.Checked)//实船
+                    {
+                        
+
+                    }
+                        if (radioButton_Trace.Checked)//路径
                     {
                         DrawExpectedPath(horizLine11);
-                        if (radioButton3.Checked)//路径仿真
-                        {
-
-
-                        }
-                        else if (radioButton4.Checked)//路径实船
-                        {
-                            if (serialPort1.IsOpen == false)//串口未打开
-                            {
-                                SystemInfo("请打开串口！");
-                                timer2.Enabled=false;
-                                return;
-                            }
-
-
-
-                        }
-
-
                     }
-                    else if (radioButton1.Checked)//轨迹
+                    else if(radioButton_Trajectory.Checked)//轨迹
                     {
                         horizLine11.Clear();
-
-                        if (radioButton3.Checked)//轨迹仿真
-                        {
-
-
-                        }
-                        else if (radioButton4.Checked)//轨迹实船
-                        {
-
-                            if (serialPort1.IsOpen == false)//串口未打开
-                            {
-                                SystemInfo("请打开串口！");
-                                timer2.Enabled = false;
-                                return;
-                            }
-
-
-
-
-                        }
                     }
                 }
-                else if (radioButton8.Checked)//编队
+                else if (radioButton_formation.Checked)//编队
                 {
-
-                    if (radioButton3.Checked)//编队仿真
+                    horizLine11.Clear();
+                    if (radioButton_Simulation.Checked)//编队仿真
                     {
+                        USVs[0] = new USV(form1, 0);
+                        USVs[0].Init(horizLine12);
+                        USVs[0].Init(USVs_LOS[0]);
+                        USVs[0].Init(USVs_State_Info[0]);
 
+                        USVs[1] = new USV(form1, 1);
+                        USVs[1].Init(horizLine13);
+                        USVs[1].Init(USVs_LOS[1]);
+                        USVs[1].Init(USVs_State_Info[1]);
+
+                        USVs[2] = new USV(form1, 2);
+                        USVs[2].Init(horizLine14);
+                        USVs[2].Init(USVs_LOS[2]);
+                        USVs[2].Init(USVs_State_Info[2]);
 
                     }
-                    else if (radioButton4.Checked)//编队实船
-                    {
-
-                        if (serialPort1.IsOpen == false)//串口未打开
-                        {
-                            SystemInfo("请打开串口！");
-                            timer2.Enabled = false;
-                            return;
-                        }
-
-
-
-
-                    }
-
-
-
+                   
+                   
                 }
-
-
-
-
-
-
-
-
-
-
-
 
 
             }
@@ -1816,23 +1864,30 @@ namespace 地面站
                 groupBox17.Enabled = true;
                 groupBox19.Enabled = true;
 
-                LOS_PathTracking.track_time = 0;
+                track_time = 0;
+                timer2.Enabled = false;
 
+                if (radioButton_Real_USV.Enabled)
+                {
 
+                    try
+                    {
+                      //  USVs[0].LOCK();
+                       // USVs[1].LOCK();
+                        //USVs[2].LOCK();
+                    }
+                    catch
+                    {
 
-
-
-
-
-
-
-
+                    }
+                }
+                
 
             }
 
 
 
-            if (radioButton3.Checked)//地面站仿真
+        /*    if (radioButton3.Checked)//地面站仿真
             {
                 if (button3.Text == "开始实验")
                 {
@@ -1848,7 +1903,7 @@ namespace 地面站
                     groupBox13.Enabled = true;
                     groupBox16.Enabled = true;
 
-                    LOS_PathTracking.track_time = 0;
+                    track_time = 0;
                 }
             }
             else if (radioButton4.Checked)//实船
@@ -1886,10 +1941,10 @@ namespace 地面站
                     SendMavMsgToRocker(mavlinkPacket);
                     timer2.Enabled = false;
                     button3.Text = "开始实验";
-                    LOS_PathTracking.track_time = 0;
+                    track_time = 0;
 
                 }
-            }
+            }*/
         }
 
         public void LOS_Control(double T)
@@ -1903,23 +1958,22 @@ namespace 地面站
             double rudder;
             double course;
             LOS.Result result;
-            if (radioButton3.Checked)//地面站仿真
+            if (radioButton_Simulation.Checked)//地面站仿真
             {
                 beta = 0.1;
-               
                 x = LOS_PathTracking.x;
                 y = LOS_PathTracking.y;
-                heading = LOS_PathTracking.psi;
+                heading = LOS_PathTracking.psi;//psi已在在los计算函数中计算出
                 course = heading + beta;
                 
-                if (radioButton8.Checked == true)
+                if (radioButton_formation.Checked == true)
                 {
                     u = 1.5;
                     LOS_PathTracking.UpdateData(x, y, heading, course, u);
                     heading_set = LOS_PathTracking.Calculate(T);
                     LOS_PathTracking.UpdateSimulationPosition(heading_set, beta, T);//调试LOS时，假定自动舵能让船始终跟上设定角
                 }
-                else if (radioButton1.Checked == true)
+                else if (radioButton_Trace.Checked == true)
                 {
                     result = LOS_PathTracking.Calculate_trajectory(T);
                     LOS_PathTracking.UpdateData(x, y, heading, course, result.vel);
@@ -1930,21 +1984,23 @@ namespace 地面站
                 Tchart6_Draw(horizLine12,x, y);
 
             }
-            else if (radioButton4.Checked)//实船
+            else if (radioButton_Real_USV.Checked)//实船
             {
                 heading = msg_usv_state.heading / 180 * Math.PI;//弧度
                 u = msg_usv_state.speed;
                 course = msg_usv_state.Track / 180 * Math.PI;//弧度
+
                 Tchart6_Draw(horizLine12,Usv_Position.X-X_Standard,Usv_Position.Y-Y_Standard);
                 LOS_PathTracking.UpdateData(Usv_Position.X- X_Standard, Usv_Position.Y-Y_Standard, heading, course, u);
-                if (radioButton8.Checked == true)
+                if (radioButton_Trace.Checked == true)
                 {
                     heading_set = LOS_PathTracking.Calculate(T) * 180 / Math.PI;//计算设定艏向角
                     msg_Usv_Set.Heading = (float)heading_set;
                     msg_Usv_Set.Speed = 2.5f;
                 }
-                else if (radioButton1.Checked==true)
+                else if (radioButton_Trajectory.Checked==true)
                 {
+                    
                     result = LOS_PathTracking.Calculate_trajectory(T);
                     result.psi_d=result.psi_d*180/Math.PI;
                     msg_Usv_Set.Heading = (float)result.psi_d;
@@ -1962,8 +2018,8 @@ namespace 地面站
         private void DrawExpectedTrack(HorizLine horizLine)
         {
             double x, y;
-            x = Eval.Calculate(LOS_PathTracking.track_time*0.2, "var x=" + textBox13.Text + ";");
-            y = Eval.Calculate(LOS_PathTracking.track_time*0.2, "var y=" + textBox12.Text + ";");
+            x = Eval.Calculate(track_time*0.2, "var x=" + textBox13.Text + ";");
+            y = Eval.Calculate(track_time*0.2, "var y=" + textBox12.Text + ";");
             horizLine.Add(x, y);
 
         }
@@ -1996,13 +2052,20 @@ namespace 地面站
             
             LOS_PathTracking.UpdateExpectedPath(textBox13.Text, textBox12.Text);
             LOS_PathTracking.UpadataParam(Convert.ToDouble(textBox1.Text),
-                                            Convert.ToDouble(textBox9.Text),
-                                            Convert.ToDouble(textBox8.Text),
-                                            Convert.ToDouble(textBox7.Text),
                                             Convert.ToDouble(textBox6.Text));
+            
+            
+            USVs_LOS[0].UpdateExpectedPath(textBox13.Text, textBox12.Text);
+            USVs_LOS[1].UpdateExpectedPath(textBox13.Text, textBox12.Text);
+            USVs_LOS[2].UpdateExpectedPath(textBox13.Text, textBox12.Text);
+
+            USVs_LOS[0].UpadataParam(Convert.ToDouble(textBox_USV1_kp.Text), Convert.ToDouble(textBox_USV1_delta.Text));
+            USVs_LOS[1].UpadataParam(Convert.ToDouble(textBox_USV2_kp.Text), Convert.ToDouble(textBox_USV2_delta.Text));
+            USVs_LOS[2].UpadataParam(Convert.ToDouble(textBox_USV3_kp.Text), Convert.ToDouble(textBox_USV3_delta.Text));
+
             horizLine11.Clear();
-            LOS_PathTracking.track_time = 0;
-            if (radioButton2.Checked)
+            track_time = 0;
+            if (radioButton_Trajectory.Checked)
             {
                 DrawExpectedPath(horizLine11);
             }
@@ -2018,9 +2081,6 @@ namespace 地面站
         private void LOS_UpdateParam(object sender, EventArgs e)//LOS参数更新
         {
             LOS_PathTracking.UpadataParam(Convert.ToDouble(textBox1.Text),
-                                            Convert.ToDouble(textBox9.Text),
-                                            Convert.ToDouble(textBox8.Text),
-                                            Convert.ToDouble(textBox7.Text),
                                             Convert.ToDouble(textBox6.Text));
         }
 

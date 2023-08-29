@@ -20,9 +20,11 @@ namespace 地面站
         double psi_F_last;//上一时刻期望路径切向角ψF
         double psi_F_deriv;//期望路径切向角ψF的导数
 
-       
+        double X_F_Last, Y_F_Last;
 
-        public int track_time;
+        private readonly Form1 form1;
+
+
         public struct Result
         {
             public double psi_d;
@@ -66,22 +68,17 @@ namespace 地面站
             //x_err_est_err = 0;
             //y_err_est_err = 0;
         }
-        public LOS(string x,string y, double kp_, double kx_, double ky_, double gamma_, double delta_)
+        public LOS(object sender, string x,string y, double kp_, double delta_)
         {
+            form1 = (Form1)sender;
             UpdateExpectedPath(x, y);
             LOS_Clear();
             kp = kp_;
-            kx = kx_;
-            ky = ky_;
-            gamma1 = gamma_;
             delta = delta_;
         }
-        public void UpadataParam(double kp_, double kx_, double ky_,double gamma_,double delta_)
+        public void UpadataParam(double kp_,double delta_)
         {
             kp = kp_;
-            kx = kx_;
-            ky = ky_;
-            gamma1 = gamma_;
             delta = delta_;
         }
         /// <summary>
@@ -165,7 +162,7 @@ namespace 地面站
             double U_d;
             double U_p;
             double t;
-            t = T * track_time;
+            t = T * form1.track_time;
 
             x_F = Eval.Calculate(t, x_F_expression);
             y_F = Eval.Calculate(t, y_F_expression);
@@ -190,7 +187,7 @@ namespace 地面站
 
 
         }
-
+        
         public Result Caculate_Follower(double T,double L,double Theta)
         {
             double h = 0.0001;
@@ -205,7 +202,9 @@ namespace 地面站
             double psi_F_deriv_W;
             double psi_L, psi_L_1;
             double theta;
-            t = T * track_time;
+           
+
+            t = T * form1.track_time;
 
             x_L = Eval.Calculate(t, x_F_expression);
             y_L = Eval.Calculate(t, y_F_expression);
@@ -214,10 +213,10 @@ namespace 地面站
             x_L_deriv_w = (x_L_1 - x_L) / h;//对参数w求导
             y_L_deriv_w = (y_L_1 - y_L) / h;//对参数w求导
             psi_L = Math.Atan2(y_L_deriv_w, x_L_deriv_w);
-
-
+            psi_F = psi_L;
+            //theta = Theta;
             theta = Theta * Math.PI / 180;//弧度
-            psi_L = psi_L * Math.PI / 180;//弧度
+            //psi_L = psi_L * Math.PI / 180;//弧度
 
             x_F = x_L + L * Math.Cos(theta + psi_L);
             y_F = y_L + L * Math.Sin(theta + psi_L);
@@ -233,8 +232,8 @@ namespace 地面站
             psi_L_1 = Math.Atan2(y_L_deriv_w, x_L_deriv_w);
 
 
-            theta = Theta * Math.PI / 180;//弧度
-            psi_L_1 = psi_L_1 * Math.PI / 180;//弧度
+           // theta = Theta * Math.PI / 180;//弧度
+            //psi_L_1 = psi_L_1 * Math.PI / 180;//弧度
 
             x_F_1 = x_L + L * Math.Cos(theta + psi_L_1);
             y_F_1 = y_L + L * Math.Sin(theta + psi_L_1);
@@ -253,7 +252,7 @@ namespace 地面站
             result.vel = U_p * Math.Cos(beta);
 
             psi_F_last = psi_F;
-
+            
             return result;
         }
         /// <summary>

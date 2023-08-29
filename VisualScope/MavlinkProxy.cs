@@ -60,18 +60,16 @@ namespace 地面站
                 form1.USV_ID_List.Add((byte)e.ComponentId);
                 form1.USVs[form1.USV_ID_List.Count - 1] = new USV(form1, (byte)e.ComponentId);
                 form1.USVs[form1.USV_ID_List.Count - 1].Init(form1.HorizLines[form1.USV_ID_List.Count + 10]);
+                form1.USVs[form1.USV_ID_List.Count - 1].Init(form1.USVs_State_Info[form1.USV_ID_List.Count-1]);
+                form1.USVs[form1.USV_ID_List.Count - 1].Init(form1.USVs_LOS[form1.USV_ID_List.Count -1]);
 
             }
             else 
             {
                 if (e.Message.ToString().Contains("Msg_usv_state"))
                 {
-                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state.latitude = ((Msg_usv_state)e.Message).latitude;
-                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state.longitude = ((Msg_usv_state)e.Message).longitude;
-                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state.speed = ((Msg_usv_state)e.Message).speed;
-                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state.heading = ((Msg_usv_state)e.Message).heading;
-                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state.Track = ((Msg_usv_state)e.Message).Track;
-
+                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state = ((Msg_usv_state)e.Message);
+                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].USV_Info_Display();
                 }
             }
 
