@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Steema.TeeChart.Styles.SeriesMarks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using static 地面站.Form1;
 using static 地面站.LOS;
@@ -61,6 +62,10 @@ namespace 地面站
             DEV_ID = DEV_ID_;
         }
 
+        public void Init(byte DEV_ID_)
+        {
+            DEV_ID = DEV_ID_;
+        }
         public void Init(HorizLine horizline_)
         {
             horizLine = horizline_;
@@ -110,7 +115,7 @@ namespace 地面站
         }
         private void Draw_Line()
         {
-            form1.Tchart6_Draw(horizLine, Position.X, Position.Y);
+            horizLine.Add(Position.X, Position.Y);
         }
 
         public void USV_Info_Display()
@@ -151,7 +156,7 @@ namespace 地面站
                 result = Los.Caculate_Follower(T, Convert.ToDouble(usv_state_info.L.Text), Convert.ToDouble(usv_state_info.angle.Text));
                 state.speed = (float)result.vel;
                 Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
-                form1.Tchart6_Draw(horizLine, Position.X, Position.Y);
+                Draw_Line();
 
             }
             else if(form1.radioButton_Real_USV.Checked)//实船
@@ -234,8 +239,8 @@ namespace 地面站
                     state.speed = Convert.ToSingle(form1.textBox_Speed_Set.Text);
                 }
 
-               
-                form1.Tchart6_Draw(horizLine, Position.X, Position.Y);
+
+                Draw_Line();
 
             }
             else if (form1.radioButton_Real_USV.Checked)//实船实验

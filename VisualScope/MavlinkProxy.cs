@@ -58,10 +58,7 @@ namespace 地面站
             if (!form1.USV_ID_List.Contains((byte)e.ComponentId)&(byte)e.ComponentId!=0)//已有的ID不包含新的USV_ID
             {
                 form1.USV_ID_List.Add((byte)e.ComponentId);
-                form1.USVs[form1.USV_ID_List.Count - 1] = new USV(form1, (byte)e.ComponentId);
-                form1.USVs[form1.USV_ID_List.Count - 1].Init(form1.HorizLines[form1.USV_ID_List.Count + 10]);
-                form1.USVs[form1.USV_ID_List.Count - 1].Init(form1.USVs_State_Info[form1.USV_ID_List.Count-1]);
-                form1.USVs[form1.USV_ID_List.Count - 1].Init(form1.USVs_LOS[form1.USV_ID_List.Count -1]);
+                form1.USVs[form1.USV_ID_List.Count - 1].Init((byte)e.ComponentId);
 
             }
             else 

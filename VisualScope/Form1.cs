@@ -425,12 +425,25 @@ namespace 地面站
             USVs_LOS[1] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox_USV2_kp.Text), Convert.ToDouble(textBox_USV2_delta.Text));
             USVs_LOS[2] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox_USV3_kp.Text), Convert.ToDouble(textBox_USV3_delta.Text));
 
+            USVs[0] = new USV(form1, 16);
+            USVs[0].Init(horizLine12);
+            USVs[0].Init(USVs_LOS[0]);
+            USVs[0].Init(USVs_State_Info[0]);
 
-            
+            USVs[1] = new USV(form1, 16);
+            USVs[1].Init(horizLine13);
+            USVs[1].Init(USVs_LOS[1]);
+            USVs[1].Init(USVs_State_Info[1]);
+
+            USVs[2] = new USV(form1, 16);
+            USVs[2].Init(horizLine14);
+            USVs[2].Init(USVs_LOS[2]);
+            USVs[2].Init(USVs_State_Info[2]);
+
 
 
             //*************更新参数事件初始化**********************//
-            
+
 
             textBox1.Leave += new EventHandler(LOS_UpdateParam);
             textBox9.Leave += new EventHandler(LOS_UpdateParam);
@@ -1450,6 +1463,8 @@ namespace 地面站
             dt = timer2.Interval * 0.001;
 
             // LOS_Control(dt);
+            textBox_X.Text = USVs[0].Position.X.ToString("0.00");
+            textBox_Y.Text = USVs[0].Position.Y.ToString("0.00");
             if (radioButton_Single_USV.Checked)//单船
             {
                 USVs[0].LOS_Control(dt);
@@ -1792,8 +1807,8 @@ namespace 地面站
                     try
                     {
                         USVs[0].UNLOCK();
-                        //USVs[1].UNLOCK();
-                        //USVs[2].UNLOCK();
+                        USVs[1].UNLOCK();
+                        USVs[2].UNLOCK();
                     }
                     catch
                     { 
@@ -1804,19 +1819,7 @@ namespace 地面站
 
                 if (radioButton_Single_USV.Checked)//单船
                 {
-                    if (radioButton_Simulation.Checked)//仿真
-                    {
-                        USVs[0] = new USV(form1, 0);
-                        USVs[0].Init(horizLine12);
-                        USVs[0].Init(USVs_LOS[0]);
-                        USVs[0].Init(USVs_State_Info[0]);
-                    }
-                    else if (radioButton_Real_USV.Checked)//实船
-                    {
-                        
-
-                    }
-                        if (radioButton_Trace.Checked)//路径
+                    if (radioButton_Trace.Checked)//路径
                     {
                         DrawExpectedPath(horizLine11);
                     }
@@ -1828,28 +1831,8 @@ namespace 地面站
                 else if (radioButton_formation.Checked)//编队
                 {
                     horizLine11.Clear();
-                    if (radioButton_Simulation.Checked)//编队仿真
-                    {
-                        USVs[0] = new USV(form1, 0);
-                        USVs[0].Init(horizLine12);
-                        USVs[0].Init(USVs_LOS[0]);
-                        USVs[0].Init(USVs_State_Info[0]);
-
-                        USVs[1] = new USV(form1, 1);
-                        USVs[1].Init(horizLine13);
-                        USVs[1].Init(USVs_LOS[1]);
-                        USVs[1].Init(USVs_State_Info[1]);
-
-                        USVs[2] = new USV(form1, 2);
-                        USVs[2].Init(horizLine14);
-                        USVs[2].Init(USVs_LOS[2]);
-                        USVs[2].Init(USVs_State_Info[2]);
-
-                    }
-                   
-                   
+                 
                 }
-
 
             }
             else if (button3.Text == "结束实验")
@@ -1872,9 +1855,9 @@ namespace 地面站
 
                     try
                     {
-                      //  USVs[0].LOCK();
-                       // USVs[1].LOCK();
-                        //USVs[2].LOCK();
+                        USVs[0].LOCK();
+                        USVs[1].LOCK();
+                        USVs[2].LOCK();
                     }
                     catch
                     {
