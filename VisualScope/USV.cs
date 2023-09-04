@@ -84,8 +84,8 @@ namespace 地面站
         {
             Msg_cmd.DEV_ID = DEV_ID;
             Msg_cmd.cmd_id = (byte)MavLink.CMD_TYPE.CMD_UNLOCK;
-            mavlinkPacket.Message = Msg_cmd;
-            form1.SendMavMsgToRocker(mavlinkPacket);
+            form1.mavlinkPacket.Message = Msg_cmd;
+            form1.SendMavMsgToRocker(form1.mavlinkPacket);
 
         }
 
@@ -93,8 +93,8 @@ namespace 地面站
         {
             Msg_cmd.DEV_ID = DEV_ID; 
             Msg_cmd.cmd_id = (byte)MavLink.CMD_TYPE.CMD_LOCK;
-            mavlinkPacket.Message = Msg_cmd;
-            form1.SendMavMsgToRocker(mavlinkPacket);
+            form1.mavlinkPacket.Message = Msg_cmd;
+            form1.SendMavMsgToRocker(form1.mavlinkPacket);
 
         }
 
@@ -102,11 +102,15 @@ namespace 地面站
 
         private void ll2XY()
         {
-            form1.MCT84Bl2xy(state.longitude, state.latitude, out Position.X, out Position.Y);
+            double X;
+            double Y;
+            form1.MCT84Bl2xy(state.longitude, state.latitude, out X, out Y);
+            Position.X = X - form1.X_Standard;
+            Position.Y = Y - form1.Y_Standard;
         }
         private void Draw_Line()
         {
-            form1.Tchart6_Draw(horizLine, Position.X - form1.X_Standard, Position.Y - form1.Y_Standard);
+            form1.Tchart6_Draw(horizLine, Position.X, Position.Y);
         }
 
         public void USV_Info_Display()
@@ -165,7 +169,15 @@ namespace 地面站
                 result.psi_d = result.psi_d * 180 / Math.PI;
                 set.Heading = (float)result.psi_d;
                 set.Speed = (float)result.vel;
+                if (set.Speed >= 5)
+                {
+                    set.Speed = 5;
+                }
 
+                if (set.Speed <= 0)
+                {
+                    set.Speed = 0;
+                }
                 set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
                 set.DEV_ID = DEV_ID;
 
@@ -240,14 +252,14 @@ namespace 地面站
 
                     Los.UpdateData(Position.X, Position.Y, heading, course, u);
                     result = Los.Calculate_trajectory(T);
-                    set.Heading = (float)result.psi_d;
+                    set.Heading = Convert.ToSingle( result.psi_d*180/Math.PI);
                     set.Speed = (float)result.vel;
 
                 }
                 else if (form1.radioButton_Trace.Checked)//路径
                 {
                     Los.UpdateData(Position.X, Position.Y, heading, course, Convert.ToSingle(form1.textBox_Speed_Set.Text));
-                    heading_set = Los.Calculate(T);
+                    heading_set =  Los.Calculate(T);
                     heading_set = heading_set * 180 / Math.PI;
                     set.Heading = (float)heading_set;
                     set.Speed = Convert.ToSingle(form1.textBox_Speed_Set.Text);
@@ -260,7 +272,15 @@ namespace 地面站
 
                 set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
                 set.DEV_ID = DEV_ID;
+                if (set.Speed >= 5)
+                {
+                    set.Speed = 5;
+                }
 
+                if (set.Speed <= 0)
+                {
+                    set.Speed = 0;
+                }
                 form1.mavlinkPacket.Message = set;
                 form1.SendMavMsgToRocker(form1.mavlinkPacket);
 

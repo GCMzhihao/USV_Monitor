@@ -1792,8 +1792,8 @@ namespace 地面站
                     try
                     {
                         USVs[0].UNLOCK();
-                        USVs[1].UNLOCK();
-                        USVs[2].UNLOCK();
+                        //USVs[1].UNLOCK();
+                        //USVs[2].UNLOCK();
                     }
                     catch
                     { 
@@ -2082,6 +2082,12 @@ namespace 地面站
         {
             LOS_PathTracking.UpadataParam(Convert.ToDouble(textBox1.Text),
                                             Convert.ToDouble(textBox6.Text));
+            USVs_LOS[0].UpadataParam(Convert.ToDouble(textBox_USV1_kp.Text), Convert.ToDouble(textBox_USV1_delta.Text));
+            USVs_LOS[1].UpadataParam(Convert.ToDouble(textBox_USV2_kp.Text), Convert.ToDouble(textBox_USV2_delta.Text));
+            USVs_LOS[2].UpadataParam(Convert.ToDouble(textBox_USV3_kp.Text), Convert.ToDouble(textBox_USV3_delta.Text));
+
+
+
         }
 
         private void datastart_Click(object sender, EventArgs e)

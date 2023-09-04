@@ -55,7 +55,7 @@ namespace 地面站
                 TChart1Display(WaveName, Convert.ToDouble(info.GetValue(e.Message).ToString()));
             }
 
-            if (!form1.USV_ID_List.Contains((byte)e.ComponentId))//已有的ID不包含新的USV_ID
+            if (!form1.USV_ID_List.Contains((byte)e.ComponentId)&(byte)e.ComponentId!=0)//已有的ID不包含新的USV_ID
             {
                 form1.USV_ID_List.Add((byte)e.ComponentId);
                 form1.USVs[form1.USV_ID_List.Count - 1] = new USV(form1, (byte)e.ComponentId);
@@ -68,8 +68,9 @@ namespace 地面站
             {
                 if (e.Message.ToString().Contains("Msg_usv_state"))
                 {
-                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].state = ((Msg_usv_state)e.Message);
-                    form1.USVs[form1.USV_ID_List.BinarySearch((byte)e.ComponentId)].USV_Info_Display();
+                    
+                    form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state = ((Msg_usv_state)e.Message);
+                    form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].USV_Info_Display();
                 }
             }
 
