@@ -20,18 +20,15 @@ using System.Collections;
 using System.Xml.Linq;
 using static 地面站.Form1;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
-
+using System.Linq.Expressions;
 
 namespace 地面站
 {
     class TCP
     {
-        double X_Standard0;
-        double Y_Standard0;
-        double X_Standard1;
-        double Y_Standard1;
-        double X_Standard2;
-        double Y_Standard2;
+        int?[] IDJ = new int?[3] { null, null, null };
+        double X_Standard;
+        double Y_Standard;
         public double latitude;
         public double longitude;
         public double speed;
@@ -63,17 +60,28 @@ namespace 地面站
             form1 = f1;
 
             mavlink_DTU.PacketReceived += Mavlink_DTU_PacketReceived;
-
+            try { 
             using (Socket skt = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
             {
                 skt.Connect("8.8.8.8", 65530);//远程主机的IP地址和端口号
                 IPEndPoint ipEnd = skt.LocalEndPoint as IPEndPoint;//加上下面两行程序 显示本地IP地址
                 ip = ipEnd.Address.ToString();
-               // MessageBox.Show(ipEnd.ToString());//窗口显示当前端口号
+                // MessageBox.Show(ipEnd.ToString());//窗口显示当前端口号
                 form1.ipadress.Invoke(new MethodInvoker(delegate ()
                 {
                     form1.ipadress.Text = ip;
                 }));
+            }
+        }
+        catch{
+                if (form1.connectstate.IsHandleCreated)
+                {
+                    form1.connectstate.Invoke(new MethodInvoker(delegate ()
+                {
+                    form1.connectstate.AppendText(System.DateTime.Now.ToString() + $" 服务端未打开" + "\r\n");
+                }));
+                }
+
             }
 
             port = 8899;//服务端口，理论自定义范围 1-65535，不可与以开放端口冲突   //本地端口号  开放端口是什么意思？
@@ -136,7 +144,7 @@ namespace 地面站
                         {
                             IsBackground = true,
                         };
-                        ReveiveThread.Start(ClientSocket);//其中ClienSocket为obj参数吗？
+                        ReveiveThread.Start(ClientSocket);
                     }
                     catch (Exception ex)
 
@@ -217,17 +225,20 @@ namespace 地面站
                 }
                 catch (Exception e)
                 {
+                    if (form1.connectstate.IsHandleCreated)
+                    {
                         form1.connectstate.Invoke(new MethodInvoker(delegate ()
                     {
                         form1.connectstate.AppendText($"{System.DateTime.Now.ToString()} 客户端{_ClientSocket.RemoteEndPoint}从服务器断开,断开原因：{e.Message.ToString()}  \r\n");
                     }));
-                    
-                    // 从客户端列表中移除该客户端
-                    this.ClientSockets.Remove(_ClientSocket);
-                    //断开连接
-                    _ClientSocket.Shutdown(SocketShutdown.Both);
-                    _ClientSocket.Close();
-                    break;
+
+                        // 从客户端列表中移除该客户端
+                        this.ClientSockets.Remove(_ClientSocket);
+                        //断开连接
+                        _ClientSocket.Shutdown(SocketShutdown.Both);
+                        _ClientSocket.Close();
+                        break;
+                    }//不清楚这里break是否有影响？0905
                 }
             }
 
@@ -281,7 +292,28 @@ namespace 地面站
             double x;
             double y;
 
-                int Dev_id =e.ComponentId;//获取设备ID与状态
+
+            if (IDJ[0] == null)
+            {
+                IDJ[0] = e.ComponentId;
+            }
+            else if (IDJ[0] != e.ComponentId && IDJ[1] == null)
+            {
+                IDJ[1] = e.ComponentId;
+
+            }
+            else if (IDJ[0] != e.ComponentId && IDJ[1] != e.ComponentId && IDJ[2] == null)
+            {
+                IDJ[2] = e.ComponentId;
+
+            }
+
+            string ID0 = IDJ[0].ToString();//设定当前界面监视的ID号 
+            string ID1 = IDJ[1].ToString();
+            string ID2 = IDJ[2].ToString();
+
+
+               int Dev_id =e.ComponentId;//获取设备ID与状态
                 string ID = Dev_id.ToString();
                 latitude = ((Msg_usv_state)e.Message).latitude;
                 longitude = ((Msg_usv_state)e.Message).longitude;
@@ -295,90 +327,73 @@ namespace 地面站
             //    form1.ID.Text = ID;
             //}));
 
-            if (Dev_id == 15)
+            if (IDJ[0] != null)
             {
-                form1.ID1.Invoke(new MethodInvoker(delegate ()//显示ID
+                if (IDJ[0] == Dev_id)
                 {
-                    form1.ID1.Text = ID;
-                }));
-                form1.x1.Invoke(new MethodInvoker(delegate ()
+                    form1.ID1.Invoke(new MethodInvoker(delegate ()//显示ID
                 {
-                    form1.x1.Text = latitude.ToString();
+                    form1.ID1.Text = ID0;
                 }));
-
-                form1.y1.Invoke(new MethodInvoker(delegate ()
-                {
-                    form1.y1.Text = longitude.ToString();
-                }));
-
-                form1.fastLine22.Add(speed);
-                form1.fastLine23.Add(heading);
-                form1.fastLine24.Add(voltage);
-                form1.fastLine31.Add(latitude);
-                form1.fastLine32.Add(longitude);
-                form1.MCT84Bl2xy(latitude, longitude, out USV_0.X, out USV_0.Y);
+                    form1.fastLine22.Add(speed);
+                    form1.fastLine23.Add(heading);
+                    form1.fastLine24.Add(voltage);
+                    form1.fastLine31.Add(latitude);
+                    form1.fastLine32.Add(longitude);
+                    form1.MCT84Bl2xy(latitude, longitude, out USV_0.X, out USV_0.Y);
+                }
             }
 
 
 
-            else if (Dev_id == 0)
+            if (IDJ[1] != null)
             {
-                form1.ID2.Invoke(new MethodInvoker(delegate ()//显示ID
+                if (IDJ[1] == Dev_id)
                 {
-                    form1.ID2.Text = ID;
-                }));
-                form1.x2.Invoke(new MethodInvoker(delegate ()
+                    form1.ID2.Invoke(new MethodInvoker(delegate ()//显示ID
                 {
-                    form1.x2.Text = latitude.ToString();
+                    form1.ID2.Text = ID1;
                 }));
-
-                form1.y2.Invoke(new MethodInvoker(delegate ()
-                {
-                    form1.y2.Text = longitude.ToString();
-                }));
-                form1.fastLine27.Add(speed);
-                form1.fastLine28.Add(heading);
-                form1.fastLine29.Add(voltage);
-                form1.fastLine33.Add(latitude);
-                form1.fastLine34.Add(longitude);
-                form1.MCT84Bl2xy(latitude, longitude, out USV_1.X, out USV_1.Y);
+                    form1.fastLine27.Add(speed);
+                    form1.fastLine28.Add(heading);
+                    form1.fastLine29.Add(voltage);
+                    form1.fastLine33.Add(latitude);
+                    form1.fastLine34.Add(longitude);
+                    form1.MCT84Bl2xy(latitude, longitude, out USV_1.X, out USV_1.Y);
+                }
             }
-            else if (Dev_id == 0)
+             if (IDJ[2] != null)
             {
-                form1.ID3.Invoke(new MethodInvoker(delegate ()//显示ID
+                if (IDJ[2] == Dev_id)
                 {
-                    form1.ID3.Text = ID;
-                }));
-                form1.x3.Invoke(new MethodInvoker(delegate ()
+                    form1.ID3.Invoke(new MethodInvoker(delegate ()//显示ID
                 {
-                    form1.x3.Text = latitude.ToString();
+                    form1.ID3.Text = ID2;
                 }));
-
-                form1.y3.Invoke(new MethodInvoker(delegate ()
-                {
-                    form1.y3.Text = longitude.ToString();
-                }));
-                form1.fastLine25.Add(speed);
-                form1.fastLine26.Add(heading);
-                form1.fastLine30.Add(voltage);
-                form1.fastLine35.Add(latitude);
-                form1.fastLine36.Add(longitude);
-                form1.MCT84Bl2xy(latitude, longitude, out USV_2.X, out USV_2.Y);
+                    form1.fastLine25.Add(speed);
+                    form1.fastLine26.Add(heading);
+                    form1.fastLine30.Add(voltage);
+                    form1.fastLine35.Add(latitude);
+                    form1.fastLine36.Add(longitude);
+                    form1.MCT84Bl2xy(latitude, longitude, out USV_2.X, out USV_2.Y);
+                }
             }
         }
+
+
         public void drawtrack()
         {
-            Draw(form1.horizLine21, USV_0.X - X_Standard0, USV_0.Y - Y_Standard0);
-            form1.x1.Text = (USV_0.X - X_Standard0).ToString("0.00");
-            form1.y1.Text = (USV_0.Y - Y_Standard0).ToString("0.00");
+            Draw(form1.horizLine21, USV_0.X - X_Standard, USV_0.Y - Y_Standard);
+            form1.x1.Text = (USV_0.X - X_Standard).ToString("0.00");
+            form1.y1.Text = (USV_0.Y - Y_Standard).ToString("0.00");
 
-            Draw(form1.horizLine22, USV_1.X - X_Standard1, USV_1.Y - Y_Standard1);
-            form1.x2.Text = (USV_1.X - X_Standard1).ToString("0.00");
-            form1.y2.Text = (USV_1.Y - Y_Standard1).ToString("0.00");
+            Draw(form1.horizLine22, USV_1.X - X_Standard, USV_1.Y - Y_Standard);
+            form1.x2.Text = (USV_1.X - X_Standard).ToString("0.00");
+            form1.y2.Text = (USV_1.Y - Y_Standard).ToString("0.00");
 
-            Draw(form1.horizLine23, USV_2.X - X_Standard2, USV_2.Y - Y_Standard2);
-            form1.x3.Text = (USV_2.X - X_Standard2).ToString("0.00");
-            form1.y3.Text = (USV_2.Y - Y_Standard2).ToString("0.00");
+            Draw(form1.horizLine23, USV_2.X - X_Standard, USV_2.Y - Y_Standard);
+            form1.x3.Text = (USV_2.X - X_Standard).ToString("0.00");
+            form1.y3.Text = (USV_2.Y - Y_Standard).ToString("0.00");
         }
 
         public void Draw(HorizLine horizLine, double X, double Y)
@@ -387,7 +402,11 @@ namespace 地面站
         }
         public void _Click()//坐标矫正
         {
-            
+            X_Standard += System.Convert.ToDouble(form1.x1.Text);
+            Y_Standard += System.Convert.ToDouble(form1.y1.Text);
+            form1.horizLine21.Clear();
+            form1.horizLine22.Clear();
+            form1.horizLine23.Clear();
         }
 
 

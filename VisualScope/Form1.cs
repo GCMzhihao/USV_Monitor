@@ -2157,7 +2157,7 @@ namespace 地面站
 
         private void button14_Click(object sender, EventArgs e)
         {
-           
+            tcpserver._Click();
         }
 
         private void timer4_Tick(object sender, EventArgs e)
