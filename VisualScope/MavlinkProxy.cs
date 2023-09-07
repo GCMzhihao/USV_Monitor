@@ -8,7 +8,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace 地面站
 {
-    class MavlinkProxy
+    public class MavlinkProxy
     {
         private readonly Form1 form1;
         public MavlinkProxy(object sender)
@@ -55,7 +55,7 @@ namespace 地面站
                 TChart1Display(WaveName, Convert.ToDouble(info.GetValue(e.Message).ToString()));
             }
 
-            if (!form1.USV_ID_List.Contains((byte)e.ComponentId)&(byte)e.ComponentId!=0)//已有的ID不包含新的USV_ID
+            if (!form1.USV_ID_List.Contains((byte)e.ComponentId)&& (SYS_TYPE)e.SystemId==SYS_TYPE.SYS_USV)//已有的ID不包含新的USV_ID
             {
                 form1.USV_ID_List.Add((byte)e.ComponentId);
                 form1.USVs[form1.USV_ID_List.Count - 1].Init((byte)e.ComponentId);
@@ -65,8 +65,17 @@ namespace 地面站
             {
                 if (e.Message.ToString().Contains("Msg_usv_state"))
                 {
-                    
                     form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state = ((Msg_usv_state)e.Message);
+                    while (form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state.heading > 180)
+                        form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state.heading -= 360;
+                    while (form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state.heading < -180)
+                        form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state.heading += 360;
+
+                    while (form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state.Track > 180)
+                        form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state.Track -= 360;
+                    while (form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state.Track < -180)
+                        form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state.Track += 360;
+
                     form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].USV_Info_Display();
                 }
             }
@@ -128,8 +137,15 @@ namespace 地面站
                 form1.msg_usv_state.longitude = ((Msg_usv_state)e.Message).longitude;
                 form1.msg_usv_state.speed = ((Msg_usv_state)e.Message).speed;
                 form1.msg_usv_state.heading = ((Msg_usv_state)e.Message).heading;
+                while (form1.msg_usv_state.heading > 180)
+                    form1.msg_usv_state.heading -= 360;
+                while (form1.msg_usv_state.heading < -180)
+                    form1.msg_usv_state.heading += 360;
                 form1.msg_usv_state.Track = ((Msg_usv_state)e.Message).Track;
-
+                while (form1.msg_usv_state.Track > 180)
+                    form1.msg_usv_state.Track -= 360;
+                while (form1.msg_usv_state.Track < -180)
+                    form1.msg_usv_state.Track += 360;
                 form1.MCT84Bl2xy(form1.msg_usv_state.longitude, form1.msg_usv_state.latitude, out form1.Usv_Position.X, out form1.Usv_Position.Y);
                 //form1.Tchart6_Draw(form1.HorizLines[11], form1.Usv_Position.X-form1.X_Standard, form1.Usv_Position.Y-form1.Y_Standard);
             }

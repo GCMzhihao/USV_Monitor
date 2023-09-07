@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace 地面站
 {
-    class Norbbin//输入舵角，通过norbbin模型输出艏向角
+    public class Norbbin//输入舵角，通过norbbin模型输出艏向角
     {
         double psi_deriv;
         double r;

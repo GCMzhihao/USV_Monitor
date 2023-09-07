@@ -52,7 +52,7 @@ namespace 地面站
         HorizLine horizLine;
         public MavlinkPacket mavlinkPacket;
         LOS.Result result;
-
+        public Norbbin norbbin = new Norbbin(0, 0);
 
         USV_State_Info usv_state_info;
 
@@ -100,10 +100,19 @@ namespace 地面站
             Msg_cmd.cmd_id = (byte)MavLink.CMD_TYPE.CMD_LOCK;
             form1.mavlinkPacket.Message = Msg_cmd;
             form1.SendMavMsgToRocker(form1.mavlinkPacket);
+            Auto_sail();
+
+        }
+        public void Auto_sail()
+        {
+            Msg_cmd.DEV_ID = DEV_ID;
+            Msg_cmd.cmd_id = (byte)MavLink.CMD_TYPE.CMD_AUTO_DRIVE;
+            form1.mavlinkPacket.Message = Msg_cmd;
+            form1.SendMavMsgToRocker(form1.mavlinkPacket);
 
         }
 
-        
+
 
         private void ll2XY()
         {
@@ -188,7 +197,8 @@ namespace 地面站
 
                 form1.mavlinkPacket.Message = set;
                 form1.SendMavMsgToRocker(form1.mavlinkPacket);
-
+                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.speed", set.Speed);//添加到波形显示
+                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.heading", set.Heading);//添加到波形显示
             }
 
         }
@@ -212,30 +222,50 @@ namespace 地面站
             
             if (form1.radioButton_Simulation.Checked)//仿真
             {
-                
-                Position.X = Los.x;
-                Position.Y = Los.y;
+
+                Position.X = norbbin.state.x;
+                Position.Y = norbbin.state.y;
 
                 beta = 0.1;
-                heading = Los.psi;
+                heading = norbbin.state.psi;
+                while (heading > Math.PI)
+                    heading -= 2 * Math.PI;
+                while (heading < -Math.PI)
+                    heading += 2 * Math.PI;
                 course = heading + beta;
-
+                double delta_r;
                 if (form1.radioButton_Trajectory.Checked)//轨迹
                 {
 
                     u = result.vel;
                     Los.UpdateData(Position.X, Position.Y, heading, course, u);
                     result = Los.Calculate_trajectory(T);
-                  
-                    Los.UpdateData(Position.X, Position.Y, heading, course, result.vel);
-                    Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
+                    double err = (result.psi_d - norbbin.state.psi);
+                    while (err > Math.PI)
+                        err -= 2 * Math.PI;
+                    while (err < -Math.PI)
+                        err += 2 * Math.PI;
+                    delta_r = 30 * err;
+                    norbbin.UpdateData(delta_r, beta, u);
+                    norbbin.Calculate(T);
+                    //Los.UpdateData(Position.X, Position.Y, heading, course, result.vel);
+                    //Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
+
                     state.speed = (float)result.vel;
                 }
                 else if (form1.radioButton_Trace.Checked)//路径
                 {
                     Los.UpdateData(Position.X, Position.Y, heading, course, Convert.ToSingle(form1.textBox_Speed_Set.Text));
                     heading_set = Los.Calculate(T);
-                    Los.UpdateSimulationPosition(heading_set, beta, T);
+                    double err = (heading_set-norbbin.state.psi);
+                    while(err>Math.PI)
+                        err -= 2 * Math.PI;
+                    while (err <- Math.PI)
+                        err += 2 * Math.PI;
+                    delta_r = 80 * err;
+                    norbbin.UpdateData(delta_r, beta, Convert.ToSingle(form1.textBox_Speed_Set.Text));
+                    norbbin.Calculate(T);
+                    // Los.UpdateSimulationPosition(heading_set, beta, T);
                     state.speed = Convert.ToSingle(form1.textBox_Speed_Set.Text);
                 }
 
@@ -258,6 +288,10 @@ namespace 地面站
                     Los.UpdateData(Position.X, Position.Y, heading, course, u);
                     result = Los.Calculate_trajectory(T);
                     set.Heading = Convert.ToSingle( result.psi_d*180/Math.PI);
+                    while (set.Heading > 180)
+                        set.Heading -= 360;
+                    while (set.Heading < -180)
+                        set.Heading += 360;
                     set.Speed = (float)result.vel;
 
                 }
@@ -273,21 +307,15 @@ namespace 地面站
 
 
                 Draw_Line();
-                Los.UpdateData(Position.X - form1.X_Standard, Position.Y - form1.Y_Standard, heading, course, u);
+                //Los.UpdateData(Position.X - form1.X_Standard, Position.Y - form1.Y_Standard, heading, course, u);
 
                 set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
                 set.DEV_ID = DEV_ID;
-                if (set.Speed >= 5)
-                {
-                    set.Speed = 5;
-                }
 
-                if (set.Speed <= 0)
-                {
-                    set.Speed = 0;
-                }
                 form1.mavlinkPacket.Message = set;
                 form1.SendMavMsgToRocker(form1.mavlinkPacket);
+                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.speed", set.Speed);//添加到波形显示
+                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.heading", set.Heading);//添加到波形显示
 
             }
 

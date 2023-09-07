@@ -24,7 +24,7 @@ namespace 地面站
         int TxCount = 0;
         int RxCount = 0;
         private Mavlink mavlink;
-        private MavlinkProxy mavlinkProxy;
+        public MavlinkProxy mavlinkProxy;
         public string CB_MsgSelText;
         public MavlinkPacket mavlinkPacket ;
         private Msg_param_write msg_Param_Write ;
@@ -37,8 +37,8 @@ namespace 地面站
         public double LongitudeStart;
         public double LatitudeStart;
 
-        public double X_Standard;
-        public double Y_Standard;
+        public double X_Standard= 4052589.2780501638;
+        public double Y_Standard= 11726384.463664232;
         public int track_time;
 
 
@@ -1479,7 +1479,7 @@ namespace 地面站
             if (radioButton_Trajectory.Checked|radioButton_formation.Checked)
             {
                 track_time++;
-                DrawExpectedTrack(horizLine11);
+                DrawExpectedTrack(horizLine11,dt);
             }
 
 
@@ -1780,9 +1780,9 @@ namespace 地面站
                 textBox12.Enabled = false;
                 textBox13.Enabled = false;
 
-                groupBox16.Enabled=false;
-                groupBox17.Enabled=false;
-                groupBox19.Enabled=false;
+                groupBox16.Enabled = false;
+                groupBox17.Enabled = false;
+                groupBox19.Enabled = false;
 
 
                 horizLine12.Clear();
@@ -1792,6 +1792,9 @@ namespace 地面站
                 USVs_LOS[0].LOS_Clear();
                 USVs_LOS[1].LOS_Clear();
                 USVs_LOS[2].LOS_Clear();
+                USVs[0].norbbin.Clear(0, 0);
+                USVs[1].norbbin.Clear(0, 0);
+                USVs[2].norbbin.Clear(0, 0);
                 timer2.Enabled = true;
 
 
@@ -1929,80 +1932,11 @@ namespace 地面站
                 }
             }*/
         }
-
-        public void LOS_Control(double T)
-        {
-            double heading_set;//设定艏向角
-            double rudder_set;//设定舵角
-            double beta;//漂角
-            double u;//船速
-            double x, y;
-            double heading;
-            double rudder;
-            double course;
-            LOS.Result result;
-            if (radioButton_Simulation.Checked)//地面站仿真
-            {
-                beta = 0.1;
-                x = LOS_PathTracking.x;
-                y = LOS_PathTracking.y;
-                heading = LOS_PathTracking.psi;//psi已在在los计算函数中计算出
-                course = heading + beta;
-                
-                if (radioButton_formation.Checked == true)
-                {
-                    u = 1.5;
-                    LOS_PathTracking.UpdateData(x, y, heading, course, u);
-                    heading_set = LOS_PathTracking.Calculate(T);
-                    LOS_PathTracking.UpdateSimulationPosition(heading_set, beta, T);//调试LOS时，假定自动舵能让船始终跟上设定角
-                }
-                else if (radioButton_Trace.Checked == true)
-                {
-                    result = LOS_PathTracking.Calculate_trajectory(T);
-                    LOS_PathTracking.UpdateData(x, y, heading, course, result.vel);
-                    LOS_PathTracking.UpdateSimulationPosition(result.psi_d, beta, T);
-                    
-                }
-                
-                Tchart6_Draw(horizLine12,x, y);
-
-            }
-            else if (radioButton_Real_USV.Checked)//实船
-            {
-                heading = msg_usv_state.heading / 180 * Math.PI;//弧度
-                u = msg_usv_state.speed;
-                course = msg_usv_state.Track / 180 * Math.PI;//弧度
-
-                Tchart6_Draw(horizLine12,Usv_Position.X-X_Standard,Usv_Position.Y-Y_Standard);
-                LOS_PathTracking.UpdateData(Usv_Position.X- X_Standard, Usv_Position.Y-Y_Standard, heading, course, u);
-                if (radioButton_Trace.Checked == true)
-                {
-                    heading_set = LOS_PathTracking.Calculate(T) * 180 / Math.PI;//计算设定艏向角
-                    msg_Usv_Set.Heading = (float)heading_set;
-                    msg_Usv_Set.Speed = 2.5f;
-                }
-                else if (radioButton_Trajectory.Checked==true)
-                {
-                    
-                    result = LOS_PathTracking.Calculate_trajectory(T);
-                    result.psi_d=result.psi_d*180/Math.PI;
-                    msg_Usv_Set.Heading = (float)result.psi_d;
-                    msg_Usv_Set.Speed = (float)result.vel; 
-
-                }
-                
-                msg_Usv_Set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
-                msg_Usv_Set.DEV_ID = 15;
-                mavlinkPacket.Message = msg_Usv_Set;
-                SendMavMsgToRocker(mavlinkPacket);
-            }
-
-        }
-        private void DrawExpectedTrack(HorizLine horizLine)
+        private void DrawExpectedTrack(HorizLine horizLine,double T)
         {
             double x, y;
-            x = Eval.Calculate(track_time*0.2, "var x=" + textBox13.Text + ";");
-            y = Eval.Calculate(track_time*0.2, "var y=" + textBox12.Text + ";");
+            x = Eval.Calculate(track_time*T, "var x=" + textBox13.Text + ";");
+            y = Eval.Calculate(track_time*T, "var y=" + textBox12.Text + ";");
             horizLine.Add(x, y);
 
         }
@@ -2052,8 +1986,6 @@ namespace 地面站
             {
                 DrawExpectedPath(horizLine11);
             }
-
-
         }
 
         private void button2_Click(object sender, EventArgs e)

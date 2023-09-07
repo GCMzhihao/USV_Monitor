@@ -5,6 +5,8 @@ using Steema.TeeChart.Themes;
 using System;
 using System.Web.UI.WebControls;
 using System.Windows;
+using static 地面站.LOS;
+
 namespace 地面站
 {
     public class LOS//船的初始位置必须为期望路径中的点。如果不是期望路径中的点，需要给x,y,Ze等需要积分算出的变量赋初值
@@ -141,12 +143,12 @@ namespace 地面站
             x_sig = Math.Pow(Math.Abs(x_err), 1.2) * Math.Sign(x_err)+Math.Pow(Math.Abs(x_err), 0.8) * Math.Sign(x_err);
             y_sig = Math.Pow(Math.Abs(y_err), 1.2) * Math.Sign(y_err)+Math.Pow(Math.Abs(y_err),0.8) * Math.Sign(y_err);
             //los
-            //psi_d = psi_F + Math.Atan(-y_err / delta - beta);
-            //w_deriv = (U * Math.Cos(psi - psi_F) - U * Math.Sin(psi - psi_F) * beta + kp * x_err) / (Math.Sqrt(x_F_deriv_w * x_F_deriv_w + y_F_deriv_w * y_F_deriv_w));
+            psi_d = psi_F + Math.Atan(-y_err / delta - beta);
+            w_deriv = (U * Math.Cos(psi - psi_F) - U * Math.Sin(psi - psi_F) * beta + kp * x_err) / (Math.Sqrt(x_F_deriv_w * x_F_deriv_w + y_F_deriv_w * y_F_deriv_w));
 
             //固定时间los
-            psi_d = psi_F + Math.Atan(-y_sig / delta - beta);
-            w_deriv = (U * Math.Cos(psi - psi_F) - U * Math.Sin(psi - psi_F) * beta + kp * x_sig) / (Math.Sqrt(x_F_deriv_w * x_F_deriv_w + y_F_deriv_w * y_F_deriv_w));
+            //psi_d = psi_F + Math.Atan(-y_sig / delta - beta);
+            //w_deriv = (U * Math.Cos(psi - psi_F) - U * Math.Sin(psi - psi_F) * beta + kp * x_sig) / (Math.Sqrt(x_F_deriv_w * x_F_deriv_w + y_F_deriv_w * y_F_deriv_w));
 
             w += w_deriv * T;//更新路径参数
             psi_F_last = psi_F;
@@ -179,7 +181,10 @@ namespace 地面站
             U_d = Math.Sqrt(x_F_deriv_w*x_F_deriv_w+y_F_deriv_w*y_F_deriv_w);
             U_p = ((U_d-kp*x_err)*Math.Sqrt(y_err*y_err+delta*delta)) / delta;
             result.vel = U_p*Math.Cos(beta);
-
+            if (result.vel > U_d * 1.5)//限制输出速度，防止初始误差过大，设定值太大
+                result.vel = U_d * 1.5;
+            else if (result.vel < 0)
+                result.vel = 0;
             psi_F_last = psi_F;
 
             return result;
