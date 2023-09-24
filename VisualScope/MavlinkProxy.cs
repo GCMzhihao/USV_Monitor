@@ -39,10 +39,6 @@ namespace 地面站
                 form1.FastLines[num].Add(data);
             }
         }
-        public void TChart6Display(string text, double x, double y)
-        { 
-        
-        }
 
         public void Mavlink_PacketReceived(object sender, MavLink.MavlinkPacket e)
         {
@@ -57,8 +53,15 @@ namespace 地面站
 
             if (!form1.USV_ID_List.Contains((byte)e.ComponentId)&& (SYS_TYPE)e.SystemId==SYS_TYPE.SYS_USV)//已有的ID不包含新的USV_ID
             {
+                int i = 0;
                 form1.USV_ID_List.Add((byte)e.ComponentId);
-                form1.USVs[form1.USV_ID_List.Count - 1].Init((byte)e.ComponentId);
+                form1.USV_ID_List.Sort();
+                form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].Init((byte)e.ComponentId);
+                foreach (var item in form1.USV_ID_List)
+                {   
+                    form1.USVs[i++].Init(item);
+                
+                }
 
             }
             else 
@@ -78,6 +81,14 @@ namespace 地面站
 
                     form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].USV_Info_Display();
                 }
+
+
+                if (e.Message.ToString().Contains("Msg_param_read_ack"))
+                {
+                    form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].usv_PID_info.USV_PID_Value_Recive((MavLink.Msg_param_read_ack)e.Message);
+                    form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].usv_PID_info.USV_PID_Info_Display();
+                }
+
             }
 
             if (e.Message.ToString().Contains("Msg_param_read_ack"))
@@ -96,6 +107,9 @@ namespace 地面站
                 form1.dataGridView1.Rows[index].Cells[0].Value = ((MavLink.Msg_param_read_ack)e.Message).param_id.ToString();
                 form1.dataGridView1.Rows[index].Cells[1].Value = (PARAM_TYPE)(((MavLink.Msg_param_read_ack)e.Message).param_id);
                 form1.dataGridView1.Rows[index].Cells[2].Value = ((MavLink.Msg_param_read_ack)e.Message).value;
+
+
+
             }
             else if (e.Message.ToString().Contains("Msg_param_write_ack"))
             {

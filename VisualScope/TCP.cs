@@ -74,53 +74,54 @@ namespace 地面站
             }
         }
         catch{
-                if (form1.connectstate.IsHandleCreated)
-                {
+                
                     form1.connectstate.Invoke(new MethodInvoker(delegate ()
                 {
                     form1.connectstate.AppendText(System.DateTime.Now.ToString() + $" 服务端未打开" + "\r\n");
                 }));
-                }
+           
 
             }
-
-            port = 8899;//服务端口，理论自定义范围 1-65535，不可与以开放端口冲突   //本地端口号  开放端口是什么意思？
-            maxClientCount = 256; //设定最大连接数
-            ClientSockets = new List<Socket>();
-            IPAddress iPAddress = IPAddress.Parse(ip);//本地地址？
-            ipEndPoint = new IPEndPoint(iPAddress, port);      //初始化IP终端 放入本地IP和端口号
-            ServerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);     //初始化服务端Socket，新建一个socket
-            ServerSocket.Bind(ipEndPoint);      //端口绑定
-            ServerSocket.Listen(maxClientCount);     //设置监听数目的最大值
-            form1.portnumber.Invoke(new MethodInvoker(delegate ()
+            if (ip != null)
             {
-                form1.portnumber.Text = port.ToString();
+                port = 8899;//服务端口，理论自定义范围 1-65535，不可与以开放端口冲突   //本地端口号  开放端口是什么意思？
+                maxClientCount = 256; //设定最大连接数
+                ClientSockets = new List<Socket>();
+                IPAddress iPAddress = IPAddress.Parse(ip);//本地地址？
+                ipEndPoint = new IPEndPoint(iPAddress, port);      //初始化IP终端 放入本地IP和端口号
+                ServerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);     //初始化服务端Socket，新建一个socket
+                ServerSocket.Bind(ipEndPoint);      //端口绑定
+                ServerSocket.Listen(maxClientCount);     //设置监听数目的最大值
+                form1.portnumber.Invoke(new MethodInvoker(delegate ()
+                {
+                    form1.portnumber.Text = port.ToString();
 
-            }));
-            Thread ServerThread = new Thread(() =>
-            {
-                ListenClientConnect();         //开启监听，后台线程，非阻塞
-            })
-            {
-                IsBackground = true,
-            };
+                }));
+                Thread ServerThread = new Thread(() =>
+                {
+                    ListenClientConnect();         //开启监听，后台线程，非阻塞
+                })
+                {
+                    IsBackground = true,
+                };
 
-            ServerThread.Start();//服务端线程开启
+                ServerThread.Start();//服务端线程开启
 
-            form1.connectstate.Invoke(new MethodInvoker(delegate ()
-            {
-                //form1.richTextBox1.AppendText($"{DateTime.Now} 服务端已开启:{ipEndPoint}\r\n", System.Drawing.Color.Lime, font);
-                form1.connectstate.AppendText(System.DateTime.Now.ToString() + $" 服务端已打开：" + ipEndPoint + "\r\n");
-            }));
+                form1.connectstate.Invoke(new MethodInvoker(delegate ()
+                {
+                    //form1.richTextBox1.AppendText($"{DateTime.Now} 服务端已开启:{ipEndPoint}\r\n", System.Drawing.Color.Lime, font);
+                    form1.connectstate.AppendText(System.DateTime.Now.ToString() + $" 服务端已打开：" + ipEndPoint + "\r\n");
+                }));
 
 
-            aTimer = new System.Timers.Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(TimerEvent);  //到达时间的时候执行事件；
-                                                                    // 设置引发时间的时间间隔　此处设置为１秒（１０００毫秒）
-            aTimer.Interval = 1000;
-            aTimer.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
-            aTimer.Enabled = true; //是否执行System.Timers.Timer.Elapsed事件；
-            aTimer.Start();
+                aTimer = new System.Timers.Timer();
+                aTimer.Elapsed += new ElapsedEventHandler(TimerEvent);  //到达时间的时候执行事件；
+                                                                        // 设置引发时间的时间间隔　此处设置为１秒（１０００毫秒）
+                aTimer.Interval = 1000;
+                aTimer.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
+                aTimer.Enabled = true; //是否执行System.Timers.Timer.Elapsed事件；
+                aTimer.Start();
+            }
         }
 
         private void ListenClientConnect()

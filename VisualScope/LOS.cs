@@ -254,10 +254,17 @@ namespace 地面站
             result.psi_d = psi_F + Math.Atan(-y_err / delta) - beta;
             U_d = Math.Sqrt(x_F_deriv_w * x_F_deriv_w + y_F_deriv_w * y_F_deriv_w);
             U_p = ((U_d - kp * x_err) * Math.Sqrt(y_err * y_err + delta * delta)) / delta;
+
+            if (U_p <= 0)
+                U_p = U_d;
+
             result.vel = U_p * Math.Cos(beta);
 
             psi_F_last = psi_F;
-            
+            if (result.vel > U_d * 1.5)//限制输出速度，防止初始误差过大，设定值太大
+                result.vel = U_d * 1.5;
+            else if (result.vel < 0)
+                result.vel = 0;
             return result;
         }
         /// <summary>

@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using MavLink;
 using Steema.TeeChart.Styles;
 
@@ -44,9 +45,6 @@ namespace 地面站
 
         private StreamWriter usv_sw;
 
-
-
-        LOS LOS_PathTracking;
         Norbbin norbbin;
         Form form1;
         public class USV_Position
@@ -84,6 +82,7 @@ namespace 地面站
         public Mavlink[] USVs_Mavlink=new Mavlink[USV_NUM];
         public List<byte> USV_ID_List = new List<byte>();
         public USV_State_Info[] USVs_State_Info = new USV_State_Info[USV_NUM];
+        public USV_PID_Info[] USVs_PID_Info = new USV_PID_Info[USV_NUM];
 
 
 
@@ -105,7 +104,7 @@ namespace 地面站
         {
             InitializeComponent();
         }
-        private void Delay_ms(long ms)//非阻塞延时
+        public void Delay_ms(long ms)//非阻塞延时
         {
             long t;
             t = ms * 10000;
@@ -417,9 +416,13 @@ namespace 地面站
 
 
             /******USV相关控件初始化*******/
-            USVs_State_Info[0] = new USV_State_Info(label_USV1_ID, label_USV1_VEL, label_USV1_VOL, label_USV1_X, label_USV1_Y, textBox_USV1_L, textBox_USV1_angle, textBox_USV1_kp, textBox_USV1_delta);
-            USVs_State_Info[1] = new USV_State_Info(label_USV2_ID, label_USV2_VEL, label_USV2_VOL, label_USV2_X, label_USV2_Y, textBox_USV2_L, textBox_USV2_angle, textBox_USV2_kp, textBox_USV2_delta);
-            USVs_State_Info[2] = new USV_State_Info(label_USV3_ID, label_USV3_VEL, label_USV3_VOL, label_USV3_X, label_USV3_Y, textBox_USV3_L, textBox_USV3_angle, textBox_USV3_kp, textBox_USV3_delta);
+            USVs_State_Info[0] = new USV_State_Info(label_USV1_ID, label_USV1_VEL, label_USV1_VOL, label_USV1_X, label_USV1_Y, label_USV1_HEADING, label_USV1_LOS_VEL, label_USV1_LOS_HEA, textBox_USV1_L, textBox_USV1_angle, textBox_USV1_kp, textBox_USV1_delta);
+            USVs_State_Info[1] = new USV_State_Info(label_USV2_ID, label_USV2_VEL, label_USV2_VOL, label_USV2_X, label_USV2_Y, label_USV2_HEADING, label_USV2_LOS_VEL, label_USV2_LOS_HEA, textBox_USV2_L, textBox_USV2_angle, textBox_USV2_kp, textBox_USV2_delta);
+            USVs_State_Info[2] = new USV_State_Info(label_USV3_ID, label_USV3_VEL, label_USV3_VOL, label_USV3_X, label_USV3_Y, label_USV3_HEADING, label_USV3_LOS_VEL, label_USV3_LOS_HEA, textBox_USV3_L, textBox_USV3_angle, textBox_USV3_kp, textBox_USV3_delta);
+
+            USVs_PID_Info[0] = new USV_PID_Info(textBox_USV1_VEL_Kp, textBox_USV1_VEL_Ki, textBox_USV1_VEL_Kd, textBox_USV1_HEA_Kp, textBox_USV1_HEA_Ki, textBox_USV1_HEA_Kd);
+            USVs_PID_Info[1] = new USV_PID_Info(textBox_USV2_VEL_Kp, textBox_USV2_VEL_Ki, textBox_USV2_VEL_Kd, textBox_USV2_HEA_Kp, textBox_USV2_HEA_Ki, textBox_USV2_HEA_Kd);
+            USVs_PID_Info[2] = new USV_PID_Info(textBox_USV3_VEL_Kp, textBox_USV3_VEL_Ki, textBox_USV3_VEL_Kd, textBox_USV3_HEA_Kp, textBox_USV3_HEA_Ki, textBox_USV3_HEA_Kd);
 
             USVs_LOS[0] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox_USV1_kp.Text), Convert.ToDouble(textBox_USV1_delta.Text));
             USVs_LOS[1] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox_USV2_kp.Text), Convert.ToDouble(textBox_USV2_delta.Text));
@@ -429,27 +432,27 @@ namespace 地面站
             USVs[0].Init(horizLine12);
             USVs[0].Init(USVs_LOS[0]);
             USVs[0].Init(USVs_State_Info[0]);
+            USVs[0].Init(USVs_PID_Info[0]);
 
             USVs[1] = new USV(form1, 16);
             USVs[1].Init(horizLine13);
             USVs[1].Init(USVs_LOS[1]);
             USVs[1].Init(USVs_State_Info[1]);
+            USVs[1].Init(USVs_PID_Info[1]);
 
             USVs[2] = new USV(form1, 16);
             USVs[2].Init(horizLine14);
             USVs[2].Init(USVs_LOS[2]);
             USVs[2].Init(USVs_State_Info[2]);
+            USVs[2].Init(USVs_PID_Info[2]);
+
 
 
 
             //*************更新参数事件初始化**********************//
 
 
-            textBox1.Leave += new EventHandler(LOS_UpdateParam);
-            textBox9.Leave += new EventHandler(LOS_UpdateParam);
-            textBox8.Leave += new EventHandler(LOS_UpdateParam);
-            textBox7.Leave += new EventHandler(LOS_UpdateParam);
-            textBox6.Leave += new EventHandler(LOS_UpdateParam);
+
 
             textBox12.Leave += new EventHandler(UpdateExpectedPath);
             textBox13.Leave += new EventHandler(UpdateExpectedPath);
@@ -461,31 +464,52 @@ namespace 地面站
             USVs_State_Info[0].kp.Leave += new EventHandler(LOS_UpdateParam);
             USVs_State_Info[0].angle.Leave += new EventHandler(LOS_UpdateParam);
             USVs_State_Info[0].delta.Leave += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[0].L.Enter += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[0].kp.Enter += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[0].angle.Enter += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[0].delta.Enter += new EventHandler(LOS_UpdateParam);
+
 
             USVs_State_Info[1].L.Leave += new EventHandler(LOS_UpdateParam);
             USVs_State_Info[1].kp.Leave += new EventHandler(LOS_UpdateParam);
             USVs_State_Info[1].angle.Leave += new EventHandler(LOS_UpdateParam);
             USVs_State_Info[1].delta.Leave += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[1].L.Enter += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[1].kp.Enter += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[1].angle.Enter += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[1].delta.Enter += new EventHandler(LOS_UpdateParam);
+
 
             USVs_State_Info[2].L.Leave += new EventHandler(LOS_UpdateParam);
             USVs_State_Info[2].kp.Leave += new EventHandler(LOS_UpdateParam);
             USVs_State_Info[2].angle.Leave += new EventHandler(LOS_UpdateParam);
             USVs_State_Info[2].delta.Leave += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[2].L.Enter += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[2].kp.Enter += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[2].angle.Enter += new EventHandler(LOS_UpdateParam);
-            USVs_State_Info[2].delta.Enter += new EventHandler(LOS_UpdateParam);
 
+            groupBox_USV1_PID.DoubleClick += new EventHandler(USVs[0].Read_Param);
+            groupBox_USV2_PID.DoubleClick += new EventHandler(USVs[1].Read_Param);
+            groupBox_USV3_PID.DoubleClick += new EventHandler(USVs[2].Read_Param);
 
+            USVs_PID_Info[0].VEL_Kp.Leave += new EventHandler(USVs[0].PID_Updata);
+            USVs_PID_Info[0].VEL_Ki.Leave += new EventHandler(USVs[0].PID_Updata);
+            USVs_PID_Info[0].VEL_Kd.Leave += new EventHandler(USVs[0].PID_Updata);
+            USVs_PID_Info[0].HEA_Kp.Leave += new EventHandler(USVs[0].PID_Updata);
+            USVs_PID_Info[0].HEA_Ki.Leave += new EventHandler(USVs[0].PID_Updata);
+            USVs_PID_Info[0].HEA_Kd.Leave += new EventHandler(USVs[0].PID_Updata);
 
+            USVs_PID_Info[1].VEL_Kp.Leave += new EventHandler(USVs[1].PID_Updata);
+            USVs_PID_Info[1].VEL_Ki.Leave += new EventHandler(USVs[1].PID_Updata);
+            USVs_PID_Info[1].VEL_Kd.Leave += new EventHandler(USVs[1].PID_Updata);
+            USVs_PID_Info[1].HEA_Kp.Leave += new EventHandler(USVs[1].PID_Updata);
+            USVs_PID_Info[1].HEA_Ki.Leave += new EventHandler(USVs[1].PID_Updata);
+            USVs_PID_Info[1].HEA_Kd.Leave += new EventHandler(USVs[1].PID_Updata);
+
+            USVs_PID_Info[2].VEL_Kp.Leave += new EventHandler(USVs[2].PID_Updata);
+            USVs_PID_Info[2].VEL_Ki.Leave += new EventHandler(USVs[2].PID_Updata);
+            USVs_PID_Info[2].VEL_Kd.Leave += new EventHandler(USVs[2].PID_Updata);
+            USVs_PID_Info[2].HEA_Kp.Leave += new EventHandler(USVs[2].PID_Updata);
+            USVs_PID_Info[2].HEA_Ki.Leave += new EventHandler(USVs[2].PID_Updata);
+            USVs_PID_Info[2].HEA_Kd.Leave += new EventHandler(USVs[2].PID_Updata);
+
+            button_USV1_LOCK.Click += new EventHandler(USVs[0].LOCK_EVENT);
+            button_USV2_LOCK.Click += new EventHandler(USVs[1].LOCK_EVENT);
+            button_USV3_LOCK.Click += new EventHandler(USVs[2].LOCK_EVENT);
+
+            radioButton_USV1_Rocker.Click += new EventHandler(Rocker_Switch);
+            radioButton_USV2_Rocker.Click += new EventHandler(Rocker_Switch);
+            radioButton_USV3_Rocker.Click += new EventHandler(Rocker_Switch);
+            radioButton_USV_LOCK.Click += new EventHandler(Rocker_Switch);
 
 
             TrkBar_LeftX.ValueChanged += new System.EventHandler(TrackBarValueChanged);
@@ -633,18 +657,17 @@ namespace 地面站
             button12.SendToBack();
 
 
-
-            LOS_PathTracking = new LOS(sender, textBox13.Text, textBox12.Text,
-                            Convert.ToDouble(textBox1.Text),
-                            Convert.ToDouble(textBox6.Text));
             DrawExpectedPath(horizLine11);
-
-
-
 
             new TBoxOnlyNumber(TB_FormationGatherSpeed);
             tcpserver = new TCP((Form1)sender);//
         }
+
+        private void Button_USV2_LOCK_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SendMavMsgToRocker(MavlinkPacket mp)//发送Mavlink消息给摇杆
         {
             mavsend.Clear();
@@ -1572,7 +1595,7 @@ namespace 地面站
                         e.Graphics.FillRectangle(new SolidBrush(backC), Rec);
                         BackBrush = new SolidBrush(unSeletedColor);
                         //绘制标签头背景颜色、边框
-                        Rec = new Rectangle(Rec.X+3, Rec.Y , Rec.Width-6, Rec.Height ); //将边框高度降低 4 像素来凸显选中项
+                        Rec = new Rectangle(Rec.X + 3, Rec.Y, Rec.Width - 6, Rec.Height); //将边框高度降低 4 像素来凸显选中项
                         e.Graphics.FillRectangle(BackBrush, Rec);
                         Pen pen = new Pen(borderColor);
                         e.Graphics.DrawRectangle(pen, Rec);
@@ -1587,7 +1610,7 @@ namespace 地面站
                 e.Graphics.FillRectangle(new SolidBrush(backC), newRecOfMainBack);
                 #endregion
             }
-            else if(tc==tabControl3||tc==tabControl4)//Bottom
+            else if (tc == tabControl3 || tc == tabControl4||tc==tabControl6)//Bottom
             {
                 Color seletedColor = Color.DeepSkyBlue;   //选中项背景色
                 Color unSeletedColor = Color.LightYellow;  //未选中项背景色
@@ -1711,10 +1734,6 @@ namespace 地面站
             tChart5.SendToBack();
             button12.SendToBack();
         }
-        private void timer3_Tick(object sender, EventArgs e)
-        {
-           
-        }
         public void MCT84Bl2xy(double l, double B, out double xc, out double yc)//经纬度转换成xy坐标
         {
             try
@@ -1749,18 +1768,6 @@ namespace 地面站
             }
             xc = -1;
             yc = -1;
-        }
-
-        private void tChart4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        public void Tchart6_Draw(HorizLine horizLine ,double X, double Y)
-        {
-            horizLine.Add(X, Y);      
-            textBox_X.Text = X.ToString("0.00");
-            textBox_Y.Text = Y.ToString("0.00");
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -1872,65 +1879,6 @@ namespace 地面站
             }
 
 
-
-        /*    if (radioButton3.Checked)//地面站仿真
-            {
-                if (button3.Text == "开始实验")
-                {
-                    horizLine12.Clear();
-                    LOS_PathTracking.LOS_Clear();
-                    timer2.Enabled = true;
-                }
-                else
-                {
-                    timer2.Enabled = false;
-                    button3.Text = "开始实验";
-                    groupBox6.Enabled = true;
-                    groupBox13.Enabled = true;
-                    groupBox16.Enabled = true;
-
-                    track_time = 0;
-                }
-            }
-            else if (radioButton4.Checked)//实船
-            {
-                if (serialPort1.IsOpen == false)//串口未打开
-                {
-                    SystemInfo("请打开串口！");
-                    return;
-                }
-                if (button3.Text == "开始实验")
-                {
-                    string path = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "/实验数据/";
-                    if (Directory.Exists(path) == false)
-                        Directory.CreateDirectory(path);
-                    
-                    msg_Cmd_Write.cmd_id = (byte)MavLink.CMD_TYPE.CMD_UNLOCK;
-                    mavlinkPacket.Message = msg_Cmd_Write;
-                    SendMavMsgToRocker(mavlinkPacket);
-
-                    horizLine2.Clear();
-                    LOS_PathTracking.LOS_Clear();
-
-                    timer2.Enabled = true;
-                    button3.Text = "结束实验";
-                    LongitudeStart = msg_usv_state.longitude;
-                    LatitudeStart = msg_usv_state.latitude;
-                    //  SF_PathTracking.Clear(10, 0, usv_state.Heading * Math.PI / 180, usv_state.Course * Math.PI / 180, 10);
-
-                    
-                }
-                else
-                {
-                    msg_Cmd_Write.cmd_id = (byte)MavLink.CMD_TYPE.CMD_LOCK;
-                    mavlinkPacket.Message = msg_Cmd_Write;
-                    SendMavMsgToRocker(mavlinkPacket);
-                    timer2.Enabled = false;
-                    button3.Text = "开始实验";
-                    track_time = 0;
-
-                }
-            }*/
         }
         private void DrawExpectedTrack(HorizLine horizLine,double T)
         {
@@ -1966,12 +1914,7 @@ namespace 地面站
         }
         private void UpdateExpectedPath(object sender, EventArgs e)//更新期望路径
         {
-            
-            LOS_PathTracking.UpdateExpectedPath(textBox13.Text, textBox12.Text);
-            LOS_PathTracking.UpadataParam(Convert.ToDouble(textBox1.Text),
-                                            Convert.ToDouble(textBox6.Text));
-            
-            
+
             USVs_LOS[0].UpdateExpectedPath(textBox13.Text, textBox12.Text);
             USVs_LOS[1].UpdateExpectedPath(textBox13.Text, textBox12.Text);
             USVs_LOS[2].UpdateExpectedPath(textBox13.Text, textBox12.Text);
@@ -1995,13 +1938,9 @@ namespace 地面站
         }
         private void LOS_UpdateParam(object sender, EventArgs e)//LOS参数更新
         {
-            LOS_PathTracking.UpadataParam(Convert.ToDouble(textBox1.Text),
-                                            Convert.ToDouble(textBox6.Text));
             USVs_LOS[0].UpadataParam(Convert.ToDouble(textBox_USV1_kp.Text), Convert.ToDouble(textBox_USV1_delta.Text));
             USVs_LOS[1].UpadataParam(Convert.ToDouble(textBox_USV2_kp.Text), Convert.ToDouble(textBox_USV2_delta.Text));
             USVs_LOS[2].UpadataParam(Convert.ToDouble(textBox_USV3_kp.Text), Convert.ToDouble(textBox_USV3_delta.Text));
-
-
 
         }
 
@@ -2097,14 +2036,42 @@ namespace 地面站
             tcpserver.drawtrack();
         }
 
-        private void button15_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btn_clear_t6_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void key_press(object sender, KeyPressEventArgs e)//回车事件 让texbox1获取焦点 其他控件失去焦点
+        {
+            if (e.KeyChar == ((char)Keys.Enter))
+            {
+                textBox1.Visible = true;
+                textBox1.Focus();
+                textBox1.Visible = false;
+            }
+        
+        }
+
+        private void Rocker_Switch(object sender, EventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            USVs[0].LOCK();
+            USVs[1].LOCK();
+            USVs[2].LOCK();
+            if (rb.Name.Contains("USV1"))
+            {
+                USVs[0].UNLOCK();
+            }
+            else if (rb.Name.Contains("USV2"))
+            {
+                USVs[1].UNLOCK();
+            }
+            else if (rb.Name.Contains("USV3"))
+            {
+                USVs[2].UNLOCK();
+            }
+
+
         }
     }
 }
