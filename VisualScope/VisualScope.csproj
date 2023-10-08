@@ -89,6 +89,7 @@
       <HintPath>..\MAVLINK\CS\mavlink.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.JScript" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />

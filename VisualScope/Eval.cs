@@ -3,9 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 #pragma warning disable 0618
 namespace 地面站
 {
+    class Expression
+    {
+        public string X_Expression;
+        public string Y_Expression;
+        public double Min;
+        public double Max;
+    
+        public Expression(string X_expression,string Y_expression,double Min_,double Max_) 
+        {
+            X_Expression=X_expression;
+            Y_Expression=Y_expression;
+            Min=Min_;
+            Max=Max_;
+
+        }
+        public void change(string X_expression, string Y_expression, double Min_, double Max_)
+        {
+            X_Expression = X_expression;
+            Y_Expression = Y_expression;
+            Min = Min_;
+            Max = Max_;
+
+        }
+        public string Out_X_Expression(double w)
+        {
+
+            if (w > Min && w < Max)
+            {
+                return X_Expression;
+            }
+            return null;
+            
+        }
+        public string Out_Y_Expression(double w)
+        {
+            if (w > Min && w < Max)
+            {
+                return Y_Expression;
+            }
+            return null;
+            
+        }
+
+    }
     class Eval
     {
         static Microsoft.JScript.Vsa.VsaEngine engine = Microsoft.JScript.Vsa.VsaEngine.CreateEngine();
@@ -29,5 +74,10 @@ namespace 地面站
             }
             return result;
         }
+        
+
+
+        
+
     }
 }

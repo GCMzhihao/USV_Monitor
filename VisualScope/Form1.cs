@@ -4,13 +4,16 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using MavLink;
+using Microsoft.JScript;
 using Steema.TeeChart.Styles;
+using Convert = System.Convert;
 
 
 //Ctrl-M-O   折叠所有方法 
@@ -86,7 +89,7 @@ namespace 地面站
 
 
 
-
+        List<Expression> Expressions = new List<Expression>();
         List<byte> UWB_TagUsed = new List<byte>();
 
         public HorizLine[] HorizLines = new HorizLine[30];
@@ -460,6 +463,9 @@ namespace 地面站
             textBox13.Enter += new EventHandler(UpdateExpectedPath);
 
 
+            richTextBox_EXpression.TextChanged += new EventHandler(UpdateExpectedPath);
+
+
             USVs_State_Info[0].L.Leave += new EventHandler(LOS_UpdateParam);
             USVs_State_Info[0].kp.Leave += new EventHandler(LOS_UpdateParam);
             USVs_State_Info[0].angle.Leave += new EventHandler(LOS_UpdateParam);
@@ -510,6 +516,7 @@ namespace 地面站
             radioButton_USV2_Rocker.Click += new EventHandler(Rocker_Switch);
             radioButton_USV3_Rocker.Click += new EventHandler(Rocker_Switch);
             radioButton_USV_LOCK.Click += new EventHandler(Rocker_Switch);
+
 
 
             TrkBar_LeftX.ValueChanged += new System.EventHandler(TrackBarValueChanged);
@@ -1498,7 +1505,24 @@ namespace 地面站
                 USVs[1].LOS_Follower(dt);
                 USVs[2].LOS_Follower(dt);
             }
-            
+            int cnt=Expressions.Count();
+            if (cnt != 0)//表示使用分段轨迹
+            {
+                foreach (Expression item in Expressions)
+                {
+                    if (track_time < item.Max && track_time >= item.Min)
+                    {
+                        USVs_LOS[0].UpdateExpectedPath(item.X_Expression, item.Y_Expression);
+                        USVs_LOS[1].UpdateExpectedPath(item.X_Expression, item.Y_Expression);
+                        USVs_LOS[2].UpdateExpectedPath(item.X_Expression, item.Y_Expression);
+
+                    }
+
+                }
+
+            }
+
+
             if (radioButton_Trajectory.Checked|radioButton_formation.Checked)
             {
                 track_time++;
@@ -1883,9 +1907,31 @@ namespace 地面站
         private void DrawExpectedTrack(HorizLine horizLine,double T)
         {
             double x, y;
-            x = Eval.Calculate(track_time*T, "var x=" + textBox13.Text + ";");
-            y = Eval.Calculate(track_time*T, "var y=" + textBox12.Text + ";");
-            horizLine.Add(x, y);
+            if (Expressions.Count() == 0)
+            {
+                x = Eval.Calculate(track_time * T, "var x=" + textBox13.Text + ";");
+                y = Eval.Calculate(track_time * T, "var y=" + textBox12.Text + ";");
+                horizLine.Add(x, y);
+            }
+            else
+            {
+                string X_Expression, Y_Expression;
+                foreach (Expression item in Expressions)
+                {
+                    X_Expression = item.Out_X_Expression(track_time * T);
+                    Y_Expression = item.Out_Y_Expression(track_time * T);
+                    if (X_Expression != null && Y_Expression != null)
+                    {
+                        x = Eval.Calculate(track_time * T, "var x=" + X_Expression + ";");
+                        y = Eval.Calculate(track_time * T, "var y=" + Y_Expression + ";");
+                        horizLine.Add(x, y);
+                        break;
+                    }
+                }
+             
+            }
+
+            
 
         }
         private void DrawExpectedPath(HorizLine horizLine)//绘制期望路径
@@ -1893,24 +1939,62 @@ namespace 地面站
             
             double min, max, pionts;
             pionts = 500;//绘制点数
-            try
-            {
-                min = Convert.ToDouble(textBox11.Text);
-                max = Convert.ToDouble(textBox10.Text);
-            }
-            catch
-            {
-                MessageBox.Show("w的取值范围输入错误！");
-                return;
-            }
             horizLine.Clear();
-            for (int i = 0; i < pionts; i++)
+            if (Expressions.Count() == 0)
             {
-                double x, y;
-                x = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var x=" + textBox13.Text + ";");
-                y = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var y=" + textBox12.Text + ";");
-            horizLine.Add(x, y);
+                try
+                {
+                    min = Convert.ToDouble(textBox11.Text);
+                    max = Convert.ToDouble(textBox10.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("w的取值范围输入错误！");
+                    return;
+                }
+                for (int i = 0; i < pionts; i++)
+                {
+                    double x, y;
+                    x = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var x=" + textBox13.Text + ";");
+                    y = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var y=" + textBox12.Text + ";");
+                    horizLine.Add(x, y);
+                }
+
             }
+            else
+            {
+                try
+                {
+                    min = Convert.ToDouble(Expressions[0].Min);
+                    max = Convert.ToDouble(Expressions[Expressions.Count()-1].Max);
+                }
+                catch
+                {
+                    MessageBox.Show("w的取值范围输入错误！");
+                    return;
+                }
+                for (int i = 0; i < pionts; i++)
+                {
+                    double x, y;
+                    string X_Expression,Y_Expression;
+                    foreach (Expression item in Expressions)
+                    {
+                        X_Expression = item.Out_X_Expression(min * Math.PI + i * (max - min) * Math.PI / pionts);
+                        Y_Expression = item.Out_Y_Expression(min * Math.PI + i * (max - min) * Math.PI / pionts);
+                        if(X_Expression!=null&&Y_Expression!=null) 
+                        {
+                            x = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var x=" + X_Expression + ";");
+                            y = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var y=" + Y_Expression + ";");
+                            horizLine.Add(x, y);
+                            break;
+                        }
+                    }
+                   
+                }
+
+
+            }
+           
         }
         private void UpdateExpectedPath(object sender, EventArgs e)//更新期望路径
         {
@@ -2038,7 +2122,9 @@ namespace 地面站
 
         private void btn_clear_t6_Click(object sender, EventArgs e)
         {
-            
+            Expressions.Clear();
+            horizLine10.Clear();
+            richTextBox_EXpression.Clear();
         }
 
         private void key_press(object sender, KeyPressEventArgs e)//回车事件 让texbox1获取焦点 其他控件失去焦点
@@ -2072,6 +2158,33 @@ namespace 地面站
             }
 
 
+        }
+        private void UPdate_Expression()
+        {   uint i = 0;
+            richTextBox_EXpression.Clear();
+            richTextBox_EXpression.AppendText("当前轨迹表达式：\r\n");
+            foreach (var item in Expressions)
+            {
+                richTextBox_EXpression.AppendText("编号:" + i++.ToString()+"      W=："+item.Min.ToString()+'-'+item.Max.ToString()+"\r\n");
+                richTextBox_EXpression.AppendText("X=" + item.X_Expression+"\r\n");
+                richTextBox_EXpression.AppendText("Y=" + item.Y_Expression+"\r\n");
+                richTextBox_EXpression.AppendText("\r\n");
+            }
+        }
+        private void button_ADDEXP_Click(object sender, EventArgs e)
+        {
+            if (Expressions.Count > Convert.ToInt16(textBox_EXP_ID.Text))
+            {
+                Expressions[Convert.ToInt16(textBox_EXP_ID.Text)].change(textBox13.Text, textBox12.Text, Convert.ToDouble(textBox11.Text), Convert.ToDouble(textBox10.Text));
+            }
+            else 
+            {
+                Expressions.Add(new Expression(textBox13.Text, textBox12.Text, Convert.ToDouble(textBox11.Text), Convert.ToDouble(textBox10.Text)));
+            }
+
+            textBox_EXP_ID.Text= (Convert.ToInt16(textBox_EXP_ID.Text)+1).ToString();
+            textBox11.Text = textBox10.Text;
+            UPdate_Expression();
         }
     }
 }
