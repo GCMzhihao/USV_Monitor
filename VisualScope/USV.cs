@@ -347,7 +347,7 @@ namespace 地面站
                 Position.Y = norbbin.state.y;
 
                 beta = 0.1;
-                heading = norbbin.state.psi;
+                heading = state.heading ;
                 while (heading > Math.PI)
                     heading -= 2 * Math.PI;
                 while (heading < -Math.PI)
@@ -360,16 +360,16 @@ namespace 地面站
                     u = result.vel;
                     Los.UpdateData(Position.X, Position.Y, heading, course, u);
                     result = Los.Calculate_trajectory(T);
-                    double err = (result.psi_d - norbbin.state.psi);
-                    while (err > Math.PI)
-                        err -= 2 * Math.PI;
-                    while (err < -Math.PI)
-                        err += 2 * Math.PI;
-                    delta_r = 30 * err;
-                    norbbin.UpdateData(delta_r, beta, u);
-                    norbbin.Calculate(T);
-                    //Los.UpdateData(Position.X, Position.Y, heading, course, result.vel);
-                    //Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
+                    //double err = (result.psi_d - norbbin.state.psi);
+                    //while (err > Math.PI)
+                    //    err -= 2 * Math.PI;
+                    //while (err < -Math.PI)
+                    //    err += 2 * Math.PI;
+                    //delta_r = 30 * err;
+                    //norbbin.UpdateData(delta_r, beta, u);
+                    //norbbin.Calculate(T);
+                    Los.UpdateData(Position.X, Position.Y, heading, course, result.vel);
+                    Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
 
                     state.speed = (float)result.vel;
                 }
@@ -377,15 +377,15 @@ namespace 地面站
                 {
                     Los.UpdateData(Position.X, Position.Y, heading, course, Convert.ToSingle(form1.textBox_Speed_Set.Text));
                     heading_set = Los.Calculate(T);
-                    double err = (heading_set-norbbin.state.psi);
-                    while(err>Math.PI)
-                        err -= 2 * Math.PI;
-                    while (err <- Math.PI)
-                        err += 2 * Math.PI;
-                    delta_r = 80 * err;
-                    norbbin.UpdateData(delta_r, beta, Convert.ToSingle(form1.textBox_Speed_Set.Text));
-                    norbbin.Calculate(T);
-                    // Los.UpdateSimulationPosition(heading_set, beta, T);
+                    //double err = (heading_set-norbbin.state.psi);
+                    //while(err>Math.PI)
+                    //    err -= 2 * Math.PI;
+                    //while (err <- Math.PI)
+                    //    err += 2 * Math.PI;
+                    //delta_r = 80 * err;
+                    //norbbin.UpdateData(delta_r, beta, Convert.ToSingle(form1.textBox_Speed_Set.Text));
+                    //norbbin.Calculate(T);
+                    Los.UpdateSimulationPosition(heading_set, beta, T);
                     state.speed = Convert.ToSingle(form1.textBox_Speed_Set.Text);
                 }
 

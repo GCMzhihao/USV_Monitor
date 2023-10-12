@@ -43,7 +43,7 @@ namespace 地面站
 
         public double X_Standard= 4052589.2780501638;
         public double Y_Standard= 11726384.463664232;
-        public int track_time;
+        public double track_time;
 
 
         private StreamWriter usv_sw;
@@ -90,6 +90,7 @@ namespace 地面站
 
 
         List<Expression> Expressions = new List<Expression>();
+        List<Expression> Expressions_Copy=new List<Expression>();
         List<byte> UWB_TagUsed = new List<byte>();
 
         public HorizLine[] HorizLines = new HorizLine[30];
@@ -1508,17 +1509,15 @@ namespace 地面站
             int cnt=Expressions.Count();
             if (cnt != 0)//表示使用分段轨迹
             {
-                foreach (Expression item in Expressions)
+                if (Expressions_Copy[0].Max*Math.PI<=track_time*0.2)
                 {
-                    if (track_time < item.Max && track_time >= item.Min)
-                    {
-                        USVs_LOS[0].UpdateExpectedPath(item.X_Expression, item.Y_Expression);
-                        USVs_LOS[1].UpdateExpectedPath(item.X_Expression, item.Y_Expression);
-                        USVs_LOS[2].UpdateExpectedPath(item.X_Expression, item.Y_Expression);
-
-                    }
+                    track_time = Expressions_Copy[0].Min * Math.PI;
+                    Expressions_Copy.RemoveAt(0);
 
                 }
+                USVs_LOS[0].UpdateExpectedPath(Expressions_Copy[0].X_Expression, Expressions_Copy[0].Y_Expression);
+                USVs_LOS[1].UpdateExpectedPath(Expressions_Copy[0].X_Expression, Expressions_Copy[0].Y_Expression);
+                USVs_LOS[2].UpdateExpectedPath(Expressions_Copy[0].X_Expression, Expressions_Copy[0].Y_Expression);
 
             }
 
@@ -1828,6 +1827,8 @@ namespace 地面站
                 USVs[2].norbbin.Clear(0, 0);
                 timer2.Enabled = true;
 
+                Expressions_Copy= (List<Expression>)DeepCopy.deepcopy(Expressions);
+
 
                 if (radioButton_Real_USV.Checked)//实船
                 {
@@ -1922,8 +1923,8 @@ namespace 地面站
                     Y_Expression = item.Out_Y_Expression(track_time * T);
                     if (X_Expression != null && Y_Expression != null)
                     {
-                        x = Eval.Calculate(track_time * T, "var x=" + X_Expression + ";");
-                        y = Eval.Calculate(track_time * T, "var y=" + Y_Expression + ";");
+                        x = Eval.Calculate(track_time * T ,"var x=" + X_Expression + ";");
+                        y = Eval.Calculate(track_time * T , "var y=" + Y_Expression + ";");
                         horizLine.Add(x, y);
                         break;
                     }
@@ -1944,8 +1945,8 @@ namespace 地面站
             {
                 try
                 {
-                    min = Convert.ToDouble(textBox11.Text);
-                    max = Convert.ToDouble(textBox10.Text);
+                    min = Convert.ToDouble(textBox11.Text) * Math.PI;
+                    max = Convert.ToDouble(textBox10.Text) * Math.PI;
                 }
                 catch
                 {
@@ -1955,44 +1956,42 @@ namespace 地面站
                 for (int i = 0; i < pionts; i++)
                 {
                     double x, y;
-                    x = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var x=" + textBox13.Text + ";");
-                    y = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var y=" + textBox12.Text + ";");
+                    x = Eval.Calculate(min  + i * (max - min)  / pionts, "var x=" + textBox13.Text + ";");
+                    y = Eval.Calculate(min  + i * (max - min) / pionts, "var y=" + textBox12.Text + ";");
                     horizLine.Add(x, y);
                 }
 
             }
             else
             {
-                try
+                double x, y;
+                string X_Expression,Y_Expression;
+                foreach (Expression item in Expressions)
                 {
-                    min = Convert.ToDouble(Expressions[0].Min);
-                    max = Convert.ToDouble(Expressions[Expressions.Count()-1].Max);
-                }
-                catch
-                {
-                    MessageBox.Show("w的取值范围输入错误！");
-                    return;
-                }
-                for (int i = 0; i < pionts; i++)
-                {
-                    double x, y;
-                    string X_Expression,Y_Expression;
-                    foreach (Expression item in Expressions)
+                    try
                     {
-                        X_Expression = item.Out_X_Expression(min * Math.PI + i * (max - min) * Math.PI / pionts);
-                        Y_Expression = item.Out_Y_Expression(min * Math.PI + i * (max - min) * Math.PI / pionts);
-                        if(X_Expression!=null&&Y_Expression!=null) 
+                        min = Convert.ToDouble(item.Min)*Math.PI;
+                        max = Convert.ToDouble(item.Max)*Math.PI;
+                    }
+                    catch
+                    {
+                        MessageBox.Show("w的取值范围输入错误！");
+                        return;
+                    }
+                    for (int i = 0; i < pionts; i++)
+                    {
+                        X_Expression = item.X_Expression;
+                        Y_Expression = item.Y_Expression;
+                        //X_Expression = item.Out_X_Expression(min * Math.PI + i * (max - min) * Math.PI / pionts);
+                       // Y_Expression = item.Out_Y_Expression(min * Math.PI + i * (max - min) * Math.PI / pionts);
+                        if (X_Expression != null && Y_Expression != null)
                         {
-                            x = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var x=" + X_Expression + ";");
-                            y = Eval.Calculate(min * Math.PI + i * (max - min) * Math.PI / pionts, "var y=" + Y_Expression + ";");
+                            x = Eval.Calculate(min  + i * (max - min) / pionts, "var x=" + X_Expression + ";");
+                            y = Eval.Calculate(min + i * (max - min) / pionts, "var y=" + Y_Expression + ";");
                             horizLine.Add(x, y);
-                            break;
                         }
                     }
-                   
                 }
-
-
             }
            
         }

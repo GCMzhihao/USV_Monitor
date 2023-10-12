@@ -181,8 +181,8 @@ namespace 地面站
             U_d = Math.Sqrt(x_F_deriv_w*x_F_deriv_w+y_F_deriv_w*y_F_deriv_w);
             U_p = ((U_d-kp*x_err)*Math.Sqrt(y_err*y_err+delta*delta)) / delta;
             result.vel = U_p*Math.Cos(beta);
-            if (result.vel > U_d * 1.5)//限制输出速度，防止初始误差过大，设定值太大
-                result.vel = U_d * 1.5;
+            if (result.vel > U_d * 2.5)//限制输出速度，防止初始误差过大，设定值太大
+                result.vel = U_d * 2.5;
             else if (result.vel < 0)
                 result.vel = 0;
             psi_F_last = psi_F;
