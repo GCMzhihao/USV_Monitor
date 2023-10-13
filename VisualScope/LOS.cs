@@ -14,18 +14,19 @@ namespace 地面站
         public double w;//期望路径的参数方程自变量
         double w_deriv;//期望路径的参数方程自变量的导数
         public double x, y;//实际位置
-        double x_F, y_F;//期望路径的参数方程因变量
+        public double x_F, y_F;//期望路径的参数方程因变量
         string x_F_expression, y_F_expression;//表达式
         double U;//航速
         public double psi;//艏向角ψ
         double psi_F;//期望路径切向角ψF
         double psi_F_last;//上一时刻期望路径切向角ψF
         double psi_F_deriv;//期望路径切向角ψF的导数
+        public double x_Start,y_Start;
 
         double X_F_Last, Y_F_Last;
 
         private readonly Form1 form1;
-
+        public  PID pid_x, pid_y;
 
         public struct Result
         {
@@ -51,7 +52,7 @@ namespace 地面站
             w = 0;
             w_deriv = 0;
             x = 0;
-            y = 3;
+            y = 0;
             x_F = 0;
             y_F = 0;
             U = 0;
@@ -69,6 +70,8 @@ namespace 地面站
             //y_err_est_deriv = 0;
             //x_err_est_err = 0;
             //y_err_est_err = 0;
+            result.psi_d = 0;
+            result.vel=0;
         }
         public LOS(object sender, string x,string y, double kp_, double delta_)
         {
@@ -77,11 +80,20 @@ namespace 地面站
             LOS_Clear();
             kp = kp_;
             delta = delta_;
+            pid_x = new PID();
+            pid_y = new PID();
         }
         public void UpadataParam(double kp_,double delta_)
         {
             kp = kp_;
             delta = delta_;
+        }
+        public void Update_XY_F(double X_F,double Y_F,double X_S,double Y_S)
+        {
+            x_F = X_F;
+            y_F = Y_F;
+            x_Start = X_S;
+            y_Start = Y_S;
         }
         /// <summary>
         /// 
@@ -192,7 +204,33 @@ namespace 地面站
 
 
         }
-        
+        public Result Calculate_Point_Leader(double T)
+        {
+            psi_F = Math.Atan2(y_F-y,  x_F-x);
+            x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) * (y - y_F);
+            y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
+            psi_d = psi_F + Math.Atan(-y_err / delta - beta);
+            result.psi_d=psi_d;
+            result.vel= Convert.ToSingle(form1.textBox_Speed_Set.Text);
+            return result;
+        }
+        public Result Calculate_Point_Follower(double x_l, double y_l, double psi_l,
+                                double dt, double L, double Theta)
+        {
+            double x_f_d, y_f_d;
+            double theta;
+            double ud_x, ud_y;
+            theta = Theta * Math.PI / 180;//弧度
+            psi_l = psi_l * Math.PI / 180;//弧度
+
+            x_f_d = x_l + L * Math.Cos(theta + psi_l);
+            y_f_d = y_l + L * Math.Sin(theta + psi_l);
+            ud_x = pid_x.Calculate(x_f_d, x, dt);
+            ud_y = pid_y.Calculate(y_f_d, y, dt);
+            result.vel = Math.Sqrt(ud_x*ud_x+ud_y*ud_y);
+            result.psi_d = Math.Atan2(ud_y,ud_x);
+            return result;
+        }
         public Result Caculate_Follower(double T,double L,double Theta)
         {
             double h = 0.0001;

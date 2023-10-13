@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace 地面站
 {
-    class PID
+    public class PID
     {
         public struct Param
         {
@@ -59,10 +59,11 @@ namespace 地面站
 
             pid.Err = setvalue - feedback;
             pid.Pout = pid.Kp * pid.Err;
-            pid.Integral += pid.Ki * pid.Err * dt;
+            pid.Integral +=  pid.Err * dt;
+            
             if (pid.IntMax != 0)
                 pid.Integral = LIMIT(pid.Integral, -pid.IntMax, pid.IntMax);
-            pid.Iout = pid.Integral;
+            pid.Iout = pid.Ki * pid.Integral;
             pid.Dout = pid.Kd * (pid.Err - pid.LastValue) / dt;
             pid.LastValue = pid.Err;
 
@@ -72,7 +73,11 @@ namespace 地面站
                 pid.OutPut = LIMIT((pid.Pout + pid.Iout+ pid.Dout), -pid.OutPutMax, pid.OutPutMax);
             return pid.OutPut;
         }
-
+        public void Clear()
+        {
+            pid.Integral = 0;
+            pid.LastValue = 0;
+        }
 
 
 

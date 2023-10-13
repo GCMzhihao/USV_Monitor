@@ -387,21 +387,25 @@
             this.label86 = new System.Windows.Forms.Label();
             this.textBox_USV3_L = new System.Windows.Forms.TextBox();
             this.tabPage18 = new System.Windows.Forms.TabPage();
+            this.richTextBox_EXpression = new System.Windows.Forms.RichTextBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.radioButton_USV_LOCK = new System.Windows.Forms.RadioButton();
             this.radioButton_USV3_Rocker = new System.Windows.Forms.RadioButton();
             this.radioButton_USV2_Rocker = new System.Windows.Forms.RadioButton();
             this.radioButton_USV1_Rocker = new System.Windows.Forms.RadioButton();
             this.btn_clear_t6 = new System.Windows.Forms.Button();
-            this.label51 = new System.Windows.Forms.Label();
-            this.textBox_Speed_Set = new System.Windows.Forms.TextBox();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
             this.radioButton_formation = new System.Windows.Forms.RadioButton();
             this.radioButton_Single_USV = new System.Windows.Forms.RadioButton();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.label_EXP_ID = new System.Windows.Forms.Label();
+            this.textBox_EXP_ID = new System.Windows.Forms.TextBox();
+            this.button_ADDEXP = new System.Windows.Forms.Button();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.textBox11 = new System.Windows.Forms.TextBox();
+            this.label51 = new System.Windows.Forms.Label();
+            this.textBox_Speed_Set = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.label44 = new System.Windows.Forms.Label();
@@ -496,10 +500,49 @@
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button_ADDEXP = new System.Windows.Forms.Button();
-            this.label_EXP_ID = new System.Windows.Forms.Label();
-            this.textBox_EXP_ID = new System.Windows.Forms.TextBox();
-            this.richTextBox_EXpression = new System.Windows.Forms.RichTextBox();
+            this.textBox_USV1_X_Kd = new System.Windows.Forms.TextBox();
+            this.label115 = new System.Windows.Forms.Label();
+            this.textBox_USV1_X_Ki = new System.Windows.Forms.TextBox();
+            this.label116 = new System.Windows.Forms.Label();
+            this.label117 = new System.Windows.Forms.Label();
+            this.textBox_USV1_X_Kp = new System.Windows.Forms.TextBox();
+            this.label118 = new System.Windows.Forms.Label();
+            this.textBox_USV1_Y_Kd = new System.Windows.Forms.TextBox();
+            this.label119 = new System.Windows.Forms.Label();
+            this.textBox_USV1_Y_Ki = new System.Windows.Forms.TextBox();
+            this.label120 = new System.Windows.Forms.Label();
+            this.label121 = new System.Windows.Forms.Label();
+            this.textBox_USV1_Y_Kp = new System.Windows.Forms.TextBox();
+            this.label122 = new System.Windows.Forms.Label();
+            this.textBox_USV2_X_Kd = new System.Windows.Forms.TextBox();
+            this.label123 = new System.Windows.Forms.Label();
+            this.textBox_USV2_X_Ki = new System.Windows.Forms.TextBox();
+            this.label124 = new System.Windows.Forms.Label();
+            this.label125 = new System.Windows.Forms.Label();
+            this.textBox_USV2_X_Kp = new System.Windows.Forms.TextBox();
+            this.label126 = new System.Windows.Forms.Label();
+            this.textBox_USV2_Y_Kd = new System.Windows.Forms.TextBox();
+            this.label127 = new System.Windows.Forms.Label();
+            this.textBox_USV2_Y_Ki = new System.Windows.Forms.TextBox();
+            this.label128 = new System.Windows.Forms.Label();
+            this.label129 = new System.Windows.Forms.Label();
+            this.textBox_USV2_Y_Kp = new System.Windows.Forms.TextBox();
+            this.label130 = new System.Windows.Forms.Label();
+            this.textBox_USV3_X_Kd = new System.Windows.Forms.TextBox();
+            this.label131 = new System.Windows.Forms.Label();
+            this.textBox_USV3_X_Ki = new System.Windows.Forms.TextBox();
+            this.label132 = new System.Windows.Forms.Label();
+            this.label133 = new System.Windows.Forms.Label();
+            this.textBox_USV3_X_Kp = new System.Windows.Forms.TextBox();
+            this.label134 = new System.Windows.Forms.Label();
+            this.textBox_USV3_Y_Kd = new System.Windows.Forms.TextBox();
+            this.label135 = new System.Windows.Forms.Label();
+            this.textBox_USV3_Y_Ki = new System.Windows.Forms.TextBox();
+            this.label136 = new System.Windows.Forms.Label();
+            this.label137 = new System.Windows.Forms.Label();
+            this.textBox_USV3_Y_Kp = new System.Windows.Forms.TextBox();
+            this.label138 = new System.Windows.Forms.Label();
+            this.radioButton_Point = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -6541,11 +6584,12 @@
             // 
             // groupBox17
             // 
+            this.groupBox17.Controls.Add(this.radioButton_Point);
             this.groupBox17.Controls.Add(this.radioButton_Trace);
             this.groupBox17.Controls.Add(this.radioButton_Trajectory);
-            this.groupBox17.Location = new System.Drawing.Point(186, 572);
+            this.groupBox17.Location = new System.Drawing.Point(155, 582);
             this.groupBox17.Name = "groupBox17";
-            this.groupBox17.Size = new System.Drawing.Size(129, 44);
+            this.groupBox17.Size = new System.Drawing.Size(166, 39);
             this.groupBox17.TabIndex = 60;
             this.groupBox17.TabStop = false;
             // 
@@ -6553,18 +6597,17 @@
             // 
             this.radioButton_Trace.AutoSize = true;
             this.radioButton_Trace.Checked = true;
-            this.radioButton_Trace.Location = new System.Drawing.Point(66, 19);
+            this.radioButton_Trace.Location = new System.Drawing.Point(62, 16);
             this.radioButton_Trace.Name = "radioButton_Trace";
             this.radioButton_Trace.Size = new System.Drawing.Size(47, 16);
             this.radioButton_Trace.TabIndex = 50;
-            this.radioButton_Trace.TabStop = true;
             this.radioButton_Trace.Text = "路径";
             this.radioButton_Trace.UseVisualStyleBackColor = true;
             // 
             // radioButton_Trajectory
             // 
             this.radioButton_Trajectory.AutoSize = true;
-            this.radioButton_Trajectory.Location = new System.Drawing.Point(7, 17);
+            this.radioButton_Trajectory.Location = new System.Drawing.Point(7, 16);
             this.radioButton_Trajectory.Name = "radioButton_Trajectory";
             this.radioButton_Trajectory.Size = new System.Drawing.Size(47, 16);
             this.radioButton_Trajectory.TabIndex = 49;
@@ -6584,7 +6627,7 @@
             this.tabControl6.Multiline = true;
             this.tabControl6.Name = "tabControl6";
             this.tabControl6.SelectedIndex = 0;
-            this.tabControl6.Size = new System.Drawing.Size(317, 372);
+            this.tabControl6.Size = new System.Drawing.Size(317, 400);
             this.tabControl6.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl6.TabIndex = 59;
             this.tabControl6.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TabControl_DrawItem);
@@ -6603,7 +6646,7 @@
             this.tabPage20.Location = new System.Drawing.Point(4, 4);
             this.tabPage20.Name = "tabPage20";
             this.tabPage20.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage20.Size = new System.Drawing.Size(309, 329);
+            this.tabPage20.Size = new System.Drawing.Size(309, 357);
             this.tabPage20.TabIndex = 0;
             this.tabPage20.Text = "USV1";
             // 
@@ -6625,6 +6668,20 @@
             // 
             // groupBox_USV1_PID
             // 
+            this.groupBox_USV1_PID.Controls.Add(this.textBox_USV1_Y_Kd);
+            this.groupBox_USV1_PID.Controls.Add(this.label119);
+            this.groupBox_USV1_PID.Controls.Add(this.textBox_USV1_Y_Ki);
+            this.groupBox_USV1_PID.Controls.Add(this.label120);
+            this.groupBox_USV1_PID.Controls.Add(this.label121);
+            this.groupBox_USV1_PID.Controls.Add(this.textBox_USV1_Y_Kp);
+            this.groupBox_USV1_PID.Controls.Add(this.label122);
+            this.groupBox_USV1_PID.Controls.Add(this.textBox_USV1_X_Kd);
+            this.groupBox_USV1_PID.Controls.Add(this.label115);
+            this.groupBox_USV1_PID.Controls.Add(this.textBox_USV1_X_Ki);
+            this.groupBox_USV1_PID.Controls.Add(this.label116);
+            this.groupBox_USV1_PID.Controls.Add(this.label117);
+            this.groupBox_USV1_PID.Controls.Add(this.textBox_USV1_X_Kp);
+            this.groupBox_USV1_PID.Controls.Add(this.label118);
             this.groupBox_USV1_PID.Controls.Add(this.textBox_USV1_HEA_Kd);
             this.groupBox_USV1_PID.Controls.Add(this.label92);
             this.groupBox_USV1_PID.Controls.Add(this.textBox_USV1_VEL_Kd);
@@ -6639,16 +6696,16 @@
             this.groupBox_USV1_PID.Controls.Add(this.label34);
             this.groupBox_USV1_PID.Controls.Add(this.textBox_USV1_VEL_Kp);
             this.groupBox_USV1_PID.Controls.Add(this.label63);
-            this.groupBox_USV1_PID.Location = new System.Drawing.Point(9, 235);
+            this.groupBox_USV1_PID.Location = new System.Drawing.Point(9, 224);
             this.groupBox_USV1_PID.Name = "groupBox_USV1_PID";
-            this.groupBox_USV1_PID.Size = new System.Drawing.Size(292, 77);
+            this.groupBox_USV1_PID.Size = new System.Drawing.Size(292, 133);
             this.groupBox_USV1_PID.TabIndex = 66;
             this.groupBox_USV1_PID.TabStop = false;
             this.groupBox_USV1_PID.Text = "PID参数";
             // 
             // textBox_USV1_HEA_Kd
             // 
-            this.textBox_USV1_HEA_Kd.Location = new System.Drawing.Point(241, 52);
+            this.textBox_USV1_HEA_Kd.Location = new System.Drawing.Point(241, 50);
             this.textBox_USV1_HEA_Kd.Name = "textBox_USV1_HEA_Kd";
             this.textBox_USV1_HEA_Kd.Size = new System.Drawing.Size(46, 21);
             this.textBox_USV1_HEA_Kd.TabIndex = 24;
@@ -6658,7 +6715,7 @@
             // label92
             // 
             this.label92.AutoSize = true;
-            this.label92.Location = new System.Drawing.Point(216, 56);
+            this.label92.Location = new System.Drawing.Point(216, 53);
             this.label92.Name = "label92";
             this.label92.Size = new System.Drawing.Size(17, 12);
             this.label92.TabIndex = 25;
@@ -6666,7 +6723,7 @@
             // 
             // textBox_USV1_VEL_Kd
             // 
-            this.textBox_USV1_VEL_Kd.Location = new System.Drawing.Point(240, 22);
+            this.textBox_USV1_VEL_Kd.Location = new System.Drawing.Point(240, 17);
             this.textBox_USV1_VEL_Kd.Name = "textBox_USV1_VEL_Kd";
             this.textBox_USV1_VEL_Kd.Size = new System.Drawing.Size(47, 21);
             this.textBox_USV1_VEL_Kd.TabIndex = 22;
@@ -6676,7 +6733,7 @@
             // label97
             // 
             this.label97.AutoSize = true;
-            this.label97.Location = new System.Drawing.Point(216, 26);
+            this.label97.Location = new System.Drawing.Point(216, 21);
             this.label97.Name = "label97";
             this.label97.Size = new System.Drawing.Size(17, 12);
             this.label97.TabIndex = 23;
@@ -6684,7 +6741,7 @@
             // 
             // textBox_USV1_HEA_Ki
             // 
-            this.textBox_USV1_HEA_Ki.Location = new System.Drawing.Point(155, 50);
+            this.textBox_USV1_HEA_Ki.Location = new System.Drawing.Point(155, 48);
             this.textBox_USV1_HEA_Ki.Name = "textBox_USV1_HEA_Ki";
             this.textBox_USV1_HEA_Ki.Size = new System.Drawing.Size(46, 21);
             this.textBox_USV1_HEA_Ki.TabIndex = 20;
@@ -6694,7 +6751,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(131, 54);
+            this.label29.Location = new System.Drawing.Point(131, 53);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(17, 12);
             this.label29.TabIndex = 21;
@@ -6702,7 +6759,7 @@
             // 
             // textBox_USV1_VEL_Ki
             // 
-            this.textBox_USV1_VEL_Ki.Location = new System.Drawing.Point(154, 20);
+            this.textBox_USV1_VEL_Ki.Location = new System.Drawing.Point(154, 17);
             this.textBox_USV1_VEL_Ki.Name = "textBox_USV1_VEL_Ki";
             this.textBox_USV1_VEL_Ki.Size = new System.Drawing.Size(47, 21);
             this.textBox_USV1_VEL_Ki.TabIndex = 18;
@@ -6712,7 +6769,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(131, 24);
+            this.label31.Location = new System.Drawing.Point(131, 21);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(17, 12);
             this.label31.TabIndex = 19;
@@ -6730,7 +6787,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(3, 53);
+            this.label33.Location = new System.Drawing.Point(3, 49);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(41, 12);
             this.label33.TabIndex = 15;
@@ -6738,7 +6795,7 @@
             // 
             // textBox_USV1_HEA_Kp
             // 
-            this.textBox_USV1_HEA_Kp.Location = new System.Drawing.Point(66, 49);
+            this.textBox_USV1_HEA_Kp.Location = new System.Drawing.Point(66, 46);
             this.textBox_USV1_HEA_Kp.Name = "textBox_USV1_HEA_Kp";
             this.textBox_USV1_HEA_Kp.Size = new System.Drawing.Size(46, 21);
             this.textBox_USV1_HEA_Kp.TabIndex = 2;
@@ -6748,7 +6805,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(42, 53);
+            this.label34.Location = new System.Drawing.Point(42, 49);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(17, 12);
             this.label34.TabIndex = 3;
@@ -6756,7 +6813,7 @@
             // 
             // textBox_USV1_VEL_Kp
             // 
-            this.textBox_USV1_VEL_Kp.Location = new System.Drawing.Point(65, 19);
+            this.textBox_USV1_VEL_Kp.Location = new System.Drawing.Point(65, 17);
             this.textBox_USV1_VEL_Kp.Name = "textBox_USV1_VEL_Kp";
             this.textBox_USV1_VEL_Kp.Size = new System.Drawing.Size(47, 21);
             this.textBox_USV1_VEL_Kp.TabIndex = 0;
@@ -6782,7 +6839,7 @@
             this.groupBox24.Controls.Add(this.label67);
             this.groupBox24.Controls.Add(this.textBox_USV1_kp);
             this.groupBox24.Controls.Add(this.label68);
-            this.groupBox24.Location = new System.Drawing.Point(6, 152);
+            this.groupBox24.Location = new System.Drawing.Point(6, 147);
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.Size = new System.Drawing.Size(292, 77);
             this.groupBox24.TabIndex = 65;
@@ -7042,7 +7099,7 @@
             this.tabPage21.Location = new System.Drawing.Point(4, 4);
             this.tabPage21.Name = "tabPage21";
             this.tabPage21.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage21.Size = new System.Drawing.Size(309, 329);
+            this.tabPage21.Size = new System.Drawing.Size(309, 357);
             this.tabPage21.TabIndex = 1;
             this.tabPage21.Text = "USV2";
             // 
@@ -7064,6 +7121,20 @@
             // 
             // groupBox_USV2_PID
             // 
+            this.groupBox_USV2_PID.Controls.Add(this.textBox_USV2_Y_Kd);
+            this.groupBox_USV2_PID.Controls.Add(this.label127);
+            this.groupBox_USV2_PID.Controls.Add(this.textBox_USV2_Y_Ki);
+            this.groupBox_USV2_PID.Controls.Add(this.label128);
+            this.groupBox_USV2_PID.Controls.Add(this.label129);
+            this.groupBox_USV2_PID.Controls.Add(this.textBox_USV2_Y_Kp);
+            this.groupBox_USV2_PID.Controls.Add(this.label130);
+            this.groupBox_USV2_PID.Controls.Add(this.textBox_USV2_X_Kd);
+            this.groupBox_USV2_PID.Controls.Add(this.label123);
+            this.groupBox_USV2_PID.Controls.Add(this.textBox_USV2_X_Ki);
+            this.groupBox_USV2_PID.Controls.Add(this.label124);
+            this.groupBox_USV2_PID.Controls.Add(this.label125);
+            this.groupBox_USV2_PID.Controls.Add(this.textBox_USV2_X_Kp);
+            this.groupBox_USV2_PID.Controls.Add(this.label126);
             this.groupBox_USV2_PID.Controls.Add(this.textBox_USV2_HEA_Kd);
             this.groupBox_USV2_PID.Controls.Add(this.label105);
             this.groupBox_USV2_PID.Controls.Add(this.textBox_USV2_VEL_Kd);
@@ -7079,16 +7150,16 @@
             this.groupBox_USV2_PID.Controls.Add(this.label102);
             this.groupBox_USV2_PID.Controls.Add(this.textBox_USV2_VEL_Kp);
             this.groupBox_USV2_PID.Controls.Add(this.label103);
-            this.groupBox_USV2_PID.Location = new System.Drawing.Point(9, 234);
+            this.groupBox_USV2_PID.Location = new System.Drawing.Point(9, 220);
             this.groupBox_USV2_PID.Name = "groupBox_USV2_PID";
-            this.groupBox_USV2_PID.Size = new System.Drawing.Size(292, 77);
+            this.groupBox_USV2_PID.Size = new System.Drawing.Size(292, 137);
             this.groupBox_USV2_PID.TabIndex = 68;
             this.groupBox_USV2_PID.TabStop = false;
             this.groupBox_USV2_PID.Text = "PID参数";
             // 
             // textBox_USV2_HEA_Kd
             // 
-            this.textBox_USV2_HEA_Kd.Location = new System.Drawing.Point(241, 52);
+            this.textBox_USV2_HEA_Kd.Location = new System.Drawing.Point(241, 47);
             this.textBox_USV2_HEA_Kd.Name = "textBox_USV2_HEA_Kd";
             this.textBox_USV2_HEA_Kd.Size = new System.Drawing.Size(41, 21);
             this.textBox_USV2_HEA_Kd.TabIndex = 25;
@@ -7098,7 +7169,7 @@
             // label105
             // 
             this.label105.AutoSize = true;
-            this.label105.Location = new System.Drawing.Point(215, 55);
+            this.label105.Location = new System.Drawing.Point(215, 51);
             this.label105.Name = "label105";
             this.label105.Size = new System.Drawing.Size(17, 12);
             this.label105.TabIndex = 26;
@@ -7106,7 +7177,7 @@
             // 
             // textBox_USV2_VEL_Kd
             // 
-            this.textBox_USV2_VEL_Kd.Location = new System.Drawing.Point(239, 22);
+            this.textBox_USV2_VEL_Kd.Location = new System.Drawing.Point(239, 18);
             this.textBox_USV2_VEL_Kd.Name = "textBox_USV2_VEL_Kd";
             this.textBox_USV2_VEL_Kd.Size = new System.Drawing.Size(43, 21);
             this.textBox_USV2_VEL_Kd.TabIndex = 23;
@@ -7116,7 +7187,7 @@
             // label106
             // 
             this.label106.AutoSize = true;
-            this.label106.Location = new System.Drawing.Point(216, 25);
+            this.label106.Location = new System.Drawing.Point(216, 22);
             this.label106.Name = "label106";
             this.label106.Size = new System.Drawing.Size(17, 12);
             this.label106.TabIndex = 24;
@@ -7124,7 +7195,7 @@
             // 
             // textBox_USV2_HEA_Ki
             // 
-            this.textBox_USV2_HEA_Ki.Location = new System.Drawing.Point(152, 51);
+            this.textBox_USV2_HEA_Ki.Location = new System.Drawing.Point(152, 47);
             this.textBox_USV2_HEA_Ki.Name = "textBox_USV2_HEA_Ki";
             this.textBox_USV2_HEA_Ki.Size = new System.Drawing.Size(41, 21);
             this.textBox_USV2_HEA_Ki.TabIndex = 21;
@@ -7134,7 +7205,7 @@
             // label100
             // 
             this.label100.AutoSize = true;
-            this.label100.Location = new System.Drawing.Point(128, 56);
+            this.label100.Location = new System.Drawing.Point(128, 53);
             this.label100.Name = "label100";
             this.label100.Size = new System.Drawing.Size(17, 12);
             this.label100.TabIndex = 22;
@@ -7142,7 +7213,7 @@
             // 
             // textBox_USV2_VEL_Ki
             // 
-            this.textBox_USV2_VEL_Ki.Location = new System.Drawing.Point(150, 21);
+            this.textBox_USV2_VEL_Ki.Location = new System.Drawing.Point(150, 18);
             this.textBox_USV2_VEL_Ki.Name = "textBox_USV2_VEL_Ki";
             this.textBox_USV2_VEL_Ki.Size = new System.Drawing.Size(43, 21);
             this.textBox_USV2_VEL_Ki.TabIndex = 19;
@@ -7152,7 +7223,7 @@
             // label104
             // 
             this.label104.AutoSize = true;
-            this.label104.Location = new System.Drawing.Point(129, 26);
+            this.label104.Location = new System.Drawing.Point(129, 23);
             this.label104.Name = "label104";
             this.label104.Size = new System.Drawing.Size(17, 12);
             this.label104.TabIndex = 20;
@@ -7178,7 +7249,7 @@
             // label101
             // 
             this.label101.AutoSize = true;
-            this.label101.Location = new System.Drawing.Point(5, 53);
+            this.label101.Location = new System.Drawing.Point(5, 50);
             this.label101.Name = "label101";
             this.label101.Size = new System.Drawing.Size(41, 12);
             this.label101.TabIndex = 15;
@@ -7186,7 +7257,7 @@
             // 
             // textBox_USV2_HEA_Kp
             // 
-            this.textBox_USV2_HEA_Kp.Location = new System.Drawing.Point(71, 51);
+            this.textBox_USV2_HEA_Kp.Location = new System.Drawing.Point(71, 47);
             this.textBox_USV2_HEA_Kp.Name = "textBox_USV2_HEA_Kp";
             this.textBox_USV2_HEA_Kp.Size = new System.Drawing.Size(41, 21);
             this.textBox_USV2_HEA_Kp.TabIndex = 2;
@@ -7196,7 +7267,7 @@
             // label102
             // 
             this.label102.AutoSize = true;
-            this.label102.Location = new System.Drawing.Point(45, 54);
+            this.label102.Location = new System.Drawing.Point(45, 51);
             this.label102.Name = "label102";
             this.label102.Size = new System.Drawing.Size(17, 12);
             this.label102.TabIndex = 3;
@@ -7204,7 +7275,7 @@
             // 
             // textBox_USV2_VEL_Kp
             // 
-            this.textBox_USV2_VEL_Kp.Location = new System.Drawing.Point(69, 21);
+            this.textBox_USV2_VEL_Kp.Location = new System.Drawing.Point(69, 18);
             this.textBox_USV2_VEL_Kp.Name = "textBox_USV2_VEL_Kp";
             this.textBox_USV2_VEL_Kp.Size = new System.Drawing.Size(43, 21);
             this.textBox_USV2_VEL_Kp.TabIndex = 0;
@@ -7214,7 +7285,7 @@
             // label103
             // 
             this.label103.AutoSize = true;
-            this.label103.Location = new System.Drawing.Point(46, 24);
+            this.label103.Location = new System.Drawing.Point(46, 21);
             this.label103.Name = "label103";
             this.label103.Size = new System.Drawing.Size(17, 12);
             this.label103.TabIndex = 1;
@@ -7230,7 +7301,7 @@
             this.groupBox22.Controls.Add(this.label57);
             this.groupBox22.Controls.Add(this.textBox_USV2_kp);
             this.groupBox22.Controls.Add(this.label58);
-            this.groupBox22.Location = new System.Drawing.Point(6, 151);
+            this.groupBox22.Location = new System.Drawing.Point(6, 146);
             this.groupBox22.Name = "groupBox22";
             this.groupBox22.Size = new System.Drawing.Size(292, 77);
             this.groupBox22.TabIndex = 67;
@@ -7275,7 +7346,7 @@
             // 
             // textBox_USV2_delta
             // 
-            this.textBox_USV2_delta.Location = new System.Drawing.Point(187, 50);
+            this.textBox_USV2_delta.Location = new System.Drawing.Point(185, 47);
             this.textBox_USV2_delta.Name = "textBox_USV2_delta";
             this.textBox_USV2_delta.Size = new System.Drawing.Size(56, 21);
             this.textBox_USV2_delta.TabIndex = 2;
@@ -7293,7 +7364,7 @@
             // 
             // textBox_USV2_kp
             // 
-            this.textBox_USV2_kp.Location = new System.Drawing.Point(186, 20);
+            this.textBox_USV2_kp.Location = new System.Drawing.Point(186, 18);
             this.textBox_USV2_kp.Name = "textBox_USV2_kp";
             this.textBox_USV2_kp.Size = new System.Drawing.Size(54, 21);
             this.textBox_USV2_kp.TabIndex = 0;
@@ -7489,7 +7560,7 @@
             this.tabPage22.Controls.Add(this.textBox_USV3_L);
             this.tabPage22.Location = new System.Drawing.Point(4, 4);
             this.tabPage22.Name = "tabPage22";
-            this.tabPage22.Size = new System.Drawing.Size(309, 329);
+            this.tabPage22.Size = new System.Drawing.Size(309, 357);
             this.tabPage22.TabIndex = 2;
             this.tabPage22.Text = "USV3";
             // 
@@ -7511,6 +7582,20 @@
             // 
             // groupBox_USV3_PID
             // 
+            this.groupBox_USV3_PID.Controls.Add(this.textBox_USV3_Y_Kd);
+            this.groupBox_USV3_PID.Controls.Add(this.label135);
+            this.groupBox_USV3_PID.Controls.Add(this.textBox_USV3_Y_Ki);
+            this.groupBox_USV3_PID.Controls.Add(this.label136);
+            this.groupBox_USV3_PID.Controls.Add(this.label137);
+            this.groupBox_USV3_PID.Controls.Add(this.textBox_USV3_Y_Kp);
+            this.groupBox_USV3_PID.Controls.Add(this.label138);
+            this.groupBox_USV3_PID.Controls.Add(this.textBox_USV3_X_Kd);
+            this.groupBox_USV3_PID.Controls.Add(this.label131);
+            this.groupBox_USV3_PID.Controls.Add(this.textBox_USV3_X_Ki);
+            this.groupBox_USV3_PID.Controls.Add(this.label132);
+            this.groupBox_USV3_PID.Controls.Add(this.label133);
+            this.groupBox_USV3_PID.Controls.Add(this.textBox_USV3_X_Kp);
+            this.groupBox_USV3_PID.Controls.Add(this.label134);
             this.groupBox_USV3_PID.Controls.Add(this.textBox_USV3_HEA_Kd);
             this.groupBox_USV3_PID.Controls.Add(this.label113);
             this.groupBox_USV3_PID.Controls.Add(this.textBox_USV3_VEL_Kd);
@@ -7525,16 +7610,16 @@
             this.groupBox_USV3_PID.Controls.Add(this.label111);
             this.groupBox_USV3_PID.Controls.Add(this.textBox_USV3_VEL_Kp);
             this.groupBox_USV3_PID.Controls.Add(this.label112);
-            this.groupBox_USV3_PID.Location = new System.Drawing.Point(5, 240);
+            this.groupBox_USV3_PID.Location = new System.Drawing.Point(5, 217);
             this.groupBox_USV3_PID.Name = "groupBox_USV3_PID";
-            this.groupBox_USV3_PID.Size = new System.Drawing.Size(292, 77);
+            this.groupBox_USV3_PID.Size = new System.Drawing.Size(292, 137);
             this.groupBox_USV3_PID.TabIndex = 68;
             this.groupBox_USV3_PID.TabStop = false;
             this.groupBox_USV3_PID.Text = "PID参数";
             // 
             // textBox_USV3_HEA_Kd
             // 
-            this.textBox_USV3_HEA_Kd.Location = new System.Drawing.Point(235, 50);
+            this.textBox_USV3_HEA_Kd.Location = new System.Drawing.Point(235, 48);
             this.textBox_USV3_HEA_Kd.Name = "textBox_USV3_HEA_Kd";
             this.textBox_USV3_HEA_Kd.Size = new System.Drawing.Size(46, 21);
             this.textBox_USV3_HEA_Kd.TabIndex = 24;
@@ -7552,7 +7637,7 @@
             // 
             // textBox_USV3_VEL_Kd
             // 
-            this.textBox_USV3_VEL_Kd.Location = new System.Drawing.Point(235, 21);
+            this.textBox_USV3_VEL_Kd.Location = new System.Drawing.Point(235, 20);
             this.textBox_USV3_VEL_Kd.Name = "textBox_USV3_VEL_Kd";
             this.textBox_USV3_VEL_Kd.Size = new System.Drawing.Size(46, 21);
             this.textBox_USV3_VEL_Kd.TabIndex = 22;
@@ -7668,9 +7753,9 @@
             this.groupBox26.Controls.Add(this.label82);
             this.groupBox26.Controls.Add(this.textBox_USV3_kp);
             this.groupBox26.Controls.Add(this.label83);
-            this.groupBox26.Location = new System.Drawing.Point(6, 153);
+            this.groupBox26.Location = new System.Drawing.Point(6, 139);
             this.groupBox26.Name = "groupBox26";
-            this.groupBox26.Size = new System.Drawing.Size(292, 77);
+            this.groupBox26.Size = new System.Drawing.Size(292, 79);
             this.groupBox26.TabIndex = 67;
             this.groupBox26.TabStop = false;
             this.groupBox26.Text = "LOS参数";
@@ -7763,7 +7848,7 @@
             this.groupBox27.Controls.Add(this.label95);
             this.groupBox27.Location = new System.Drawing.Point(6, 39);
             this.groupBox27.Name = "groupBox27";
-            this.groupBox27.Size = new System.Drawing.Size(292, 108);
+            this.groupBox27.Size = new System.Drawing.Size(292, 101);
             this.groupBox27.TabIndex = 66;
             this.groupBox27.TabStop = false;
             this.groupBox27.Text = "无人船信息";
@@ -7771,7 +7856,7 @@
             // label_USV3_HEADING
             // 
             this.label_USV3_HEADING.AutoSize = true;
-            this.label_USV3_HEADING.Location = new System.Drawing.Point(239, 80);
+            this.label_USV3_HEADING.Location = new System.Drawing.Point(239, 77);
             this.label_USV3_HEADING.Name = "label_USV3_HEADING";
             this.label_USV3_HEADING.Size = new System.Drawing.Size(11, 12);
             this.label_USV3_HEADING.TabIndex = 14;
@@ -7780,7 +7865,7 @@
             // label75
             // 
             this.label75.AutoSize = true;
-            this.label75.Location = new System.Drawing.Point(177, 80);
+            this.label75.Location = new System.Drawing.Point(177, 73);
             this.label75.Name = "label75";
             this.label75.Size = new System.Drawing.Size(53, 12);
             this.label75.TabIndex = 13;
@@ -7789,7 +7874,7 @@
             // label_USV3_Y
             // 
             this.label_USV3_Y.AutoSize = true;
-            this.label_USV3_Y.Location = new System.Drawing.Point(137, 80);
+            this.label_USV3_Y.Location = new System.Drawing.Point(137, 75);
             this.label_USV3_Y.Name = "label_USV3_Y";
             this.label_USV3_Y.Size = new System.Drawing.Size(11, 12);
             this.label_USV3_Y.TabIndex = 12;
@@ -7798,7 +7883,7 @@
             // label87
             // 
             this.label87.AutoSize = true;
-            this.label87.Location = new System.Drawing.Point(97, 80);
+            this.label87.Location = new System.Drawing.Point(97, 75);
             this.label87.Name = "label87";
             this.label87.Size = new System.Drawing.Size(23, 12);
             this.label87.TabIndex = 11;
@@ -7807,7 +7892,7 @@
             // label_USV3_X
             // 
             this.label_USV3_X.AutoSize = true;
-            this.label_USV3_X.Location = new System.Drawing.Point(52, 79);
+            this.label_USV3_X.Location = new System.Drawing.Point(52, 76);
             this.label_USV3_X.Name = "label_USV3_X";
             this.label_USV3_X.Size = new System.Drawing.Size(11, 12);
             this.label_USV3_X.TabIndex = 10;
@@ -7816,7 +7901,7 @@
             // label89
             // 
             this.label89.AutoSize = true;
-            this.label89.Location = new System.Drawing.Point(14, 79);
+            this.label89.Location = new System.Drawing.Point(14, 76);
             this.label89.Name = "label89";
             this.label89.Size = new System.Drawing.Size(23, 12);
             this.label89.TabIndex = 9;
@@ -7920,10 +8005,19 @@
             this.tabPage18.Controls.Add(this.groupBox12);
             this.tabPage18.Location = new System.Drawing.Point(4, 4);
             this.tabPage18.Name = "tabPage18";
-            this.tabPage18.Size = new System.Drawing.Size(309, 329);
+            this.tabPage18.Size = new System.Drawing.Size(309, 357);
             this.tabPage18.TabIndex = 3;
             this.tabPage18.Text = "设置";
             this.tabPage18.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox_EXpression
+            // 
+            this.richTextBox_EXpression.Location = new System.Drawing.Point(8, 54);
+            this.richTextBox_EXpression.Name = "richTextBox_EXpression";
+            this.richTextBox_EXpression.ReadOnly = true;
+            this.richTextBox_EXpression.Size = new System.Drawing.Size(292, 146);
+            this.richTextBox_EXpression.TabIndex = 62;
+            this.richTextBox_EXpression.Text = "";
             // 
             // groupBox12
             // 
@@ -7988,7 +8082,7 @@
             this.btn_clear_t6.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
             this.btn_clear_t6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_clear_t6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn_clear_t6.Location = new System.Drawing.Point(155, 624);
+            this.btn_clear_t6.Location = new System.Drawing.Point(155, 625);
             this.btn_clear_t6.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
             this.btn_clear_t6.Name = "btn_clear_t6";
             this.btn_clear_t6.Size = new System.Drawing.Size(78, 28);
@@ -7996,23 +8090,6 @@
             this.btn_clear_t6.Text = "重置曲线";
             this.btn_clear_t6.UseVisualStyleBackColor = false;
             this.btn_clear_t6.Click += new System.EventHandler(this.btn_clear_t6_Click);
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(7, 130);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(65, 12);
-            this.label51.TabIndex = 50;
-            this.label51.Text = "速度设定：";
-            // 
-            // textBox_Speed_Set
-            // 
-            this.textBox_Speed_Set.Location = new System.Drawing.Point(72, 126);
-            this.textBox_Speed_Set.Name = "textBox_Speed_Set";
-            this.textBox_Speed_Set.Size = new System.Drawing.Size(46, 21);
-            this.textBox_Speed_Set.TabIndex = 49;
-            this.textBox_Speed_Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // groupBox16
             // 
@@ -8061,18 +8138,52 @@
             this.groupBox13.Controls.Add(this.label44);
             this.groupBox13.Controls.Add(this.label45);
             this.groupBox13.Controls.Add(this.textBox13);
-            this.groupBox13.Location = new System.Drawing.Point(2, 414);
+            this.groupBox13.Location = new System.Drawing.Point(2, 445);
             this.groupBox13.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Padding = new System.Windows.Forms.Padding(1, 3, 1, 3);
-            this.groupBox13.Size = new System.Drawing.Size(322, 157);
+            this.groupBox13.Size = new System.Drawing.Size(322, 146);
             this.groupBox13.TabIndex = 45;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "参考路径的参数方程";
             // 
+            // label_EXP_ID
+            // 
+            this.label_EXP_ID.AutoSize = true;
+            this.label_EXP_ID.Location = new System.Drawing.Point(133, 122);
+            this.label_EXP_ID.Name = "label_EXP_ID";
+            this.label_EXP_ID.Size = new System.Drawing.Size(41, 12);
+            this.label_EXP_ID.TabIndex = 54;
+            this.label_EXP_ID.Text = "标号：";
+            // 
+            // textBox_EXP_ID
+            // 
+            this.textBox_EXP_ID.Location = new System.Drawing.Point(175, 117);
+            this.textBox_EXP_ID.Name = "textBox_EXP_ID";
+            this.textBox_EXP_ID.Size = new System.Drawing.Size(46, 21);
+            this.textBox_EXP_ID.TabIndex = 53;
+            this.textBox_EXP_ID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // button_ADDEXP
+            // 
+            this.button_ADDEXP.BackColor = System.Drawing.Color.Transparent;
+            this.button_ADDEXP.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.button_ADDEXP.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
+            this.button_ADDEXP.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
+            this.button_ADDEXP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_ADDEXP.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button_ADDEXP.Location = new System.Drawing.Point(233, 113);
+            this.button_ADDEXP.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
+            this.button_ADDEXP.Name = "button_ADDEXP";
+            this.button_ADDEXP.Size = new System.Drawing.Size(78, 28);
+            this.button_ADDEXP.TabIndex = 52;
+            this.button_ADDEXP.Text = "添加轨迹";
+            this.button_ADDEXP.UseVisualStyleBackColor = false;
+            this.button_ADDEXP.Click += new System.EventHandler(this.button_ADDEXP_Click);
+            // 
             // textBox10
             // 
-            this.textBox10.Location = new System.Drawing.Point(213, 89);
+            this.textBox10.Location = new System.Drawing.Point(213, 85);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(56, 21);
             this.textBox10.TabIndex = 47;
@@ -8082,7 +8193,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(177, 95);
+            this.label35.Location = new System.Drawing.Point(177, 89);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(11, 12);
             this.label35.TabIndex = 46;
@@ -8090,17 +8201,34 @@
             // 
             // textBox11
             // 
-            this.textBox11.Location = new System.Drawing.Point(105, 89);
+            this.textBox11.Location = new System.Drawing.Point(105, 86);
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(56, 21);
             this.textBox11.TabIndex = 45;
             this.textBox11.Text = "0";
             this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Location = new System.Drawing.Point(7, 125);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(65, 12);
+            this.label51.TabIndex = 50;
+            this.label51.Text = "速度设定：";
+            // 
+            // textBox_Speed_Set
+            // 
+            this.textBox_Speed_Set.Location = new System.Drawing.Point(72, 120);
+            this.textBox_Speed_Set.Name = "textBox_Speed_Set";
+            this.textBox_Speed_Set.Size = new System.Drawing.Size(46, 21);
+            this.textBox_Speed_Set.TabIndex = 49;
+            this.textBox_Speed_Set.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // label43
             // 
             this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(7, 95);
+            this.label43.Location = new System.Drawing.Point(7, 90);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(95, 12);
             this.label43.TabIndex = 44;
@@ -8152,7 +8280,7 @@
             this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button3.Location = new System.Drawing.Point(246, 622);
+            this.button3.Location = new System.Drawing.Point(244, 624);
             this.button3.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(78, 28);
@@ -12210,48 +12338,393 @@
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox1.Visible = false;
             // 
-            // button_ADDEXP
+            // textBox_USV1_X_Kd
             // 
-            this.button_ADDEXP.BackColor = System.Drawing.Color.Transparent;
-            this.button_ADDEXP.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.button_ADDEXP.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
-            this.button_ADDEXP.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
-            this.button_ADDEXP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_ADDEXP.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button_ADDEXP.Location = new System.Drawing.Point(233, 121);
-            this.button_ADDEXP.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
-            this.button_ADDEXP.Name = "button_ADDEXP";
-            this.button_ADDEXP.Size = new System.Drawing.Size(78, 28);
-            this.button_ADDEXP.TabIndex = 52;
-            this.button_ADDEXP.Text = "添加轨迹";
-            this.button_ADDEXP.UseVisualStyleBackColor = false;
-            this.button_ADDEXP.Click += new System.EventHandler(this.button_ADDEXP_Click);
+            this.textBox_USV1_X_Kd.Location = new System.Drawing.Point(241, 77);
+            this.textBox_USV1_X_Kd.Name = "textBox_USV1_X_Kd";
+            this.textBox_USV1_X_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Kd.TabIndex = 31;
+            this.textBox_USV1_X_Kd.Text = "0.1";
+            this.textBox_USV1_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label_EXP_ID
+            // label115
             // 
-            this.label_EXP_ID.AutoSize = true;
-            this.label_EXP_ID.Location = new System.Drawing.Point(133, 131);
-            this.label_EXP_ID.Name = "label_EXP_ID";
-            this.label_EXP_ID.Size = new System.Drawing.Size(41, 12);
-            this.label_EXP_ID.TabIndex = 54;
-            this.label_EXP_ID.Text = "标号：";
+            this.label115.AutoSize = true;
+            this.label115.Location = new System.Drawing.Point(216, 80);
+            this.label115.Name = "label115";
+            this.label115.Size = new System.Drawing.Size(17, 12);
+            this.label115.TabIndex = 32;
+            this.label115.Text = "Kd";
             // 
-            // textBox_EXP_ID
+            // textBox_USV1_X_Ki
             // 
-            this.textBox_EXP_ID.Location = new System.Drawing.Point(175, 126);
-            this.textBox_EXP_ID.Name = "textBox_EXP_ID";
-            this.textBox_EXP_ID.Size = new System.Drawing.Size(46, 21);
-            this.textBox_EXP_ID.TabIndex = 53;
-            this.textBox_EXP_ID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_USV1_X_Ki.Location = new System.Drawing.Point(155, 75);
+            this.textBox_USV1_X_Ki.Name = "textBox_USV1_X_Ki";
+            this.textBox_USV1_X_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Ki.TabIndex = 29;
+            this.textBox_USV1_X_Ki.Text = "0.1";
+            this.textBox_USV1_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // richTextBox_EXpression
+            // label116
             // 
-            this.richTextBox_EXpression.Location = new System.Drawing.Point(8, 54);
-            this.richTextBox_EXpression.Name = "richTextBox_EXpression";
-            this.richTextBox_EXpression.ReadOnly = true;
-            this.richTextBox_EXpression.Size = new System.Drawing.Size(292, 146);
-            this.richTextBox_EXpression.TabIndex = 62;
-            this.richTextBox_EXpression.Text = "";
+            this.label116.AutoSize = true;
+            this.label116.Location = new System.Drawing.Point(131, 80);
+            this.label116.Name = "label116";
+            this.label116.Size = new System.Drawing.Size(17, 12);
+            this.label116.TabIndex = 30;
+            this.label116.Text = "Ki";
+            // 
+            // label117
+            // 
+            this.label117.AutoSize = true;
+            this.label117.Location = new System.Drawing.Point(7, 79);
+            this.label117.Name = "label117";
+            this.label117.Size = new System.Drawing.Size(23, 12);
+            this.label117.TabIndex = 28;
+            this.label117.Text = "X：";
+            // 
+            // textBox_USV1_X_Kp
+            // 
+            this.textBox_USV1_X_Kp.Location = new System.Drawing.Point(66, 75);
+            this.textBox_USV1_X_Kp.Name = "textBox_USV1_X_Kp";
+            this.textBox_USV1_X_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Kp.TabIndex = 26;
+            this.textBox_USV1_X_Kp.Text = "0.1";
+            this.textBox_USV1_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label118
+            // 
+            this.label118.AutoSize = true;
+            this.label118.Location = new System.Drawing.Point(42, 79);
+            this.label118.Name = "label118";
+            this.label118.Size = new System.Drawing.Size(17, 12);
+            this.label118.TabIndex = 27;
+            this.label118.Text = "Kp";
+            // 
+            // textBox_USV1_Y_Kd
+            // 
+            this.textBox_USV1_Y_Kd.Location = new System.Drawing.Point(241, 108);
+            this.textBox_USV1_Y_Kd.Name = "textBox_USV1_Y_Kd";
+            this.textBox_USV1_Y_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_Y_Kd.TabIndex = 38;
+            this.textBox_USV1_Y_Kd.Text = "0.1";
+            this.textBox_USV1_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label119
+            // 
+            this.label119.AutoSize = true;
+            this.label119.Location = new System.Drawing.Point(216, 111);
+            this.label119.Name = "label119";
+            this.label119.Size = new System.Drawing.Size(17, 12);
+            this.label119.TabIndex = 39;
+            this.label119.Text = "Kd";
+            // 
+            // textBox_USV1_Y_Ki
+            // 
+            this.textBox_USV1_Y_Ki.Location = new System.Drawing.Point(155, 106);
+            this.textBox_USV1_Y_Ki.Name = "textBox_USV1_Y_Ki";
+            this.textBox_USV1_Y_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_Y_Ki.TabIndex = 36;
+            this.textBox_USV1_Y_Ki.Text = "0.1";
+            this.textBox_USV1_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label120
+            // 
+            this.label120.AutoSize = true;
+            this.label120.Location = new System.Drawing.Point(131, 111);
+            this.label120.Name = "label120";
+            this.label120.Size = new System.Drawing.Size(17, 12);
+            this.label120.TabIndex = 37;
+            this.label120.Text = "Ki";
+            // 
+            // label121
+            // 
+            this.label121.AutoSize = true;
+            this.label121.Location = new System.Drawing.Point(8, 109);
+            this.label121.Name = "label121";
+            this.label121.Size = new System.Drawing.Size(23, 12);
+            this.label121.TabIndex = 35;
+            this.label121.Text = "Y：";
+            // 
+            // textBox_USV1_Y_Kp
+            // 
+            this.textBox_USV1_Y_Kp.Location = new System.Drawing.Point(66, 106);
+            this.textBox_USV1_Y_Kp.Name = "textBox_USV1_Y_Kp";
+            this.textBox_USV1_Y_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_Y_Kp.TabIndex = 33;
+            this.textBox_USV1_Y_Kp.Text = "0.1";
+            this.textBox_USV1_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label122
+            // 
+            this.label122.AutoSize = true;
+            this.label122.Location = new System.Drawing.Point(42, 110);
+            this.label122.Name = "label122";
+            this.label122.Size = new System.Drawing.Size(17, 12);
+            this.label122.TabIndex = 34;
+            this.label122.Text = "Kp";
+            // 
+            // textBox_USV2_X_Kd
+            // 
+            this.textBox_USV2_X_Kd.Location = new System.Drawing.Point(241, 76);
+            this.textBox_USV2_X_Kd.Name = "textBox_USV2_X_Kd";
+            this.textBox_USV2_X_Kd.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_X_Kd.TabIndex = 32;
+            this.textBox_USV2_X_Kd.Text = "0.1";
+            this.textBox_USV2_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label123
+            // 
+            this.label123.AutoSize = true;
+            this.label123.Location = new System.Drawing.Point(215, 80);
+            this.label123.Name = "label123";
+            this.label123.Size = new System.Drawing.Size(17, 12);
+            this.label123.TabIndex = 33;
+            this.label123.Text = "Kd";
+            // 
+            // textBox_USV2_X_Ki
+            // 
+            this.textBox_USV2_X_Ki.Location = new System.Drawing.Point(152, 75);
+            this.textBox_USV2_X_Ki.Name = "textBox_USV2_X_Ki";
+            this.textBox_USV2_X_Ki.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_X_Ki.TabIndex = 30;
+            this.textBox_USV2_X_Ki.Text = "0.1";
+            this.textBox_USV2_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label124
+            // 
+            this.label124.AutoSize = true;
+            this.label124.Location = new System.Drawing.Point(128, 81);
+            this.label124.Name = "label124";
+            this.label124.Size = new System.Drawing.Size(17, 12);
+            this.label124.TabIndex = 31;
+            this.label124.Text = "Ki";
+            // 
+            // label125
+            // 
+            this.label125.AutoSize = true;
+            this.label125.Location = new System.Drawing.Point(5, 80);
+            this.label125.Name = "label125";
+            this.label125.Size = new System.Drawing.Size(23, 12);
+            this.label125.TabIndex = 29;
+            this.label125.Text = "X：";
+            // 
+            // textBox_USV2_X_Kp
+            // 
+            this.textBox_USV2_X_Kp.Location = new System.Drawing.Point(71, 76);
+            this.textBox_USV2_X_Kp.Name = "textBox_USV2_X_Kp";
+            this.textBox_USV2_X_Kp.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_X_Kp.TabIndex = 27;
+            this.textBox_USV2_X_Kp.Text = "0.1";
+            this.textBox_USV2_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label126
+            // 
+            this.label126.AutoSize = true;
+            this.label126.Location = new System.Drawing.Point(45, 81);
+            this.label126.Name = "label126";
+            this.label126.Size = new System.Drawing.Size(17, 12);
+            this.label126.TabIndex = 28;
+            this.label126.Text = "Kp";
+            // 
+            // textBox_USV2_Y_Kd
+            // 
+            this.textBox_USV2_Y_Kd.Location = new System.Drawing.Point(241, 104);
+            this.textBox_USV2_Y_Kd.Name = "textBox_USV2_Y_Kd";
+            this.textBox_USV2_Y_Kd.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_Y_Kd.TabIndex = 39;
+            this.textBox_USV2_Y_Kd.Text = "0.1";
+            this.textBox_USV2_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label127
+            // 
+            this.label127.AutoSize = true;
+            this.label127.Location = new System.Drawing.Point(215, 107);
+            this.label127.Name = "label127";
+            this.label127.Size = new System.Drawing.Size(17, 12);
+            this.label127.TabIndex = 40;
+            this.label127.Text = "Kd";
+            // 
+            // textBox_USV2_Y_Ki
+            // 
+            this.textBox_USV2_Y_Ki.Location = new System.Drawing.Point(152, 103);
+            this.textBox_USV2_Y_Ki.Name = "textBox_USV2_Y_Ki";
+            this.textBox_USV2_Y_Ki.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_Y_Ki.TabIndex = 37;
+            this.textBox_USV2_Y_Ki.Text = "0.1";
+            this.textBox_USV2_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label128
+            // 
+            this.label128.AutoSize = true;
+            this.label128.Location = new System.Drawing.Point(128, 108);
+            this.label128.Name = "label128";
+            this.label128.Size = new System.Drawing.Size(17, 12);
+            this.label128.TabIndex = 38;
+            this.label128.Text = "Ki";
+            // 
+            // label129
+            // 
+            this.label129.AutoSize = true;
+            this.label129.Location = new System.Drawing.Point(5, 105);
+            this.label129.Name = "label129";
+            this.label129.Size = new System.Drawing.Size(23, 12);
+            this.label129.TabIndex = 36;
+            this.label129.Text = "Y：";
+            // 
+            // textBox_USV2_Y_Kp
+            // 
+            this.textBox_USV2_Y_Kp.Location = new System.Drawing.Point(71, 103);
+            this.textBox_USV2_Y_Kp.Name = "textBox_USV2_Y_Kp";
+            this.textBox_USV2_Y_Kp.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_Y_Kp.TabIndex = 34;
+            this.textBox_USV2_Y_Kp.Text = "0.1";
+            this.textBox_USV2_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label130
+            // 
+            this.label130.AutoSize = true;
+            this.label130.Location = new System.Drawing.Point(45, 106);
+            this.label130.Name = "label130";
+            this.label130.Size = new System.Drawing.Size(17, 12);
+            this.label130.TabIndex = 35;
+            this.label130.Text = "Kp";
+            // 
+            // textBox_USV3_X_Kd
+            // 
+            this.textBox_USV3_X_Kd.Location = new System.Drawing.Point(236, 77);
+            this.textBox_USV3_X_Kd.Name = "textBox_USV3_X_Kd";
+            this.textBox_USV3_X_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_X_Kd.TabIndex = 31;
+            this.textBox_USV3_X_Kd.Text = "0.1";
+            this.textBox_USV3_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label131
+            // 
+            this.label131.AutoSize = true;
+            this.label131.Location = new System.Drawing.Point(214, 84);
+            this.label131.Name = "label131";
+            this.label131.Size = new System.Drawing.Size(17, 12);
+            this.label131.TabIndex = 32;
+            this.label131.Text = "Kd";
+            // 
+            // textBox_USV3_X_Ki
+            // 
+            this.textBox_USV3_X_Ki.Location = new System.Drawing.Point(152, 79);
+            this.textBox_USV3_X_Ki.Name = "textBox_USV3_X_Ki";
+            this.textBox_USV3_X_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_X_Ki.TabIndex = 29;
+            this.textBox_USV3_X_Ki.Text = "0.1";
+            this.textBox_USV3_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label132
+            // 
+            this.label132.AutoSize = true;
+            this.label132.Location = new System.Drawing.Point(130, 84);
+            this.label132.Name = "label132";
+            this.label132.Size = new System.Drawing.Size(17, 12);
+            this.label132.TabIndex = 30;
+            this.label132.Text = "Ki";
+            // 
+            // label133
+            // 
+            this.label133.AutoSize = true;
+            this.label133.Location = new System.Drawing.Point(6, 80);
+            this.label133.Name = "label133";
+            this.label133.Size = new System.Drawing.Size(23, 12);
+            this.label133.TabIndex = 28;
+            this.label133.Text = "X：";
+            // 
+            // textBox_USV3_X_Kp
+            // 
+            this.textBox_USV3_X_Kp.Location = new System.Drawing.Point(68, 77);
+            this.textBox_USV3_X_Kp.Name = "textBox_USV3_X_Kp";
+            this.textBox_USV3_X_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_X_Kp.TabIndex = 26;
+            this.textBox_USV3_X_Kp.Text = "0.1";
+            this.textBox_USV3_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label134
+            // 
+            this.label134.AutoSize = true;
+            this.label134.Location = new System.Drawing.Point(46, 82);
+            this.label134.Name = "label134";
+            this.label134.Size = new System.Drawing.Size(17, 12);
+            this.label134.TabIndex = 27;
+            this.label134.Text = "Kp";
+            // 
+            // textBox_USV3_Y_Kd
+            // 
+            this.textBox_USV3_Y_Kd.Location = new System.Drawing.Point(236, 107);
+            this.textBox_USV3_Y_Kd.Name = "textBox_USV3_Y_Kd";
+            this.textBox_USV3_Y_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_Y_Kd.TabIndex = 38;
+            this.textBox_USV3_Y_Kd.Text = "0.1";
+            this.textBox_USV3_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label135
+            // 
+            this.label135.AutoSize = true;
+            this.label135.Location = new System.Drawing.Point(214, 115);
+            this.label135.Name = "label135";
+            this.label135.Size = new System.Drawing.Size(17, 12);
+            this.label135.TabIndex = 39;
+            this.label135.Text = "Kd";
+            // 
+            // textBox_USV3_Y_Ki
+            // 
+            this.textBox_USV3_Y_Ki.Location = new System.Drawing.Point(152, 108);
+            this.textBox_USV3_Y_Ki.Name = "textBox_USV3_Y_Ki";
+            this.textBox_USV3_Y_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_Y_Ki.TabIndex = 36;
+            this.textBox_USV3_Y_Ki.Text = "0.1";
+            this.textBox_USV3_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label136
+            // 
+            this.label136.AutoSize = true;
+            this.label136.Location = new System.Drawing.Point(130, 114);
+            this.label136.Name = "label136";
+            this.label136.Size = new System.Drawing.Size(17, 12);
+            this.label136.TabIndex = 37;
+            this.label136.Text = "Ki";
+            // 
+            // label137
+            // 
+            this.label137.AutoSize = true;
+            this.label137.Location = new System.Drawing.Point(6, 111);
+            this.label137.Name = "label137";
+            this.label137.Size = new System.Drawing.Size(23, 12);
+            this.label137.TabIndex = 35;
+            this.label137.Text = "Y：";
+            // 
+            // textBox_USV3_Y_Kp
+            // 
+            this.textBox_USV3_Y_Kp.Location = new System.Drawing.Point(68, 108);
+            this.textBox_USV3_Y_Kp.Name = "textBox_USV3_Y_Kp";
+            this.textBox_USV3_Y_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_Y_Kp.TabIndex = 33;
+            this.textBox_USV3_Y_Kp.Text = "0.1";
+            this.textBox_USV3_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label138
+            // 
+            this.label138.AutoSize = true;
+            this.label138.Location = new System.Drawing.Point(46, 113);
+            this.label138.Name = "label138";
+            this.label138.Size = new System.Drawing.Size(17, 12);
+            this.label138.TabIndex = 34;
+            this.label138.Text = "Kp";
+            // 
+            // radioButton_Point
+            // 
+            this.radioButton_Point.AutoSize = true;
+            this.radioButton_Point.Location = new System.Drawing.Point(116, 16);
+            this.radioButton_Point.Name = "radioButton_Point";
+            this.radioButton_Point.Size = new System.Drawing.Size(35, 16);
+            this.radioButton_Point.TabIndex = 62;
+            this.radioButton_Point.Text = "点";
+            this.radioButton_Point.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -12854,6 +13327,49 @@
         private System.Windows.Forms.Label label_EXP_ID;
         public System.Windows.Forms.TextBox textBox_EXP_ID;
         private System.Windows.Forms.RichTextBox richTextBox_EXpression;
+        private System.Windows.Forms.TextBox textBox_USV1_X_Kd;
+        private System.Windows.Forms.Label label115;
+        private System.Windows.Forms.TextBox textBox_USV1_X_Ki;
+        private System.Windows.Forms.Label label116;
+        private System.Windows.Forms.Label label117;
+        private System.Windows.Forms.TextBox textBox_USV1_X_Kp;
+        private System.Windows.Forms.Label label118;
+        private System.Windows.Forms.TextBox textBox_USV1_Y_Kd;
+        private System.Windows.Forms.Label label119;
+        private System.Windows.Forms.TextBox textBox_USV1_Y_Ki;
+        private System.Windows.Forms.Label label120;
+        private System.Windows.Forms.Label label121;
+        private System.Windows.Forms.TextBox textBox_USV1_Y_Kp;
+        private System.Windows.Forms.Label label122;
+        private System.Windows.Forms.TextBox textBox_USV2_Y_Kd;
+        private System.Windows.Forms.Label label127;
+        private System.Windows.Forms.TextBox textBox_USV2_Y_Ki;
+        private System.Windows.Forms.Label label128;
+        private System.Windows.Forms.Label label129;
+        private System.Windows.Forms.TextBox textBox_USV2_Y_Kp;
+        private System.Windows.Forms.Label label130;
+        private System.Windows.Forms.TextBox textBox_USV2_X_Kd;
+        private System.Windows.Forms.Label label123;
+        private System.Windows.Forms.TextBox textBox_USV2_X_Ki;
+        private System.Windows.Forms.Label label124;
+        private System.Windows.Forms.Label label125;
+        private System.Windows.Forms.TextBox textBox_USV2_X_Kp;
+        private System.Windows.Forms.Label label126;
+        private System.Windows.Forms.TextBox textBox_USV3_Y_Kd;
+        private System.Windows.Forms.Label label135;
+        private System.Windows.Forms.TextBox textBox_USV3_Y_Ki;
+        private System.Windows.Forms.Label label136;
+        private System.Windows.Forms.Label label137;
+        private System.Windows.Forms.TextBox textBox_USV3_Y_Kp;
+        private System.Windows.Forms.Label label138;
+        private System.Windows.Forms.TextBox textBox_USV3_X_Kd;
+        private System.Windows.Forms.Label label131;
+        private System.Windows.Forms.TextBox textBox_USV3_X_Ki;
+        private System.Windows.Forms.Label label132;
+        private System.Windows.Forms.Label label133;
+        private System.Windows.Forms.TextBox textBox_USV3_X_Kp;
+        private System.Windows.Forms.Label label134;
+        public System.Windows.Forms.RadioButton radioButton_Point;
     }
 }
 

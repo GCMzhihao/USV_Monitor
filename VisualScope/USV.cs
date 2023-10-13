@@ -48,6 +48,26 @@ namespace 地面站
         }
         
     }
+    public class USV_Point_PID_INFO
+    {
+        public TextBox X_Kp;
+        public TextBox X_Ki;
+        public TextBox X_Kd;
+        public TextBox Y_Kp;
+        public TextBox Y_Ki;
+        public TextBox Y_Kd;
+
+        public USV_Point_PID_INFO(TextBox X_Kp_, TextBox X_Ki_, TextBox X_Kd_, TextBox Y_Kp_, TextBox Y_Ki_, TextBox Y_Kd_)
+        { 
+            X_Kp = X_Kp_;
+            X_Ki = X_Ki_;
+            X_Kd = X_Kd_;
+            Y_Kp = Y_Kp_;
+            Y_Ki = Y_Ki_;
+            Y_Kd = Y_Kd_;
+        }
+
+    }
     public class USV_PID_Info
     {
         public TextBox VEL_Kp;
@@ -59,6 +79,7 @@ namespace 地面站
         public int index=0;
         public float[] PID_Value = new float[10];
         public TextBox[] textBoxes = new TextBox[10];
+
         
         public USV_PID_Info(TextBox VEL_Kp_, TextBox VEL_Ki_, TextBox VEL_Kd_, TextBox HEA_Kp_, TextBox HEA_Ki_, TextBox HEA_Kd_)
         {
@@ -116,6 +137,7 @@ namespace 地面站
 
         USV_State_Info usv_state_info;
         public USV_PID_Info usv_PID_info;
+        public USV_Point_PID_INFO usv_Point_PID_info;
 
         public USV(object sender, byte DEV_ID_)
         {
@@ -149,6 +171,10 @@ namespace 地面站
         public void Init(USV_PID_Info usv_PID_info_)
         { 
         usv_PID_info = usv_PID_info_;
+        }
+        public void Init(USV_Point_PID_INFO uSV_Point_PID_INFO)
+        {
+            usv_Point_PID_info = uSV_Point_PID_INFO;
         }
 
         public void UNLOCK()
@@ -268,16 +294,131 @@ namespace 地面站
             usv_state_info.X.Text = Position.X.ToString("0.00");
             usv_state_info.Y.Text = Position.Y.ToString("0.00");
         }
-
-        public void LOS_Follower(double T)
+        public void LOS_Point_Leader(double T)
         {
-            double heading_set;//设定艏向角
-            double rudder_set;//设定舵角
             double beta;//漂角
             double u;//船速
             double x, y;
             double heading;
-            double rudder;
+            double course;
+
+            USV_Info_Display();
+            if (form1.radioButton_Simulation.Checked)//仿真
+            {
+                beta = 0.1;
+                heading = Los.psi;
+                course = heading + beta;
+
+                Position.X = Los.x;
+                Position.Y = Los.y;
+
+                Los.UpdateData(Position.X, Position.Y, heading, course, result.vel);
+                result = Los.Calculate_Point_Leader(T);
+                state.speed = (float)result.vel;
+                Los.psi=result.psi_d;
+                state.heading =Convert.ToSingle(result.psi_d);
+                Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
+                Draw_Line();
+
+            }
+            else if (form1.radioButton_Real_USV.Checked)//实船
+            {
+                ll2XY();
+
+                heading = state.heading / 180 * Math.PI;//弧度
+                u = state.speed;
+                course = state.Track / 180 * Math.PI;//弧度
+
+                Draw_Line();
+                Los.UpdateData(Position.X, Position.Y, heading, course, u);
+
+                result = Los.Calculate_Point_Leader(T);
+                result.psi_d = result.psi_d * 180 / Math.PI;
+                set.Heading = (float)result.psi_d;
+                set.Speed = (float)result.vel;
+                set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
+                set.DEV_ID = DEV_ID;
+
+                form1.mavlinkPacket.ComponentId = DEV_ID;
+                form1.mavlinkPacket.Message = set;
+                form1.SendMavMsgToRocker(form1.mavlinkPacket);
+                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.speed", set.Speed);//添加到波形显示
+                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.heading", set.Heading);//添加到波形显示
+
+
+            }
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="T"></param>
+        /// <param name="x_l">领航者X坐标</param>
+        /// <param name="y_l">领航者Y坐标</param>
+        /// <param name="psi_l">领航者艏向角</param>
+        public void LOS_Point_Follower(double T,double x_l,double y_l,double psi_l)
+        {
+            double beta;//漂角
+            double u;//船速
+            double x, y;
+            double heading;
+            double course;
+
+            USV_Info_Display();
+            if (form1.radioButton_Simulation.Checked)//仿真
+            {
+                beta = 0.1;
+                heading = Los.psi;
+                course = heading + beta;
+
+                Position.X = Los.x;
+                Position.Y = Los.y;
+
+                Los.UpdateData(Position.X, Position.Y, heading, course, result.vel);
+                psi_l = psi_l * 180 / Math.PI;
+                result = Los.Calculate_Point_Follower(x_l,y_l,psi_l,T, 
+                                        Convert.ToDouble(usv_state_info.L.Text), 
+                                        Convert.ToDouble(usv_state_info.angle.Text));
+                state.speed = (float)result.vel;
+                Los.psi = result.psi_d;
+                Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
+                Draw_Line();
+
+            }
+            else if (form1.radioButton_Real_USV.Checked)//实船
+            {
+                ll2XY();
+
+                heading = state.heading / 180 * Math.PI;//弧度
+                u = state.speed;
+                course = state.Track / 180 * Math.PI;//弧度
+
+                Draw_Line();
+                Los.UpdateData(Position.X, Position.Y, heading, course, u);
+
+                result = Los.Calculate_Point_Follower(x_l, y_l, psi_l, T,
+                                        Convert.ToDouble(usv_state_info.L.Text),
+                                        Convert.ToDouble(usv_state_info.angle.Text)); result.psi_d = result.psi_d * 180 / Math.PI;
+                set.Heading = (float)result.psi_d;
+                set.Speed = (float)result.vel;
+                set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
+                set.DEV_ID = DEV_ID;
+
+                form1.mavlinkPacket.ComponentId = DEV_ID;
+                form1.mavlinkPacket.Message = set;
+                form1.SendMavMsgToRocker(form1.mavlinkPacket);
+                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.speed", set.Speed);//添加到波形显示
+                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.heading", set.Heading);//添加到波形显示
+
+
+            }
+        }
+        public void LOS_Follower(double T)
+        {
+            double beta;//漂角
+            double u;//船速
+            double x, y;
+            double heading;
             double course;
 
             USV_Info_Display();
@@ -326,6 +467,7 @@ namespace 地面站
             }
 
         }
+     
         public void LOS_Control(double T)
         {
             double heading_set;//设定艏向角

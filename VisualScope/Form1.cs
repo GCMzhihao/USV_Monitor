@@ -86,12 +86,21 @@ namespace 地面站
         public List<byte> USV_ID_List = new List<byte>();
         public USV_State_Info[] USVs_State_Info = new USV_State_Info[USV_NUM];
         public USV_PID_Info[] USVs_PID_Info = new USV_PID_Info[USV_NUM];
+        public USV_Point_PID_INFO[] USVs_Point_PID_ = new USV_Point_PID_INFO[USV_NUM];
+        
 
 
 
         List<Expression> Expressions = new List<Expression>();
         List<Expression> Expressions_Copy=new List<Expression>();
         List<byte> UWB_TagUsed = new List<byte>();
+
+       
+        List<PointF>Points = new List<PointF>();
+        List<PointF> Points_Copy = new List<PointF>();
+
+        float Current_Normal_k;//法向量斜率
+        string Current_Normal_Expression;//法向量方程
 
         public HorizLine[] HorizLines = new HorizLine[30];
         public FastLine[] FastLines = new FastLine[30];
@@ -410,14 +419,13 @@ namespace 地面站
             tchartzooms[1] = new TChartZoom(tChart2);
             tchartzooms[2] = new TChartZoom(tChart3);
             tchartzooms[3] = new TChartZoom(tChart5);
-            tchartzooms[3] = new TChartZoom(tChart6);
             tchartzooms[4] = new TChartZoom(tChart7);
             tchartzooms[5] = new TChartZoom(tChart8);
             tchartzooms[6] = new TChartZoom(tChart9);
             tchartzooms[8] = new TChartZoom(tChart11);
 
             tchartscalings[0] = new TChartScaling(tChart4);
-
+            tchartscalings[1] = new TChartScaling(tChart6);
 
             /******USV相关控件初始化*******/
             USVs_State_Info[0] = new USV_State_Info(label_USV1_ID, label_USV1_VEL, label_USV1_VOL, label_USV1_X, label_USV1_Y, label_USV1_HEADING, label_USV1_LOS_VEL, label_USV1_LOS_HEA, textBox_USV1_L, textBox_USV1_angle, textBox_USV1_kp, textBox_USV1_delta);
@@ -428,6 +436,10 @@ namespace 地面站
             USVs_PID_Info[1] = new USV_PID_Info(textBox_USV2_VEL_Kp, textBox_USV2_VEL_Ki, textBox_USV2_VEL_Kd, textBox_USV2_HEA_Kp, textBox_USV2_HEA_Ki, textBox_USV2_HEA_Kd);
             USVs_PID_Info[2] = new USV_PID_Info(textBox_USV3_VEL_Kp, textBox_USV3_VEL_Ki, textBox_USV3_VEL_Kd, textBox_USV3_HEA_Kp, textBox_USV3_HEA_Ki, textBox_USV3_HEA_Kd);
 
+            USVs_Point_PID_[0] = new USV_Point_PID_INFO(textBox_USV1_X_Kp, textBox_USV1_X_Ki, textBox_USV1_X_Kd, textBox_USV1_Y_Kp, textBox_USV1_Y_Ki, textBox_USV1_Y_Kd);
+            USVs_Point_PID_[1] = new USV_Point_PID_INFO(textBox_USV2_X_Kp, textBox_USV2_X_Ki, textBox_USV2_X_Kd, textBox_USV2_Y_Kp, textBox_USV2_Y_Ki, textBox_USV2_Y_Kd);
+            USVs_Point_PID_[2] = new USV_Point_PID_INFO(textBox_USV3_X_Kp, textBox_USV3_X_Ki, textBox_USV3_X_Kd, textBox_USV3_Y_Kp, textBox_USV3_Y_Ki, textBox_USV3_Y_Kd);
+
             USVs_LOS[0] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox_USV1_kp.Text), Convert.ToDouble(textBox_USV1_delta.Text));
             USVs_LOS[1] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox_USV2_kp.Text), Convert.ToDouble(textBox_USV2_delta.Text));
             USVs_LOS[2] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox_USV3_kp.Text), Convert.ToDouble(textBox_USV3_delta.Text));
@@ -437,19 +449,30 @@ namespace 地面站
             USVs[0].Init(USVs_LOS[0]);
             USVs[0].Init(USVs_State_Info[0]);
             USVs[0].Init(USVs_PID_Info[0]);
+            USVs[0].Init(USVs_Point_PID_[0]);
 
             USVs[1] = new USV(form1, 16);
             USVs[1].Init(horizLine13);
             USVs[1].Init(USVs_LOS[1]);
             USVs[1].Init(USVs_State_Info[1]);
             USVs[1].Init(USVs_PID_Info[1]);
+            USVs[0].Init(USVs_Point_PID_[1]);
 
             USVs[2] = new USV(form1, 16);
             USVs[2].Init(horizLine14);
             USVs[2].Init(USVs_LOS[2]);
             USVs[2].Init(USVs_State_Info[2]);
             USVs[2].Init(USVs_PID_Info[2]);
+            USVs[0].Init(USVs_Point_PID_[2]);
 
+            USVs_LOS[0].pid_x.UpdateParam(Convert.ToDouble(textBox_USV1_X_Kp.Text), Convert.ToDouble(textBox_USV1_X_Ki.Text), Convert.ToDouble(textBox_USV1_X_Kd.Text), 0);
+            USVs_LOS[0].pid_y.UpdateParam(Convert.ToDouble(textBox_USV1_Y_Kp.Text), Convert.ToDouble(textBox_USV1_Y_Ki.Text), Convert.ToDouble(textBox_USV1_Y_Kd.Text), 0);
+
+            USVs_LOS[1].pid_x.UpdateParam(Convert.ToDouble(textBox_USV2_X_Kp.Text), Convert.ToDouble(textBox_USV2_X_Ki.Text), Convert.ToDouble(textBox_USV2_X_Kd.Text), 0);
+            USVs_LOS[1].pid_y.UpdateParam(Convert.ToDouble(textBox_USV2_Y_Kp.Text), Convert.ToDouble(textBox_USV2_Y_Ki.Text), Convert.ToDouble(textBox_USV2_Y_Kd.Text), 0);
+
+            USVs_LOS[2].pid_x.UpdateParam(Convert.ToDouble(textBox_USV3_X_Kp.Text), Convert.ToDouble(textBox_USV3_X_Ki.Text), Convert.ToDouble(textBox_USV3_X_Kd.Text), 0);
+            USVs_LOS[2].pid_y.UpdateParam(Convert.ToDouble(textBox_USV3_Y_Kp.Text), Convert.ToDouble(textBox_USV3_Y_Ki.Text), Convert.ToDouble(textBox_USV3_Y_Kd.Text), 0);
 
 
 
@@ -508,6 +531,29 @@ namespace 地面站
             USVs_PID_Info[2].HEA_Kp.Leave += new EventHandler(USVs[2].PID_Updata);
             USVs_PID_Info[2].HEA_Ki.Leave += new EventHandler(USVs[2].PID_Updata);
             USVs_PID_Info[2].HEA_Kd.Leave += new EventHandler(USVs[2].PID_Updata);
+
+            USVs_Point_PID_[0].X_Kp.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[0].X_Ki.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[0].X_Kd.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[0].Y_Kp.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[0].Y_Ki.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[0].Y_Kd.Leave += new EventHandler(Point_PID_Update);
+
+            USVs_Point_PID_[1].X_Kp.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[1].X_Ki.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[1].X_Kd.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[1].Y_Kp.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[1].Y_Ki.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[1].Y_Kd.Leave += new EventHandler(Point_PID_Update);
+
+            USVs_Point_PID_[2].X_Kp.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[2].X_Ki.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[2].X_Kd.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[2].Y_Kp.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[2].Y_Ki.Leave += new EventHandler(Point_PID_Update);
+            USVs_Point_PID_[2].Y_Kd.Leave += new EventHandler(Point_PID_Update);
+
+
 
             button_USV1_LOCK.Click += new EventHandler(USVs[0].LOCK_EVENT);
             button_USV2_LOCK.Click += new EventHandler(USVs[1].LOCK_EVENT);
@@ -1500,11 +1546,44 @@ namespace 地面站
             {
                 USVs[0].LOS_Control(dt);
             }
-            else if(radioButton_formation.Checked)//编队
+            else if (radioButton_formation.Checked)//编队
             {
-                USVs[0].LOS_Follower(dt);
-                USVs[1].LOS_Follower(dt);
-                USVs[2].LOS_Follower(dt);
+                if (radioButton_Point.Checked)
+                {
+                    USVs[2].Los.Update_XY_F(Points_Copy[1].X, Points_Copy[1].Y, Points_Copy[0].X, Points_Copy[0].Y);//更新点
+                    USVs[2].LOS_Point_Leader(dt);
+                    USVs[0].LOS_Point_Follower(dt, USVs[2].Position.X, USVs[2].Position.Y, USVs[2].state.heading);
+                    USVs[1].LOS_Point_Follower(dt, USVs[2].Position.X, USVs[2].Position.Y, USVs[2].state.heading);
+                    if (Points_Copy.Count >= 2)
+                    {
+                        float distance, a, b, c;
+                        float X0 = Points_Copy[1].X;
+                        float Y0 = Points_Copy[1].Y;
+                        double X = USVs[2].Position.X;
+                        double Y = USVs[2].Position.Y;
+
+                        float k = (Points_Copy[1].Y - Points_Copy[0].Y) / (Points_Copy[1].X - Points_Copy[0].X);
+                        float X1 = Convert.ToSingle(Points_Copy[1].X - USVs[2].Position.X);
+                        float Y1 = Convert.ToSingle(Points_Copy[1].Y - USVs[2].Position.Y);
+                        float X2 = Convert.ToSingle(Points_Copy[1].X - Points_Copy[0].X);
+                        float Y2 = Convert.ToSingle(Points_Copy[1].Y - Points_Copy[0].Y);
+                        a = -1; b = k; c = X0 - k * Y0;
+                        distance = Convert.ToSingle(Math.Abs(a * X + b * Y + c) / Math.Sqrt(a * a + b * b));//船到法线的距离
+                        distance *= Math.Sign((X1 * X2 + Y1 * Y2) / (Math.Sqrt(X1 * X1 + Y1 * Y1) * Math.Sqrt(X2 * X2 + Y2 * Y2)));//船到法线的距离带方向，和起点同侧为正；
+                        if (distance < 0 )
+                        {
+                            Points_Copy.RemoveAt(0);
+                            USVs[0].Los.pid_x.Clear();
+                            USVs[1].Los.pid_x.Clear();
+                            USVs[0].Los.pid_y.Clear();
+                            USVs[1].Los.pid_y.Clear();
+                        }
+                        if(Points_Copy.Count<=4)
+                        {
+                            button3_Click(null, null);//结束实验
+                        }
+                    }
+                }
             }
             int cnt=Expressions.Count();
             if (cnt != 0)//表示使用分段轨迹
@@ -1521,15 +1600,14 @@ namespace 地面站
 
             }
 
-
-            if (radioButton_Trajectory.Checked|radioButton_formation.Checked)
+            if (radioButton_Trajectory.Checked|radioButton_formation.Checked&&(!radioButton_Point.Checked))
             {
                 track_time++;
                 DrawExpectedTrack(horizLine11,dt);
             }
 
 
-        }
+        }//定时器运行
         private void Button1_Click(object sender, EventArgs e)//编队开始
         {
             
@@ -1827,8 +1905,14 @@ namespace 地面站
                 USVs[2].norbbin.Clear(0, 0);
                 timer2.Enabled = true;
 
-                Expressions_Copy= (List<Expression>)DeepCopy.deepcopy(Expressions);
-
+                //Expressions_Copy= (List<Expression>)DeepCopy.deepcopy(Expressions);
+                
+                Points.Add(new PointF(20, 30));
+                Points.Add(new PointF(25, 35));
+                Points.Add(new PointF(30, 60));
+                Points.Add(new PointF(35, 70));
+                Points.Add(new PointF(50, 100));
+                Points_Copy = (List<PointF>)DeepCopy.deepcopy<List<PointF>>(Points);
 
                 if (radioButton_Real_USV.Checked)//实船
                 {
@@ -1884,6 +1968,8 @@ namespace 地面站
 
                 track_time = 0;
                 timer2.Enabled = false;
+                Points_Copy.Clear();
+                Points.Clear();
 
                 if (radioButton_Real_USV.Enabled)
                 {
@@ -1904,7 +1990,7 @@ namespace 地面站
             }
 
 
-        }
+        }//开始实验
         private void DrawExpectedTrack(HorizLine horizLine,double T)
         {
             double x, y;
@@ -1931,8 +2017,6 @@ namespace 地面站
                 }
              
             }
-
-            
 
         }
         private void DrawExpectedPath(HorizLine horizLine)//绘制期望路径
@@ -2024,6 +2108,18 @@ namespace 地面站
             USVs_LOS[0].UpadataParam(Convert.ToDouble(textBox_USV1_kp.Text), Convert.ToDouble(textBox_USV1_delta.Text));
             USVs_LOS[1].UpadataParam(Convert.ToDouble(textBox_USV2_kp.Text), Convert.ToDouble(textBox_USV2_delta.Text));
             USVs_LOS[2].UpadataParam(Convert.ToDouble(textBox_USV3_kp.Text), Convert.ToDouble(textBox_USV3_delta.Text));
+
+        }
+        private void Point_PID_Update(object sender, EventArgs e)//LOS参数更新
+        {
+            USVs_LOS[0].pid_x.UpdateParam(Convert.ToDouble(textBox_USV1_X_Kp.Text), Convert.ToDouble(textBox_USV1_X_Ki.Text), Convert.ToDouble(textBox_USV1_X_Kd.Text),0);
+            USVs_LOS[0].pid_y.UpdateParam(Convert.ToDouble(textBox_USV1_Y_Kp.Text), Convert.ToDouble(textBox_USV1_Y_Ki.Text), Convert.ToDouble(textBox_USV1_Y_Kd.Text), 0);
+
+            USVs_LOS[1].pid_x.UpdateParam(Convert.ToDouble(textBox_USV2_X_Kp.Text), Convert.ToDouble(textBox_USV2_X_Ki.Text), Convert.ToDouble(textBox_USV2_X_Kd.Text), 0);
+            USVs_LOS[1].pid_y.UpdateParam(Convert.ToDouble(textBox_USV2_Y_Kp.Text), Convert.ToDouble(textBox_USV2_Y_Ki.Text), Convert.ToDouble(textBox_USV2_Y_Kd.Text), 0);
+
+            USVs_LOS[2].pid_x.UpdateParam(Convert.ToDouble(textBox_USV3_X_Kp.Text), Convert.ToDouble(textBox_USV3_X_Ki.Text), Convert.ToDouble(textBox_USV3_X_Kd.Text), 0);
+            USVs_LOS[2].pid_y.UpdateParam(Convert.ToDouble(textBox_USV3_Y_Kp.Text), Convert.ToDouble(textBox_USV3_Y_Ki.Text), Convert.ToDouble(textBox_USV3_Y_Kd.Text), 0);
 
         }
 
@@ -2124,7 +2220,7 @@ namespace 地面站
             Expressions.Clear();
             horizLine10.Clear();
             richTextBox_EXpression.Clear();
-        }
+        }//清除多轨迹
 
         private void key_press(object sender, KeyPressEventArgs e)//回车事件 让texbox1获取焦点 其他控件失去焦点
         {
@@ -2157,7 +2253,7 @@ namespace 地面站
             }
 
 
-        }
+        }//单个船解锁
         private void UPdate_Expression()
         {   uint i = 0;
             richTextBox_EXpression.Clear();
@@ -2169,7 +2265,7 @@ namespace 地面站
                 richTextBox_EXpression.AppendText("Y=" + item.Y_Expression+"\r\n");
                 richTextBox_EXpression.AppendText("\r\n");
             }
-        }
+        }//更新多轨迹
         private void button_ADDEXP_Click(object sender, EventArgs e)
         {
             if (Expressions.Count > Convert.ToInt16(textBox_EXP_ID.Text))
@@ -2184,6 +2280,6 @@ namespace 地面站
             textBox_EXP_ID.Text= (Convert.ToInt16(textBox_EXP_ID.Text)+1).ToString();
             textBox11.Text = textBox10.Text;
             UPdate_Expression();
-        }
+        }//添加多轨迹
     }
 }
