@@ -26,7 +26,7 @@ namespace 地面站
         double X_F_Last, Y_F_Last;
 
         private readonly Form1 form1;
-        public  PID pid_x, pid_y;
+        public  PID pid_u, pid_r;
 
         public struct Result
         {
@@ -72,23 +72,27 @@ namespace 地面站
             //y_err_est_err = 0;
             result.psi_d = 0;
             result.vel=0;
+            pid_u.Clear();
+            pid_r.Clear();
         }
         public LOS(object sender, string x,string y, double kp_, double delta_)
         {
             form1 = (Form1)sender;
             UpdateExpectedPath(x, y);
-            LOS_Clear();
+            
             kp = kp_;
             delta = delta_;
-            pid_x = new PID();
-            pid_y = new PID();
+            pid_u = new PID();
+            pid_r = new PID();
+
+            LOS_Clear();
         }
         public void UpadataParam(double kp_,double delta_)
         {
             kp = kp_;
             delta = delta_;
         }
-        public void Update_XY_F(double X_F,double Y_F,double X_S,double Y_S)
+        public void Update_XY_F(double X_F,double Y_F, double X_S, double Y_S)
         {
             x_F = X_F;
             y_F = Y_F;
@@ -206,30 +210,48 @@ namespace 地面站
         }
         public Result Calculate_Point_Leader(double T)
         {
-            psi_F = Math.Atan2(y_F-y,  x_F-x);
+            double ud = Convert.ToSingle(form1.textBox_Speed_Set.Text);
+            psi_F = Math.Atan2(y_F-y_Start,  x_F-x_Start);
             x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) * (y - y_F);
             y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
             psi_d = psi_F + Math.Atan(-y_err / delta - beta);
             result.psi_d=psi_d;
-            result.vel= Convert.ToSingle(form1.textBox_Speed_Set.Text);
+            result.vel = ud;
+            while (result.psi_d > Math.PI)
+                result.psi_d -= Math.PI * 2;
+            while (result.psi_d < -Math.PI)
+                result.psi_d += Math.PI * 2;
             return result;
         }
         public Result Calculate_Point_Follower(double x_l, double y_l, double psi_l,
-                                double dt, double L, double Theta)
+                                double dt, double L, double Theta,double ud)
         {
             double x_f_d, y_f_d;
             double theta;
-            double ud_x, ud_y;
+            double U_d;
+            double U_p;
+
             theta = Theta * Math.PI / 180;//弧度
             psi_l = psi_l * Math.PI / 180;//弧度
 
             x_f_d = x_l + L * Math.Cos(theta + psi_l);
             y_f_d = y_l + L * Math.Sin(theta + psi_l);
-            ud_x = pid_x.Calculate(x_f_d, x, dt);
-            ud_y = pid_y.Calculate(y_f_d, y, dt);
-            result.vel = Math.Sqrt(ud_x*ud_x+ud_y*ud_y);
-            result.psi_d = Math.Atan2(ud_y,ud_x);
+
+            psi_F = Math.Atan2(y_f_d-y, x_f_d - x);
+            x_err = Math.Cos(psi_F) * (x - x_f_d) + Math.Sin(psi_F) * (y - y_f_d);
+            y_err = -Math.Sin(psi_F) * (x - x_f_d) + Math.Cos(psi_F) * (y - y_f_d);
+
+            result.psi_d = psi_F + Math.Atan(-y_err / delta) - beta;
+            U_d = ud;
+            U_p = ((U_d - kp * x_err) * Math.Sqrt(y_err * y_err + delta * delta)) / delta;
+            result.vel = U_p * Math.Cos(beta);
+            if (result.vel > U_d * 1.5)//限制输出速度，防止初始误差过大，设定值太大
+                result.vel = U_d * 1.5;
+            else if (result.vel < 0)
+                result.vel = 0;
+
             return result;
+
         }
         public Result Caculate_Follower(double T,double L,double Theta)
         {

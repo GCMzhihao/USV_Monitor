@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media;
 using static Steema.TeeChart.Styles.SeriesMarks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using static 地面站.Form1;
@@ -133,8 +134,8 @@ namespace 地面站
         HorizLine horizLine;
         public MavlinkPacket mavlinkPacket;
         LOS.Result result;
-        public Norbbin norbbin = new Norbbin(0, 0);
-
+        //public Norbbin norbbin = new Norbbin(0, 0);
+        public CyberShip_ii_MMG mmg = new CyberShip_ii_MMG();
         USV_State_Info usv_state_info;
         public USV_PID_Info usv_PID_info;
         public USV_Point_PID_INFO usv_Point_PID_info;
@@ -144,7 +145,10 @@ namespace 地面站
             form1 = (Form1)sender;
             DEV_ID = DEV_ID_;
         }
-
+        public void Clear()
+        {
+            mmg.Clear();
+        }
         public void Init(byte DEV_ID_)
         {
             DEV_ID = DEV_ID_;
@@ -294,6 +298,7 @@ namespace 地面站
             usv_state_info.X.Text = Position.X.ToString("0.00");
             usv_state_info.Y.Text = Position.Y.ToString("0.00");
         }
+
         public void LOS_Point_Leader(double T)
         {
             double beta;//漂角
@@ -301,25 +306,42 @@ namespace 地面站
             double x, y;
             double heading;
             double course;
-
+            double speed;
+            double tau_u, tau_r;//仿真mmg模型 pid输出
             USV_Info_Display();
             if (form1.radioButton_Simulation.Checked)//仿真
             {
-                beta = 0.1;
-                heading = Los.psi;
-                course = heading + beta;
+                heading = mmg.state.psi;
+                course = mmg.state.course;
+                beta = course - heading;
+                while (beta > Math.PI)
+                    beta -= Math.PI * 2;
+                while (beta < -Math.PI)
+                    beta += Math.PI * 2;
 
-                Position.X = Los.x;
-                Position.Y = Los.y;
+                speed = mmg.state.U;
 
-                Los.UpdateData(Position.X, Position.Y, heading, course, result.vel);
+                Los.UpdateData(Position.X, Position.Y, heading, course, speed);
                 result = Los.Calculate_Point_Leader(T);
-                state.speed = (float)result.vel;
-                Los.psi=result.psi_d;
-                state.heading =Convert.ToSingle(result.psi_d);
-                Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
-                Draw_Line();
 
+                tau_u=Los.pid_u.Calculate(result.vel, speed, T);
+
+                double err;
+                err = result.psi_d - heading;
+                while (err > Math.PI)
+                    err -= Math.PI * 2;
+                while (err < -Math.PI)
+                    err += Math.PI * 2;
+                heading = result.psi_d - err;
+                tau_r = Los.pid_r.Calculate(result.psi_d, heading, T);
+                mmg.Calculate(tau_u, tau_r, T);
+
+                Position.X = mmg.state.x;
+                Position.Y = mmg.state.y;
+                state.speed = Convert.ToSingle(mmg.state.U);
+                state.heading = Convert.ToSingle(mmg.state.psi * 180 / Math.PI);
+                state.battery_voltage = Convert.ToSingle(err * 180 / Math.PI);
+                Draw_Line();
             }
             else if (form1.radioButton_Real_USV.Checked)//实船
             {
@@ -356,32 +378,44 @@ namespace 地面站
         /// <param name="x_l">领航者X坐标</param>
         /// <param name="y_l">领航者Y坐标</param>
         /// <param name="psi_l">领航者艏向角</param>
-        public void LOS_Point_Follower(double T,double x_l,double y_l,double psi_l)
+        public void LOS_Point_Follower(double T,double x_l,double y_l,double psi_l,double Vel_L)
         {
             double beta;//漂角
             double u;//船速
             double x, y;
             double heading;
             double course;
+            double speed;
+            double tau_u, tau_r;//仿真mmg模型 pid输出
 
             USV_Info_Display();
             if (form1.radioButton_Simulation.Checked)//仿真
             {
-                beta = 0.1;
-                heading = Los.psi;
-                course = heading + beta;
-
-                Position.X = Los.x;
-                Position.Y = Los.y;
-
-                Los.UpdateData(Position.X, Position.Y, heading, course, result.vel);
-                psi_l = psi_l * 180 / Math.PI;
+                heading = mmg.state.psi;
+                course = mmg.state.course;
+                speed = mmg.state.U;
+                Los.UpdateData(Position.X, Position.Y, heading, course, speed);
                 result = Los.Calculate_Point_Follower(x_l,y_l,psi_l,T, 
                                         Convert.ToDouble(usv_state_info.L.Text), 
-                                        Convert.ToDouble(usv_state_info.angle.Text));
-                state.speed = (float)result.vel;
-                Los.psi = result.psi_d;
-                Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
+                                        Convert.ToDouble(usv_state_info.angle.Text),
+                                        Vel_L
+                                        );
+                tau_u = Los.pid_u.Calculate(result.vel, speed, T);
+                double err;
+                err = result.psi_d - heading;
+                while (err > Math.PI)
+                    err -= Math.PI * 2;
+                while (err < -Math.PI)
+                    err += Math.PI * 2;
+                heading = result.psi_d - err;
+                tau_r = Los.pid_r.Calculate(result.psi_d, heading, T);
+                mmg.Calculate(tau_u, tau_r, T);
+
+                Position.X = mmg.state.x;
+                Position.Y = mmg.state.y;
+                state.speed = Convert.ToSingle(mmg.state.U);
+                state.heading = Convert.ToSingle(mmg.state.psi * 180 / Math.PI);
+                state.battery_voltage = Convert.ToSingle(err * 180 / Math.PI);
                 Draw_Line();
 
             }
@@ -398,7 +432,9 @@ namespace 地面站
 
                 result = Los.Calculate_Point_Follower(x_l, y_l, psi_l, T,
                                         Convert.ToDouble(usv_state_info.L.Text),
-                                        Convert.ToDouble(usv_state_info.angle.Text)); result.psi_d = result.psi_d * 180 / Math.PI;
+                                        Convert.ToDouble(usv_state_info.angle.Text),
+                                        Vel_L );
+                result.psi_d = result.psi_d * 180 / Math.PI;
                 set.Heading = (float)result.psi_d;
                 set.Speed = (float)result.vel;
                 set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
@@ -485,8 +521,8 @@ namespace 地面站
             if (form1.radioButton_Simulation.Checked)//仿真
             {
 
-                Position.X = norbbin.state.x;
-                Position.Y = norbbin.state.y;
+                //Position.X = norbbin.state.x;
+                //Position.Y = norbbin.state.y;
 
                 beta = 0.1;
                 heading = state.heading ;

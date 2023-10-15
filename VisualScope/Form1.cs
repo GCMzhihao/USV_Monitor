@@ -238,6 +238,7 @@ namespace 地面站
         }
         private void TChartInit(Steema.TeeChart.TChart tchart)
         {
+            
             tchart.Aspect.View3D = false;
             tchart.Axes.Automatic = false;
             tchart.Axes.Bottom.Automatic = false;
@@ -465,14 +466,14 @@ namespace 地面站
             USVs[2].Init(USVs_PID_Info[2]);
             USVs[0].Init(USVs_Point_PID_[2]);
 
-            USVs_LOS[0].pid_x.UpdateParam(Convert.ToDouble(textBox_USV1_X_Kp.Text), Convert.ToDouble(textBox_USV1_X_Ki.Text), Convert.ToDouble(textBox_USV1_X_Kd.Text), 0);
-            USVs_LOS[0].pid_y.UpdateParam(Convert.ToDouble(textBox_USV1_Y_Kp.Text), Convert.ToDouble(textBox_USV1_Y_Ki.Text), Convert.ToDouble(textBox_USV1_Y_Kd.Text), 0);
+            USVs_LOS[0].pid_u.UpdateParam(Convert.ToDouble(textBox_USV1_X_Kp.Text), Convert.ToDouble(textBox_USV1_X_Ki.Text), Convert.ToDouble(textBox_USV1_X_Kd.Text), 0);
+            USVs_LOS[0].pid_r.UpdateParam(Convert.ToDouble(textBox_USV1_Y_Kp.Text), Convert.ToDouble(textBox_USV1_Y_Ki.Text), Convert.ToDouble(textBox_USV1_Y_Kd.Text), 0);
 
-            USVs_LOS[1].pid_x.UpdateParam(Convert.ToDouble(textBox_USV2_X_Kp.Text), Convert.ToDouble(textBox_USV2_X_Ki.Text), Convert.ToDouble(textBox_USV2_X_Kd.Text), 0);
-            USVs_LOS[1].pid_y.UpdateParam(Convert.ToDouble(textBox_USV2_Y_Kp.Text), Convert.ToDouble(textBox_USV2_Y_Ki.Text), Convert.ToDouble(textBox_USV2_Y_Kd.Text), 0);
+            USVs_LOS[1].pid_u.UpdateParam(Convert.ToDouble(textBox_USV2_X_Kp.Text), Convert.ToDouble(textBox_USV2_X_Ki.Text), Convert.ToDouble(textBox_USV2_X_Kd.Text), 0);
+            USVs_LOS[1].pid_r.UpdateParam(Convert.ToDouble(textBox_USV2_Y_Kp.Text), Convert.ToDouble(textBox_USV2_Y_Ki.Text), Convert.ToDouble(textBox_USV2_Y_Kd.Text), 0);
 
-            USVs_LOS[2].pid_x.UpdateParam(Convert.ToDouble(textBox_USV3_X_Kp.Text), Convert.ToDouble(textBox_USV3_X_Ki.Text), Convert.ToDouble(textBox_USV3_X_Kd.Text), 0);
-            USVs_LOS[2].pid_y.UpdateParam(Convert.ToDouble(textBox_USV3_Y_Kp.Text), Convert.ToDouble(textBox_USV3_Y_Ki.Text), Convert.ToDouble(textBox_USV3_Y_Kd.Text), 0);
+            USVs_LOS[2].pid_u.UpdateParam(Convert.ToDouble(textBox_USV3_X_Kp.Text), Convert.ToDouble(textBox_USV3_X_Ki.Text), Convert.ToDouble(textBox_USV3_X_Kd.Text), 0);
+            USVs_LOS[2].pid_r.UpdateParam(Convert.ToDouble(textBox_USV3_Y_Kp.Text), Convert.ToDouble(textBox_USV3_Y_Ki.Text), Convert.ToDouble(textBox_USV3_Y_Kd.Text), 0);
 
 
 
@@ -1552,8 +1553,8 @@ namespace 地面站
                 {
                     USVs[2].Los.Update_XY_F(Points_Copy[1].X, Points_Copy[1].Y, Points_Copy[0].X, Points_Copy[0].Y);//更新点
                     USVs[2].LOS_Point_Leader(dt);
-                    USVs[0].LOS_Point_Follower(dt, USVs[2].Position.X, USVs[2].Position.Y, USVs[2].state.heading);
-                    USVs[1].LOS_Point_Follower(dt, USVs[2].Position.X, USVs[2].Position.Y, USVs[2].state.heading);
+                    USVs[0].LOS_Point_Follower(dt, USVs[2].Position.X, USVs[2].Position.Y, USVs[2].state.heading, USVs[2].state.speed);
+                    USVs[1].LOS_Point_Follower(dt, USVs[2].Position.X, USVs[2].Position.Y, USVs[2].state.heading, USVs[2].state.speed);
                     if (Points_Copy.Count >= 2)
                     {
                         float distance, a, b, c;
@@ -1567,18 +1568,18 @@ namespace 地面站
                         float Y1 = Convert.ToSingle(Points_Copy[1].Y - USVs[2].Position.Y);
                         float X2 = Convert.ToSingle(Points_Copy[1].X - Points_Copy[0].X);
                         float Y2 = Convert.ToSingle(Points_Copy[1].Y - Points_Copy[0].Y);
-                        a = -1; b = k; c = X0 - k * Y0;
+                        a = 1; b = k; c = -X0 -k * Y0;
                         distance = Convert.ToSingle(Math.Abs(a * X + b * Y + c) / Math.Sqrt(a * a + b * b));//船到法线的距离
                         distance *= Math.Sign((X1 * X2 + Y1 * Y2) / (Math.Sqrt(X1 * X1 + Y1 * Y1) * Math.Sqrt(X2 * X2 + Y2 * Y2)));//船到法线的距离带方向，和起点同侧为正；
-                        if (distance < 0 )
+                        if (distance < 0.5 )
                         {
                             Points_Copy.RemoveAt(0);
-                            USVs[0].Los.pid_x.Clear();
-                            USVs[1].Los.pid_x.Clear();
-                            USVs[0].Los.pid_y.Clear();
-                            USVs[1].Los.pid_y.Clear();
+                            USVs[0].Los.pid_u.Clear();
+                            USVs[1].Los.pid_u.Clear();
+                            USVs[0].Los.pid_r.Clear();
+                            USVs[1].Los.pid_r.Clear();
                         }
-                        if(Points_Copy.Count<=4)
+                        if(Points_Copy.Count<=1)
                         {
                             button3_Click(null, null);//结束实验
                         }
@@ -1900,18 +1901,36 @@ namespace 地面站
                 USVs_LOS[0].LOS_Clear();
                 USVs_LOS[1].LOS_Clear();
                 USVs_LOS[2].LOS_Clear();
-                USVs[0].norbbin.Clear(0, 0);
-                USVs[1].norbbin.Clear(0, 0);
-                USVs[2].norbbin.Clear(0, 0);
+                USVs[0].Clear();
+                USVs[1].Clear();
+                USVs[2].Clear();
                 timer2.Enabled = true;
 
                 //Expressions_Copy= (List<Expression>)DeepCopy.deepcopy(Expressions);
-                
+
                 Points.Add(new PointF(20, 30));
                 Points.Add(new PointF(25, 35));
-                Points.Add(new PointF(30, 60));
-                Points.Add(new PointF(35, 70));
-                Points.Add(new PointF(50, 100));
+                Points.Add(new PointF(70, 60));
+                Points.Add(new PointF(85, 100));
+                Points.Add(new PointF(160, 70));
+
+                //Points.Add(new PointF(0, 0));
+                //Points.Add(new PointF(1.3F, 3.49F));
+                //Points.Add(new PointF(3.22F, 5.21F));
+                //Points.Add(new PointF(6.17F, 6.93F));
+                //Points.Add(new PointF(9.39F, 5.66F));
+                //Points.Add(new PointF(11.98F, 2.67F));
+                //Points.Add(new PointF(14.58F, -1.40F));
+
+                //Points.Add(new PointF(16.17F,-2.63F));
+                //Points.Add(new PointF(18.39F, -2.86F));
+                //Points.Add(new PointF(20.55F, -1.70F));
+                //Points.Add(new PointF(22.09F, 2.17F));
+                //Points.Add(new PointF(23.43F, 6.08F));
+                //Points.Add(new PointF(25.58F, 7.94F));
+
+
+
                 Points_Copy = (List<PointF>)DeepCopy.deepcopy<List<PointF>>(Points);
 
                 if (radioButton_Real_USV.Checked)//实船
@@ -2112,14 +2131,14 @@ namespace 地面站
         }
         private void Point_PID_Update(object sender, EventArgs e)//LOS参数更新
         {
-            USVs_LOS[0].pid_x.UpdateParam(Convert.ToDouble(textBox_USV1_X_Kp.Text), Convert.ToDouble(textBox_USV1_X_Ki.Text), Convert.ToDouble(textBox_USV1_X_Kd.Text),0);
-            USVs_LOS[0].pid_y.UpdateParam(Convert.ToDouble(textBox_USV1_Y_Kp.Text), Convert.ToDouble(textBox_USV1_Y_Ki.Text), Convert.ToDouble(textBox_USV1_Y_Kd.Text), 0);
+            USVs_LOS[0].pid_u.UpdateParam(Convert.ToDouble(textBox_USV1_X_Kp.Text), Convert.ToDouble(textBox_USV1_X_Ki.Text), Convert.ToDouble(textBox_USV1_X_Kd.Text),0);
+            USVs_LOS[0].pid_r.UpdateParam(Convert.ToDouble(textBox_USV1_Y_Kp.Text), Convert.ToDouble(textBox_USV1_Y_Ki.Text), Convert.ToDouble(textBox_USV1_Y_Kd.Text), 0);
 
-            USVs_LOS[1].pid_x.UpdateParam(Convert.ToDouble(textBox_USV2_X_Kp.Text), Convert.ToDouble(textBox_USV2_X_Ki.Text), Convert.ToDouble(textBox_USV2_X_Kd.Text), 0);
-            USVs_LOS[1].pid_y.UpdateParam(Convert.ToDouble(textBox_USV2_Y_Kp.Text), Convert.ToDouble(textBox_USV2_Y_Ki.Text), Convert.ToDouble(textBox_USV2_Y_Kd.Text), 0);
+            USVs_LOS[1].pid_u.UpdateParam(Convert.ToDouble(textBox_USV2_X_Kp.Text), Convert.ToDouble(textBox_USV2_X_Ki.Text), Convert.ToDouble(textBox_USV2_X_Kd.Text), 0);
+            USVs_LOS[1].pid_r.UpdateParam(Convert.ToDouble(textBox_USV2_Y_Kp.Text), Convert.ToDouble(textBox_USV2_Y_Ki.Text), Convert.ToDouble(textBox_USV2_Y_Kd.Text), 0);
 
-            USVs_LOS[2].pid_x.UpdateParam(Convert.ToDouble(textBox_USV3_X_Kp.Text), Convert.ToDouble(textBox_USV3_X_Ki.Text), Convert.ToDouble(textBox_USV3_X_Kd.Text), 0);
-            USVs_LOS[2].pid_y.UpdateParam(Convert.ToDouble(textBox_USV3_Y_Kp.Text), Convert.ToDouble(textBox_USV3_Y_Ki.Text), Convert.ToDouble(textBox_USV3_Y_Kd.Text), 0);
+            USVs_LOS[2].pid_u.UpdateParam(Convert.ToDouble(textBox_USV3_X_Kp.Text), Convert.ToDouble(textBox_USV3_X_Ki.Text), Convert.ToDouble(textBox_USV3_X_Kd.Text), 0);
+            USVs_LOS[2].pid_r.UpdateParam(Convert.ToDouble(textBox_USV3_Y_Kp.Text), Convert.ToDouble(textBox_USV3_Y_Ki.Text), Convert.ToDouble(textBox_USV3_Y_Kd.Text), 0);
 
         }
 
