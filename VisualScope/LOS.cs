@@ -11,10 +11,10 @@ namespace 地面站
 {
     public class LOS//船的初始位置必须为期望路径中的点。如果不是期望路径中的点，需要给x,y,Ze等需要积分算出的变量赋初值
     {
-        public double w;//期望路径的参数方程自变量
+        double w;//期望路径的参数方程自变量
         double w_deriv;//期望路径的参数方程自变量的导数
         public double x, y;//实际位置
-        public double x_F, y_F;//期望路径的参数方程因变量
+        double x_F, y_F;//期望路径的参数方程因变量
         double x_F_last, y_F_last;
         string x_F_expression, y_F_expression;//表达式
         double U;//航速
@@ -22,8 +22,8 @@ namespace 地面站
         double psi_F;//期望路径切向角ψF
         double psi_F_last;//上一时刻期望路径切向角ψF
         double psi_F_deriv;//期望路径切向角ψF的导数
-        public double x_Start,y_Start;
-        public double x_End, y_End;
+        double x_Start,y_Start;
+        double x_End, y_End;
         
 
         private readonly Form1 form1;
@@ -39,7 +39,7 @@ namespace 地面站
         double beta;//漂角β（航向角-艏向角）
         //double beta_est;//漂角估计
         //double beta_est_deriv;//漂角估计的导数
-        public double x_err, y_err;//位置误差
+        double x_err, y_err;//位置误差
         //double x_err_est, y_err_est;//位置误差估计
         //double x_err_est_deriv, y_err_est_deriv;//位置误差估计的导数
         //double x_err_est_err, y_err_est_err;//位置误差估计的误差
@@ -48,6 +48,7 @@ namespace 地面站
         double kx;//设计参数kx
         double ky;//设计参数ky
         double delta;//设计参数△
+        double Speed_Ex;
         public void LOS_Clear()
         {
             w = 0;
@@ -87,6 +88,10 @@ namespace 地面站
             pid_r = new PID();
 
             LOS_Clear();
+        }
+        public void Update_w(double w0)
+        {
+            w = w0;
         }
         public void UpadataParam(double kp_,double delta_)
         {
@@ -230,15 +235,14 @@ namespace 地面站
             //los
             psi_d = psi_F + Math.Atan(-y_err / delta - beta);
 
-            w_deriv = (U * Math.Cos(psi - psi_F) 
+            w_deriv = (U * Math.Cos(psi - psi_F)
                 - U * Math.Sin(psi - psi_F) * beta + kp * x_err) / (Math.Sqrt(1 
                 + k * k));
-            w_deriv *= Math.Sign(x_F - x_Start);
+            w_deriv *= Math.Sign(x_End - x_Start);
             w += w_deriv * T;//更新路径参数
 
             result.psi_d = psi_d;
-            double ud = Convert.ToSingle(form1.textBox_Speed_Set.Text);
-            result.vel = ud;
+            result.vel = U;
             while (result.psi_d >= Math.PI)
                 result.psi_d -= Math.PI * 2;
             while (result.psi_d < -Math.PI)
@@ -249,6 +253,7 @@ namespace 地面站
                         double dt, double L, double Theta, double ud)
         {
             double x_f_d, y_f_d;
+            double x_F_deriv, y_F_deriv;
             double theta;
             double U_d;
             double U_p;
@@ -263,27 +268,35 @@ namespace 地面站
             x_F = x_f_d;
             y_F = y_f_d;
             d = Math.Sqrt((x - x_F) * (x - x_F) + (y - y_F) * (y - y_F));//与虚拟船距离
-            if (d > 10)//距离较远
-                psi_F = Math.Atan2(y_F - y, x_F - x);
-            else
-                psi_F = psi_l;
+            //if (d > 10)//距离较远
+            //    psi_F = Math.Atan2(y_F - y, x_F - x);
+            //else
+            {
+                //psi_F = psi_l;
+                x_F_deriv = (x_F-x_F_last) /dt;
+                y_F_deriv = (y_F-y_F_last )/dt;
+                psi_F = Math.Atan2(y_F_deriv, x_F_deriv);
+            }
             x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) * (y - y_F);
             y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
-
-            result.psi_d = psi_F + Math.Atan(-y_err / delta) - beta;
-            U_d = ud;
+            if(beta>20*Math.PI/180)
+            {
+                beta = 0;
+            }
+            result.psi_d = psi_F + Math.Atan(-y_err / delta) - beta;//
+            U_d = Math.Sqrt(x_F_deriv * x_F_deriv + y_F_deriv * y_F_deriv);
             U_p = ((U_d - kp * x_err) * Math.Sqrt(y_err * y_err + delta * delta)) / delta;
             if (U_p <= 0)
                 U_p = U_d ;
 
-            result.vel = U_p * Math.Cos(beta);
-            if (result.vel > U_d * 2)//限制输出速度，防止初始误差过大，设定值太大
-                result.vel = U_d * 2;
+            result.vel = U_p;//* Math.Cos(beta)
+            if (result.vel > U_d * 1.5)//限制输出速度，防止初始误差过大，设定值太大
+                result.vel = U_d * 1.5;
             else if (result.vel < 0)
                 result.vel = 0;
             //psi_F_last = psi_F;
-            //x_F_last = x_F;
-            //y_F_last = y_F;
+            x_F_last = x_F;
+            y_F_last = y_F;
             return result;
         }
 

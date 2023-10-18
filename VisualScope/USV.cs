@@ -3,6 +3,7 @@ using Steema.TeeChart.Styles;
 using Steema.TeeChart.Themes;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.IO.Ports;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
+using System.Xml.Linq;
 using static Steema.TeeChart.Styles.SeriesMarks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using static 地面站.Form1;
@@ -118,6 +120,7 @@ namespace 地面站
         }
 
     }
+    
     public class USV
     {
         private readonly Form1 form1;
@@ -139,15 +142,16 @@ namespace 地面站
         USV_State_Info usv_state_info;
         public USV_PID_Info usv_PID_info;
         public USV_Point_PID_INFO usv_Point_PID_info;
+        public double speed_exp;
 
         public USV(object sender, byte DEV_ID_)
         {
             form1 = (Form1)sender;
             DEV_ID = DEV_ID_;
         }
-        public void Clear()
+        public void Clear(double x0, double y0,double psi0)
         {
-            mmg.Clear();
+            mmg.Clear(x0, y0,psi0);
         }
         public void Init(byte DEV_ID_)
         {
@@ -311,67 +315,35 @@ namespace 地面站
             usv_state_info.Y.Text = Position.Y.ToString("0.00");
         }
 
-        public void LOS_Point_Leader(double T)
+        public void Point_VirtualLeader(double T)
         {
-            double beta;//漂角
-            double u;//船速
-            double x, y;
+            double U;
+            double beta=0*Math.PI/180;//漂角
+
             double heading;
             double course;
-            double speed;
-            double tau_u, tau_r;//仿真mmg模型 pid输出
-            USV_Info_Display();
-            if (form1.radioButton_Simulation.Checked)//仿真
-            {
-                heading = mmg.state.psi;
-                course = mmg.state.course;
-                speed = mmg.state.U;
+            double tau_r;//仿真mmg模型 pid输出
 
-                Los.UpdateData(Position.X, Position.Y, heading, course, speed);
-                result = Los.Calculate_Point_Leader(T);
+            heading = mmg.state.psi;
+            course = mmg.state.course;
+            U = speed_exp;
 
-                tau_u=Los.pid_u.Calculate(result.vel, speed, T);
+            Los.UpdateData(Position.X, Position.Y, heading, course, U);
+            result = Los.Calculate_Point_Leader(T);
 
-                double err;
-                err = result.psi_d - heading;
-                while (err >= Math.PI)
-                    err -= Math.PI * 2;
-                while (err < -Math.PI)
-                    err += Math.PI * 2;
-                heading = result.psi_d - err;
-                tau_r = Los.pid_r.Calculate(result.psi_d, heading, T);
-                mmg.Calculate(tau_u, tau_r, T);
+            double err;
+            err = result.psi_d - heading;
+            while (err >= Math.PI)
+                err -= Math.PI * 2;
+            while (err < -Math.PI)
+                err += Math.PI * 2;
+            heading = result.psi_d - err;
+            tau_r = Los.pid_r.Calculate(result.psi_d, heading, T);
+            mmg.Calculate_Psi( U,beta,tau_r, T);
 
-                Position.X = mmg.state.x;
-                Position.Y = mmg.state.y;
-                state.speed = Convert.ToSingle(mmg.state.U);
-                state.heading = Convert.ToSingle(mmg.state.psi * 180 / Math.PI);
-                state.battery_voltage = Convert.ToSingle(err * 180 / Math.PI);
-                Draw_Line();
-            }
-            else if (form1.radioButton_Real_USV.Checked)//实船
-            {
-                heading = state.heading / 180 * Math.PI;//弧度
-                u = state.speed;
-                course = state.Track / 180 * Math.PI;//弧度
-                Draw_Line();
-                Los.UpdateData(Position.X, Position.Y, heading, course, u);
-
-                result = Los.Calculate_Point_Leader(T);
-                result.psi_d = result.psi_d * 180 / Math.PI;
-                set.Heading = (float)result.psi_d;
-                set.Speed = (float)result.vel;
-                set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
-                set.DEV_ID = DEV_ID;
-
-                form1.mavlinkPacket.ComponentId = DEV_ID;
-                form1.mavlinkPacket.Message = set;
-                form1.SendMavMsgToRocker(form1.mavlinkPacket);
-                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.speed", set.Speed);//添加到波形显示
-                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.heading", set.Heading);//添加到波形显示
-
-
-            }
+            Position.X = mmg.state.x;
+            Position.Y = mmg.state.y;
+            Draw_Line();
 
         }
         /// <summary>

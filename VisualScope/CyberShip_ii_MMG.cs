@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Deployment.Application;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,6 @@ namespace 地面站
 {
     public class CyberShip_ii_MMG
     {
-        public double x_start, y_start;
         //动力学模型参数
         double m11 = 25.8;
         double m22 = 33.8;
@@ -29,22 +29,22 @@ namespace 地面站
         public CyberShip_ii_MMG()
         {
             state = new State();
-            Init();
+            Clear(0,0,0);
         }
-        public void Init()
+        public void Clear(double x0, double y0,double psi0)
         {
-            state.x = x_start;
-            state.y = y_start;
-            state.psi = 0;
-            state.course = 0;
+            state.x = x0;
+            state.y = y0;
+            state.psi = psi0;
+            state.course = state.psi;
             state.U = 0;
             u = 0;
-            v = 0;
+            v = 0.15;
             r = 0;
         }
-        public void Clear()
-        {
-            Init();
+        public void UpdateSpeed(double speed)
+        { 
+            u= speed;
         }
         /// <summary>
         /// 
@@ -77,15 +77,45 @@ namespace 地面站
             state.x += dx * dT;
             state.y += dy * dT;
 
-            //while (state.psi >= Math.PI)
-            //    state.psi -= Math.PI * 2;
-            //while (state.psi < -Math.PI)
-            //    state.psi += Math.PI * 2;
+            while (state.psi >= Math.PI)
+                state.psi -= Math.PI * 2;
+            while (state.psi < -Math.PI)
+                state.psi += Math.PI * 2;
 
-            //while (state.course >= Math.PI)
-            //    state.course -= Math.PI * 2;
-            //while (state.course < -Math.PI)
-            //    state.course += Math.PI * 2;
+            while (state.course >= Math.PI)
+                state.course -= Math.PI * 2;
+            while (state.course < -Math.PI)
+                state.course += Math.PI * 2;
+        }
+        public void Calculate_Psi(double U,double beta,double tau_r, double dT)
+        {
+            double dx;
+            double dy;
+            double dr;
+            u = U * Math.Cos(beta);
+            v = U * Math.Sin(beta);
+
+            dr = ((m11 - m22) * u * v - d33 * r + tau_r) / m33;
+
+            r += dr * dT;
+
+            state.psi += r * dT;
+            dx = u * Math.Cos(state.psi) - v * Math.Sin(state.psi);
+            dy = u * Math.Sin(state.psi) + v * Math.Cos(state.psi);
+
+            state.course = state.psi + beta;
+            state.x += dx * dT;
+            state.y += dy * dT;
+
+            while (state.psi >= Math.PI)
+                state.psi -= Math.PI * 2;
+            while (state.psi < -Math.PI)
+                state.psi += Math.PI * 2;
+
+            while (state.course >= Math.PI)
+                state.course -= Math.PI * 2;
+            while (state.course < -Math.PI)
+                state.course += Math.PI * 2;
         }
     }
 }
