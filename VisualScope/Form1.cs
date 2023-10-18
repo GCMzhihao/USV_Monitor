@@ -491,28 +491,28 @@ namespace 地面站
             USVs_LOS[5] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox7.Text), Convert.ToDouble(textBox6.Text));
 
             USVs[0] = new USV(form1, 16);
-            USVs[0].Init(horizLine12);
+            USVs[0].Init(horizLine12,horizLine20);
             USVs[0].Init(USVs_LOS[0]);
             USVs[0].Init(USVs_State_Info[0]);
             USVs[0].Init(USVs_PID_Info[0]);
             USVs[0].Init(USVs_Point_PID_[0]);
 
             USVs[1] = new USV(form1, 16);
-            USVs[1].Init(horizLine13);
+            USVs[1].Init(horizLine13,horizLine21);
             USVs[1].Init(USVs_LOS[1]);
             USVs[1].Init(USVs_State_Info[1]);
             USVs[1].Init(USVs_PID_Info[1]);
             USVs[1].Init(USVs_Point_PID_[1]);
 
             USVs[2] = new USV(form1, 16);
-            USVs[2].Init(horizLine14);
+            USVs[2].Init(horizLine14,horizLine22);
             USVs[2].Init(USVs_LOS[2]);
             USVs[2].Init(USVs_State_Info[2]);
             USVs[2].Init(USVs_PID_Info[2]);
             USVs[2].Init(USVs_Point_PID_[2]);
 
             USVs[5] = new USV(form1, 0);
-            USVs[5].Init(horizLine19);
+            USVs[5].Init(horizLine19,horizLine23);
             USVs[5].Init(USVs_LOS[5]);
             USVs[5].Init(USVs_Point_PID_[5]);
 
@@ -725,7 +725,15 @@ namespace 地面站
             horizLine18.Legend.Visible = true;
             horizLine19.Active = true;
             horizLine19.Legend.Visible = true;
-
+            horizLine20.Active = true;
+            horizLine20.Legend.Visible = true;
+            horizLine21.Active = true;
+            horizLine21.Legend.Visible = true;
+            horizLine22.Active = true;
+            horizLine22.Legend.Visible = true;
+            horizLine23.Active = true;
+            horizLine23.Legend.Visible = true;
+            
             VirtualLeader.horizLine = HorizLines[0];
 
             VirtualLeader.horizLine.Legend.Visible = true;

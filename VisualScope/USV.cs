@@ -135,6 +135,7 @@ namespace 地面站
         public Msg_param_write param_write=new Msg_param_write();
         public LOS Los;
         HorizLine horizLine;
+        HorizLine horizLine1;
         public MavlinkPacket mavlinkPacket;
         LOS.Result result;
         //public Norbbin norbbin = new Norbbin(0, 0);
@@ -158,9 +159,10 @@ namespace 地面站
             DEV_ID = DEV_ID_;
             Read_Param();
         }
-        public void Init(HorizLine horizline_)
+        public void Init(HorizLine horizline_, HorizLine horizline1_)
         {
             horizLine = horizline_;
+            horizLine1 = horizline1_;
         }
         public void Init(LOS los_)
         {
@@ -295,6 +297,7 @@ namespace 地面站
             try
             {
                 horizLine.Add(Position.X, Position.Y);
+                horizLine1.Add(Los.x_F, Los.y_F);
             }
             catch
             {
@@ -402,7 +405,7 @@ namespace 地面站
                 u = state.speed;
                 course = state.Track / 180 * Math.PI;//弧度
 
-                Draw_Line();
+                
                 Los.UpdateData(Position.X, Position.Y, heading, course, u);
 
                 result = Los.Calculate_Point_Follower(x_l, y_l, psi_l, T,
@@ -421,7 +424,7 @@ namespace 地面站
                 form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.speed", set.Speed);//添加到波形显示
                 form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.heading", set.Heading);//添加到波形显示
 
-
+                Draw_Line();
             }
         }
         public void LOS_Follower(double T)

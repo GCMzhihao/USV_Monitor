@@ -14,7 +14,7 @@ namespace 地面站
         double w;//期望路径的参数方程自变量
         double w_deriv;//期望路径的参数方程自变量的导数
         public double x, y;//实际位置
-        double x_F, y_F;//期望路径的参数方程因变量
+        public double x_F, y_F;//期望路径的参数方程因变量
         double x_F_last, y_F_last;
         string x_F_expression, y_F_expression;//表达式
         double U;//航速
@@ -284,6 +284,7 @@ namespace 地面站
                 beta = 0;
             }
             result.psi_d = psi_F + Math.Atan(-y_err / delta) - beta;//
+
             U_d = Math.Sqrt(x_F_deriv * x_F_deriv + y_F_deriv * y_F_deriv);
             U_p = ((U_d - kp * x_err) * Math.Sqrt(y_err * y_err + delta * delta)) / delta;
             if (U_p <= 0)
@@ -294,7 +295,10 @@ namespace 地面站
                 result.vel = U_d * 1.5;
             else if (result.vel < 0)
                 result.vel = 0;
-            //psi_F_last = psi_F;
+            while (result.psi_d >= Math.PI)
+                result.psi_d -= Math.PI * 2;
+            while (result.psi_d < -Math.PI)
+                result.psi_d += Math.PI * 2;
             x_F_last = x_F;
             y_F_last = y_F;
             return result;
