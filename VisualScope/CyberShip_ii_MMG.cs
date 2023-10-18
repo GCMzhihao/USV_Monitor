@@ -8,6 +8,7 @@ namespace 地面站
 {
     public class CyberShip_ii_MMG
     {
+        public double x_start, y_start;
         //动力学模型参数
         double m11 = 25.8;
         double m22 = 33.8;
@@ -32,9 +33,11 @@ namespace 地面站
         }
         public void Init()
         {
-            state.x = 0;
-            state.y = 0;
+            state.x = x_start;
+            state.y = y_start;
             state.psi = 0;
+            state.course = 0;
+            state.U = 0;
             u = 0;
             v = 0;
             r = 0;
@@ -63,25 +66,26 @@ namespace 地面站
             u += du * dT;
             v += dv * dT;
             r += dr * dT;
-            u = 2;
-            v = 0;
+            
             state.psi += r * dT;
             dx = u * Math.Cos(state.psi) - v * Math.Sin(state.psi);
             dy = u * Math.Sin(state.psi) + v * Math.Cos(state.psi);
+
+
             state.U = Math.Sqrt(u * u + v * v);
             state.course = state.psi + Math.Atan2(v, u);
             state.x += dx * dT;
             state.y += dy * dT;
 
-            while (state.psi > Math.PI)
-                state.psi -= Math.PI * 2;
-            while (state.psi < -Math.PI)
-                state.psi += Math.PI * 2;
+            //while (state.psi >= Math.PI)
+            //    state.psi -= Math.PI * 2;
+            //while (state.psi < -Math.PI)
+            //    state.psi += Math.PI * 2;
 
-            while (state.course > Math.PI)
-                state.course -= Math.PI * 2;
-            while (state.course < -Math.PI)
-                state.course += Math.PI * 2;
+            //while (state.course >= Math.PI)
+            //    state.course -= Math.PI * 2;
+            //while (state.course < -Math.PI)
+            //    state.course += Math.PI * 2;
         }
     }
 }

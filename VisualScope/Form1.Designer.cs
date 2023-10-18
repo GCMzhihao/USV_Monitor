@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -253,12 +253,27 @@
             this.radioButton_Simulation = new System.Windows.Forms.RadioButton();
             this.radioButton_Real_USV = new System.Windows.Forms.RadioButton();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
+            this.radioButton_Point = new System.Windows.Forms.RadioButton();
             this.radioButton_Trace = new System.Windows.Forms.RadioButton();
             this.radioButton_Trajectory = new System.Windows.Forms.RadioButton();
             this.tabControl6 = new System.Windows.Forms.TabControl();
             this.tabPage20 = new System.Windows.Forms.TabPage();
             this.button_USV1_LOCK = new System.Windows.Forms.Button();
             this.groupBox_USV1_PID = new System.Windows.Forms.GroupBox();
+            this.textBox_USV1_Y_Kd = new System.Windows.Forms.TextBox();
+            this.label119 = new System.Windows.Forms.Label();
+            this.textBox_USV1_Y_Ki = new System.Windows.Forms.TextBox();
+            this.label120 = new System.Windows.Forms.Label();
+            this.label121 = new System.Windows.Forms.Label();
+            this.textBox_USV1_Y_Kp = new System.Windows.Forms.TextBox();
+            this.label122 = new System.Windows.Forms.Label();
+            this.textBox_USV1_X_Kd = new System.Windows.Forms.TextBox();
+            this.label115 = new System.Windows.Forms.Label();
+            this.textBox_USV1_X_Ki = new System.Windows.Forms.TextBox();
+            this.label116 = new System.Windows.Forms.Label();
+            this.label117 = new System.Windows.Forms.Label();
+            this.textBox_USV1_X_Kp = new System.Windows.Forms.TextBox();
+            this.label118 = new System.Windows.Forms.Label();
             this.textBox_USV1_HEA_Kd = new System.Windows.Forms.TextBox();
             this.label92 = new System.Windows.Forms.Label();
             this.textBox_USV1_VEL_Kd = new System.Windows.Forms.TextBox();
@@ -302,6 +317,20 @@
             this.tabPage21 = new System.Windows.Forms.TabPage();
             this.button_USV2_LOCK = new System.Windows.Forms.Button();
             this.groupBox_USV2_PID = new System.Windows.Forms.GroupBox();
+            this.textBox_USV2_Y_Kd = new System.Windows.Forms.TextBox();
+            this.label127 = new System.Windows.Forms.Label();
+            this.textBox_USV2_Y_Ki = new System.Windows.Forms.TextBox();
+            this.label128 = new System.Windows.Forms.Label();
+            this.label129 = new System.Windows.Forms.Label();
+            this.textBox_USV2_Y_Kp = new System.Windows.Forms.TextBox();
+            this.label130 = new System.Windows.Forms.Label();
+            this.textBox_USV2_X_Kd = new System.Windows.Forms.TextBox();
+            this.label123 = new System.Windows.Forms.Label();
+            this.textBox_USV2_X_Ki = new System.Windows.Forms.TextBox();
+            this.label124 = new System.Windows.Forms.Label();
+            this.label125 = new System.Windows.Forms.Label();
+            this.textBox_USV2_X_Kp = new System.Windows.Forms.TextBox();
+            this.label126 = new System.Windows.Forms.Label();
             this.textBox_USV2_HEA_Kd = new System.Windows.Forms.TextBox();
             this.label105 = new System.Windows.Forms.Label();
             this.textBox_USV2_VEL_Kd = new System.Windows.Forms.TextBox();
@@ -346,6 +375,20 @@
             this.tabPage22 = new System.Windows.Forms.TabPage();
             this.button_USV3_LOCK = new System.Windows.Forms.Button();
             this.groupBox_USV3_PID = new System.Windows.Forms.GroupBox();
+            this.textBox_USV3_Y_Kd = new System.Windows.Forms.TextBox();
+            this.label135 = new System.Windows.Forms.Label();
+            this.textBox_USV3_Y_Ki = new System.Windows.Forms.TextBox();
+            this.label136 = new System.Windows.Forms.Label();
+            this.label137 = new System.Windows.Forms.Label();
+            this.textBox_USV3_Y_Kp = new System.Windows.Forms.TextBox();
+            this.label138 = new System.Windows.Forms.Label();
+            this.textBox_USV3_X_Kd = new System.Windows.Forms.TextBox();
+            this.label131 = new System.Windows.Forms.Label();
+            this.textBox_USV3_X_Ki = new System.Windows.Forms.TextBox();
+            this.label132 = new System.Windows.Forms.Label();
+            this.label133 = new System.Windows.Forms.Label();
+            this.textBox_USV3_X_Kp = new System.Windows.Forms.TextBox();
+            this.label134 = new System.Windows.Forms.Label();
             this.textBox_USV3_HEA_Kd = new System.Windows.Forms.TextBox();
             this.label113 = new System.Windows.Forms.Label();
             this.textBox_USV3_VEL_Kd = new System.Windows.Forms.TextBox();
@@ -387,6 +430,7 @@
             this.label86 = new System.Windows.Forms.Label();
             this.textBox_USV3_L = new System.Windows.Forms.TextBox();
             this.tabPage18 = new System.Windows.Forms.TabPage();
+            this.button17 = new System.Windows.Forms.Button();
             this.richTextBox_EXpression = new System.Windows.Forms.RichTextBox();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.radioButton_USV_LOCK = new System.Windows.Forms.RadioButton();
@@ -416,7 +460,6 @@
             this.label27 = new System.Windows.Forms.Label();
             this.textBox_X = new System.Windows.Forms.TextBox();
             this.textBox_Y = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.tChart6 = new Steema.TeeChart.TChart();
             this.horizLine11 = new Steema.TeeChart.Styles.HorizLine();
             this.horizLine12 = new Steema.TeeChart.Styles.HorizLine();
@@ -500,49 +543,6 @@
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox_USV1_X_Kd = new System.Windows.Forms.TextBox();
-            this.label115 = new System.Windows.Forms.Label();
-            this.textBox_USV1_X_Ki = new System.Windows.Forms.TextBox();
-            this.label116 = new System.Windows.Forms.Label();
-            this.label117 = new System.Windows.Forms.Label();
-            this.textBox_USV1_X_Kp = new System.Windows.Forms.TextBox();
-            this.label118 = new System.Windows.Forms.Label();
-            this.textBox_USV1_Y_Kd = new System.Windows.Forms.TextBox();
-            this.label119 = new System.Windows.Forms.Label();
-            this.textBox_USV1_Y_Ki = new System.Windows.Forms.TextBox();
-            this.label120 = new System.Windows.Forms.Label();
-            this.label121 = new System.Windows.Forms.Label();
-            this.textBox_USV1_Y_Kp = new System.Windows.Forms.TextBox();
-            this.label122 = new System.Windows.Forms.Label();
-            this.textBox_USV2_X_Kd = new System.Windows.Forms.TextBox();
-            this.label123 = new System.Windows.Forms.Label();
-            this.textBox_USV2_X_Ki = new System.Windows.Forms.TextBox();
-            this.label124 = new System.Windows.Forms.Label();
-            this.label125 = new System.Windows.Forms.Label();
-            this.textBox_USV2_X_Kp = new System.Windows.Forms.TextBox();
-            this.label126 = new System.Windows.Forms.Label();
-            this.textBox_USV2_Y_Kd = new System.Windows.Forms.TextBox();
-            this.label127 = new System.Windows.Forms.Label();
-            this.textBox_USV2_Y_Ki = new System.Windows.Forms.TextBox();
-            this.label128 = new System.Windows.Forms.Label();
-            this.label129 = new System.Windows.Forms.Label();
-            this.textBox_USV2_Y_Kp = new System.Windows.Forms.TextBox();
-            this.label130 = new System.Windows.Forms.Label();
-            this.textBox_USV3_X_Kd = new System.Windows.Forms.TextBox();
-            this.label131 = new System.Windows.Forms.Label();
-            this.textBox_USV3_X_Ki = new System.Windows.Forms.TextBox();
-            this.label132 = new System.Windows.Forms.Label();
-            this.label133 = new System.Windows.Forms.Label();
-            this.textBox_USV3_X_Kp = new System.Windows.Forms.TextBox();
-            this.label134 = new System.Windows.Forms.Label();
-            this.textBox_USV3_Y_Kd = new System.Windows.Forms.TextBox();
-            this.label135 = new System.Windows.Forms.Label();
-            this.textBox_USV3_Y_Ki = new System.Windows.Forms.TextBox();
-            this.label136 = new System.Windows.Forms.Label();
-            this.label137 = new System.Windows.Forms.Label();
-            this.textBox_USV3_Y_Kp = new System.Windows.Forms.TextBox();
-            this.label138 = new System.Windows.Forms.Label();
-            this.radioButton_Point = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -3100,28 +3100,28 @@
             this.dataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView2.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridView2.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.Aquamarine;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Aquamarine;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView2.ColumnHeadersHeight = 30;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column4,
             this.Column5,
             this.Column6});
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView2.EnableHeadersVisualStyles = false;
             this.dataGridView2.GridColor = System.Drawing.Color.Silver;
@@ -3131,19 +3131,19 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView2.RowTemplate.Height = 30;
             this.dataGridView2.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3157,8 +3157,8 @@
             // 
             // Column4
             // 
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle2;
             this.Column4.HeaderText = "ID";
             this.Column4.MinimumWidth = 6;
             this.Column4.Name = "Column4";
@@ -3169,8 +3169,8 @@
             // 
             // Column5
             // 
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Column5.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Column5.DefaultCellStyle = dataGridViewCellStyle3;
             this.Column5.HeaderText = "命令名";
             this.Column5.MinimumWidth = 6;
             this.Column5.Name = "Column5";
@@ -3181,11 +3181,11 @@
             // 
             // Column6
             // 
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.Aqua;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.Color.Red;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.Blue;
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Aqua;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Red;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Blue;
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Column6.HeaderText = "";
             this.Column6.MinimumWidth = 6;
@@ -3216,27 +3216,27 @@
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle22.BackColor = System.Drawing.Color.Aquamarine;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Aquamarine;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView1.ColumnHeadersHeight = 30;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
             this.Column3});
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle12;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.GridColor = System.Drawing.Color.Silver;
@@ -3245,20 +3245,20 @@
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.BackColor = System.Drawing.Color.Maroon;
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 4;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle28.ForeColor = System.Drawing.Color.Black;
-            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle14;
             this.dataGridView1.RowTemplate.Height = 30;
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3276,9 +3276,9 @@
             // 
             // Column1
             // 
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle23.BackColor = System.Drawing.Color.Red;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Red;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle9;
             this.Column1.HeaderText = "ID";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
@@ -3289,10 +3289,10 @@
             // 
             // Column2
             // 
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle24.BackColor = System.Drawing.Color.LightGray;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle10;
             this.Column2.HeaderText = "参数名";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
@@ -3303,9 +3303,9 @@
             // 
             // Column3
             // 
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle25.BackColor = System.Drawing.Color.LightGray;
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.LightGray;
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle11;
             this.Column3.HeaderText = "值";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
@@ -6541,7 +6541,6 @@
             this.tabPage16.Controls.Add(this.label27);
             this.tabPage16.Controls.Add(this.textBox_X);
             this.tabPage16.Controls.Add(this.textBox_Y);
-            this.tabPage16.Controls.Add(this.button2);
             this.tabPage16.Controls.Add(this.tChart6);
             this.tabPage16.Location = new System.Drawing.Point(4, 22);
             this.tabPage16.Name = "tabPage16";
@@ -6593,6 +6592,16 @@
             this.groupBox17.TabIndex = 60;
             this.groupBox17.TabStop = false;
             // 
+            // radioButton_Point
+            // 
+            this.radioButton_Point.AutoSize = true;
+            this.radioButton_Point.Location = new System.Drawing.Point(116, 16);
+            this.radioButton_Point.Name = "radioButton_Point";
+            this.radioButton_Point.Size = new System.Drawing.Size(35, 16);
+            this.radioButton_Point.TabIndex = 62;
+            this.radioButton_Point.Text = "点";
+            this.radioButton_Point.UseVisualStyleBackColor = true;
+            // 
             // radioButton_Trace
             // 
             this.radioButton_Trace.AutoSize = true;
@@ -6601,6 +6610,7 @@
             this.radioButton_Trace.Name = "radioButton_Trace";
             this.radioButton_Trace.Size = new System.Drawing.Size(47, 16);
             this.radioButton_Trace.TabIndex = 50;
+            this.radioButton_Trace.TabStop = true;
             this.radioButton_Trace.Text = "路径";
             this.radioButton_Trace.UseVisualStyleBackColor = true;
             // 
@@ -6702,6 +6712,132 @@
             this.groupBox_USV1_PID.TabIndex = 66;
             this.groupBox_USV1_PID.TabStop = false;
             this.groupBox_USV1_PID.Text = "PID参数";
+            // 
+            // textBox_USV1_Y_Kd
+            // 
+            this.textBox_USV1_Y_Kd.Location = new System.Drawing.Point(241, 108);
+            this.textBox_USV1_Y_Kd.Name = "textBox_USV1_Y_Kd";
+            this.textBox_USV1_Y_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_Y_Kd.TabIndex = 38;
+            this.textBox_USV1_Y_Kd.Text = "0.1";
+            this.textBox_USV1_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label119
+            // 
+            this.label119.AutoSize = true;
+            this.label119.Location = new System.Drawing.Point(216, 111);
+            this.label119.Name = "label119";
+            this.label119.Size = new System.Drawing.Size(17, 12);
+            this.label119.TabIndex = 39;
+            this.label119.Text = "Kd";
+            // 
+            // textBox_USV1_Y_Ki
+            // 
+            this.textBox_USV1_Y_Ki.Location = new System.Drawing.Point(155, 106);
+            this.textBox_USV1_Y_Ki.Name = "textBox_USV1_Y_Ki";
+            this.textBox_USV1_Y_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_Y_Ki.TabIndex = 36;
+            this.textBox_USV1_Y_Ki.Text = "0.1";
+            this.textBox_USV1_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label120
+            // 
+            this.label120.AutoSize = true;
+            this.label120.Location = new System.Drawing.Point(131, 111);
+            this.label120.Name = "label120";
+            this.label120.Size = new System.Drawing.Size(17, 12);
+            this.label120.TabIndex = 37;
+            this.label120.Text = "Ki";
+            // 
+            // label121
+            // 
+            this.label121.AutoSize = true;
+            this.label121.Location = new System.Drawing.Point(8, 109);
+            this.label121.Name = "label121";
+            this.label121.Size = new System.Drawing.Size(23, 12);
+            this.label121.TabIndex = 35;
+            this.label121.Text = "r：";
+            // 
+            // textBox_USV1_Y_Kp
+            // 
+            this.textBox_USV1_Y_Kp.Location = new System.Drawing.Point(66, 106);
+            this.textBox_USV1_Y_Kp.Name = "textBox_USV1_Y_Kp";
+            this.textBox_USV1_Y_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_Y_Kp.TabIndex = 33;
+            this.textBox_USV1_Y_Kp.Text = "0.1";
+            this.textBox_USV1_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label122
+            // 
+            this.label122.AutoSize = true;
+            this.label122.Location = new System.Drawing.Point(42, 110);
+            this.label122.Name = "label122";
+            this.label122.Size = new System.Drawing.Size(17, 12);
+            this.label122.TabIndex = 34;
+            this.label122.Text = "Kp";
+            // 
+            // textBox_USV1_X_Kd
+            // 
+            this.textBox_USV1_X_Kd.Location = new System.Drawing.Point(241, 77);
+            this.textBox_USV1_X_Kd.Name = "textBox_USV1_X_Kd";
+            this.textBox_USV1_X_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Kd.TabIndex = 31;
+            this.textBox_USV1_X_Kd.Text = "0.1";
+            this.textBox_USV1_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label115
+            // 
+            this.label115.AutoSize = true;
+            this.label115.Location = new System.Drawing.Point(216, 80);
+            this.label115.Name = "label115";
+            this.label115.Size = new System.Drawing.Size(17, 12);
+            this.label115.TabIndex = 32;
+            this.label115.Text = "Kd";
+            // 
+            // textBox_USV1_X_Ki
+            // 
+            this.textBox_USV1_X_Ki.Location = new System.Drawing.Point(155, 75);
+            this.textBox_USV1_X_Ki.Name = "textBox_USV1_X_Ki";
+            this.textBox_USV1_X_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Ki.TabIndex = 29;
+            this.textBox_USV1_X_Ki.Text = "0.1";
+            this.textBox_USV1_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label116
+            // 
+            this.label116.AutoSize = true;
+            this.label116.Location = new System.Drawing.Point(131, 80);
+            this.label116.Name = "label116";
+            this.label116.Size = new System.Drawing.Size(17, 12);
+            this.label116.TabIndex = 30;
+            this.label116.Text = "Ki";
+            // 
+            // label117
+            // 
+            this.label117.AutoSize = true;
+            this.label117.Location = new System.Drawing.Point(7, 79);
+            this.label117.Name = "label117";
+            this.label117.Size = new System.Drawing.Size(23, 12);
+            this.label117.TabIndex = 28;
+            this.label117.Text = "u：";
+            // 
+            // textBox_USV1_X_Kp
+            // 
+            this.textBox_USV1_X_Kp.Location = new System.Drawing.Point(66, 75);
+            this.textBox_USV1_X_Kp.Name = "textBox_USV1_X_Kp";
+            this.textBox_USV1_X_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Kp.TabIndex = 26;
+            this.textBox_USV1_X_Kp.Text = "0.1";
+            this.textBox_USV1_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label118
+            // 
+            this.label118.AutoSize = true;
+            this.label118.Location = new System.Drawing.Point(42, 79);
+            this.label118.Name = "label118";
+            this.label118.Size = new System.Drawing.Size(17, 12);
+            this.label118.TabIndex = 27;
+            this.label118.Text = "Kp";
             // 
             // textBox_USV1_HEA_Kd
             // 
@@ -7156,6 +7292,132 @@
             this.groupBox_USV2_PID.TabIndex = 68;
             this.groupBox_USV2_PID.TabStop = false;
             this.groupBox_USV2_PID.Text = "PID参数";
+            // 
+            // textBox_USV2_Y_Kd
+            // 
+            this.textBox_USV2_Y_Kd.Location = new System.Drawing.Point(241, 104);
+            this.textBox_USV2_Y_Kd.Name = "textBox_USV2_Y_Kd";
+            this.textBox_USV2_Y_Kd.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_Y_Kd.TabIndex = 39;
+            this.textBox_USV2_Y_Kd.Text = "0.1";
+            this.textBox_USV2_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label127
+            // 
+            this.label127.AutoSize = true;
+            this.label127.Location = new System.Drawing.Point(215, 107);
+            this.label127.Name = "label127";
+            this.label127.Size = new System.Drawing.Size(17, 12);
+            this.label127.TabIndex = 40;
+            this.label127.Text = "Kd";
+            // 
+            // textBox_USV2_Y_Ki
+            // 
+            this.textBox_USV2_Y_Ki.Location = new System.Drawing.Point(152, 103);
+            this.textBox_USV2_Y_Ki.Name = "textBox_USV2_Y_Ki";
+            this.textBox_USV2_Y_Ki.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_Y_Ki.TabIndex = 37;
+            this.textBox_USV2_Y_Ki.Text = "0.1";
+            this.textBox_USV2_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label128
+            // 
+            this.label128.AutoSize = true;
+            this.label128.Location = new System.Drawing.Point(128, 108);
+            this.label128.Name = "label128";
+            this.label128.Size = new System.Drawing.Size(17, 12);
+            this.label128.TabIndex = 38;
+            this.label128.Text = "Ki";
+            // 
+            // label129
+            // 
+            this.label129.AutoSize = true;
+            this.label129.Location = new System.Drawing.Point(5, 105);
+            this.label129.Name = "label129";
+            this.label129.Size = new System.Drawing.Size(23, 12);
+            this.label129.TabIndex = 36;
+            this.label129.Text = "r：";
+            // 
+            // textBox_USV2_Y_Kp
+            // 
+            this.textBox_USV2_Y_Kp.Location = new System.Drawing.Point(71, 103);
+            this.textBox_USV2_Y_Kp.Name = "textBox_USV2_Y_Kp";
+            this.textBox_USV2_Y_Kp.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_Y_Kp.TabIndex = 34;
+            this.textBox_USV2_Y_Kp.Text = "0.1";
+            this.textBox_USV2_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label130
+            // 
+            this.label130.AutoSize = true;
+            this.label130.Location = new System.Drawing.Point(45, 106);
+            this.label130.Name = "label130";
+            this.label130.Size = new System.Drawing.Size(17, 12);
+            this.label130.TabIndex = 35;
+            this.label130.Text = "Kp";
+            // 
+            // textBox_USV2_X_Kd
+            // 
+            this.textBox_USV2_X_Kd.Location = new System.Drawing.Point(241, 76);
+            this.textBox_USV2_X_Kd.Name = "textBox_USV2_X_Kd";
+            this.textBox_USV2_X_Kd.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_X_Kd.TabIndex = 32;
+            this.textBox_USV2_X_Kd.Text = "0.1";
+            this.textBox_USV2_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label123
+            // 
+            this.label123.AutoSize = true;
+            this.label123.Location = new System.Drawing.Point(215, 80);
+            this.label123.Name = "label123";
+            this.label123.Size = new System.Drawing.Size(17, 12);
+            this.label123.TabIndex = 33;
+            this.label123.Text = "Kd";
+            // 
+            // textBox_USV2_X_Ki
+            // 
+            this.textBox_USV2_X_Ki.Location = new System.Drawing.Point(152, 75);
+            this.textBox_USV2_X_Ki.Name = "textBox_USV2_X_Ki";
+            this.textBox_USV2_X_Ki.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_X_Ki.TabIndex = 30;
+            this.textBox_USV2_X_Ki.Text = "0.1";
+            this.textBox_USV2_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label124
+            // 
+            this.label124.AutoSize = true;
+            this.label124.Location = new System.Drawing.Point(128, 81);
+            this.label124.Name = "label124";
+            this.label124.Size = new System.Drawing.Size(17, 12);
+            this.label124.TabIndex = 31;
+            this.label124.Text = "Ki";
+            // 
+            // label125
+            // 
+            this.label125.AutoSize = true;
+            this.label125.Location = new System.Drawing.Point(5, 80);
+            this.label125.Name = "label125";
+            this.label125.Size = new System.Drawing.Size(23, 12);
+            this.label125.TabIndex = 29;
+            this.label125.Text = "u：";
+            // 
+            // textBox_USV2_X_Kp
+            // 
+            this.textBox_USV2_X_Kp.Location = new System.Drawing.Point(71, 76);
+            this.textBox_USV2_X_Kp.Name = "textBox_USV2_X_Kp";
+            this.textBox_USV2_X_Kp.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_X_Kp.TabIndex = 27;
+            this.textBox_USV2_X_Kp.Text = "0.1";
+            this.textBox_USV2_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label126
+            // 
+            this.label126.AutoSize = true;
+            this.label126.Location = new System.Drawing.Point(45, 81);
+            this.label126.Name = "label126";
+            this.label126.Size = new System.Drawing.Size(17, 12);
+            this.label126.TabIndex = 28;
+            this.label126.Text = "Kp";
             // 
             // textBox_USV2_HEA_Kd
             // 
@@ -7617,6 +7879,132 @@
             this.groupBox_USV3_PID.TabStop = false;
             this.groupBox_USV3_PID.Text = "PID参数";
             // 
+            // textBox_USV3_Y_Kd
+            // 
+            this.textBox_USV3_Y_Kd.Location = new System.Drawing.Point(236, 107);
+            this.textBox_USV3_Y_Kd.Name = "textBox_USV3_Y_Kd";
+            this.textBox_USV3_Y_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_Y_Kd.TabIndex = 38;
+            this.textBox_USV3_Y_Kd.Text = "0.1";
+            this.textBox_USV3_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label135
+            // 
+            this.label135.AutoSize = true;
+            this.label135.Location = new System.Drawing.Point(214, 115);
+            this.label135.Name = "label135";
+            this.label135.Size = new System.Drawing.Size(17, 12);
+            this.label135.TabIndex = 39;
+            this.label135.Text = "Kd";
+            // 
+            // textBox_USV3_Y_Ki
+            // 
+            this.textBox_USV3_Y_Ki.Location = new System.Drawing.Point(152, 108);
+            this.textBox_USV3_Y_Ki.Name = "textBox_USV3_Y_Ki";
+            this.textBox_USV3_Y_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_Y_Ki.TabIndex = 36;
+            this.textBox_USV3_Y_Ki.Text = "0.1";
+            this.textBox_USV3_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label136
+            // 
+            this.label136.AutoSize = true;
+            this.label136.Location = new System.Drawing.Point(130, 114);
+            this.label136.Name = "label136";
+            this.label136.Size = new System.Drawing.Size(17, 12);
+            this.label136.TabIndex = 37;
+            this.label136.Text = "Ki";
+            // 
+            // label137
+            // 
+            this.label137.AutoSize = true;
+            this.label137.Location = new System.Drawing.Point(6, 111);
+            this.label137.Name = "label137";
+            this.label137.Size = new System.Drawing.Size(23, 12);
+            this.label137.TabIndex = 35;
+            this.label137.Text = "r：";
+            // 
+            // textBox_USV3_Y_Kp
+            // 
+            this.textBox_USV3_Y_Kp.Location = new System.Drawing.Point(68, 108);
+            this.textBox_USV3_Y_Kp.Name = "textBox_USV3_Y_Kp";
+            this.textBox_USV3_Y_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_Y_Kp.TabIndex = 33;
+            this.textBox_USV3_Y_Kp.Text = "0.1";
+            this.textBox_USV3_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label138
+            // 
+            this.label138.AutoSize = true;
+            this.label138.Location = new System.Drawing.Point(46, 113);
+            this.label138.Name = "label138";
+            this.label138.Size = new System.Drawing.Size(17, 12);
+            this.label138.TabIndex = 34;
+            this.label138.Text = "Kp";
+            // 
+            // textBox_USV3_X_Kd
+            // 
+            this.textBox_USV3_X_Kd.Location = new System.Drawing.Point(236, 77);
+            this.textBox_USV3_X_Kd.Name = "textBox_USV3_X_Kd";
+            this.textBox_USV3_X_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_X_Kd.TabIndex = 31;
+            this.textBox_USV3_X_Kd.Text = "0.1";
+            this.textBox_USV3_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label131
+            // 
+            this.label131.AutoSize = true;
+            this.label131.Location = new System.Drawing.Point(214, 84);
+            this.label131.Name = "label131";
+            this.label131.Size = new System.Drawing.Size(17, 12);
+            this.label131.TabIndex = 32;
+            this.label131.Text = "Kd";
+            // 
+            // textBox_USV3_X_Ki
+            // 
+            this.textBox_USV3_X_Ki.Location = new System.Drawing.Point(152, 79);
+            this.textBox_USV3_X_Ki.Name = "textBox_USV3_X_Ki";
+            this.textBox_USV3_X_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_X_Ki.TabIndex = 29;
+            this.textBox_USV3_X_Ki.Text = "0.1";
+            this.textBox_USV3_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label132
+            // 
+            this.label132.AutoSize = true;
+            this.label132.Location = new System.Drawing.Point(130, 84);
+            this.label132.Name = "label132";
+            this.label132.Size = new System.Drawing.Size(17, 12);
+            this.label132.TabIndex = 30;
+            this.label132.Text = "Ki";
+            // 
+            // label133
+            // 
+            this.label133.AutoSize = true;
+            this.label133.Location = new System.Drawing.Point(6, 80);
+            this.label133.Name = "label133";
+            this.label133.Size = new System.Drawing.Size(23, 12);
+            this.label133.TabIndex = 28;
+            this.label133.Text = "u：";
+            // 
+            // textBox_USV3_X_Kp
+            // 
+            this.textBox_USV3_X_Kp.Location = new System.Drawing.Point(68, 77);
+            this.textBox_USV3_X_Kp.Name = "textBox_USV3_X_Kp";
+            this.textBox_USV3_X_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_X_Kp.TabIndex = 26;
+            this.textBox_USV3_X_Kp.Text = "0.1";
+            this.textBox_USV3_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label134
+            // 
+            this.label134.AutoSize = true;
+            this.label134.Location = new System.Drawing.Point(46, 82);
+            this.label134.Name = "label134";
+            this.label134.Size = new System.Drawing.Size(17, 12);
+            this.label134.TabIndex = 27;
+            this.label134.Text = "Kp";
+            // 
             // textBox_USV3_HEA_Kd
             // 
             this.textBox_USV3_HEA_Kd.Location = new System.Drawing.Point(235, 48);
@@ -8001,6 +8389,7 @@
             // 
             // tabPage18
             // 
+            this.tabPage18.Controls.Add(this.button17);
             this.tabPage18.Controls.Add(this.richTextBox_EXpression);
             this.tabPage18.Controls.Add(this.groupBox12);
             this.tabPage18.Location = new System.Drawing.Point(4, 4);
@@ -8009,6 +8398,16 @@
             this.tabPage18.TabIndex = 3;
             this.tabPage18.Text = "设置";
             this.tabPage18.UseVisualStyleBackColor = true;
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(92, 283);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(114, 23);
+            this.button17.TabIndex = 65;
+            this.button17.Text = "清除所有航点";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
             // richTextBox_EXpression
             // 
@@ -8320,23 +8719,6 @@
             this.textBox_Y.Name = "textBox_Y";
             this.textBox_Y.Size = new System.Drawing.Size(55, 21);
             this.textBox_Y.TabIndex = 39;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.Transparent;
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Aqua;
-            this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Lime;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button2.Location = new System.Drawing.Point(235, 6);
-            this.button2.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(78, 30);
-            this.button2.TabIndex = 37;
-            this.button2.Text = "坐标校准";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // tChart6
             // 
@@ -8728,6 +9110,7 @@
             // 
             this.tChart6.Zoom.Pen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.tChart6.Zoom.Pen.Visible = true;
+            this.tChart6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tChart6_MouseClick);
             // 
             // horizLine11
             // 
@@ -12338,394 +12721,6 @@
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox1.Visible = false;
             // 
-            // textBox_USV1_X_Kd
-            // 
-            this.textBox_USV1_X_Kd.Location = new System.Drawing.Point(241, 77);
-            this.textBox_USV1_X_Kd.Name = "textBox_USV1_X_Kd";
-            this.textBox_USV1_X_Kd.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV1_X_Kd.TabIndex = 31;
-            this.textBox_USV1_X_Kd.Text = "0.1";
-            this.textBox_USV1_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label115
-            // 
-            this.label115.AutoSize = true;
-            this.label115.Location = new System.Drawing.Point(216, 80);
-            this.label115.Name = "label115";
-            this.label115.Size = new System.Drawing.Size(17, 12);
-            this.label115.TabIndex = 32;
-            this.label115.Text = "Kd";
-            // 
-            // textBox_USV1_X_Ki
-            // 
-            this.textBox_USV1_X_Ki.Location = new System.Drawing.Point(155, 75);
-            this.textBox_USV1_X_Ki.Name = "textBox_USV1_X_Ki";
-            this.textBox_USV1_X_Ki.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV1_X_Ki.TabIndex = 29;
-            this.textBox_USV1_X_Ki.Text = "0.1";
-            this.textBox_USV1_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label116
-            // 
-            this.label116.AutoSize = true;
-            this.label116.Location = new System.Drawing.Point(131, 80);
-            this.label116.Name = "label116";
-            this.label116.Size = new System.Drawing.Size(17, 12);
-            this.label116.TabIndex = 30;
-            this.label116.Text = "Ki";
-            // 
-            // label117
-            // 
-            this.label117.AutoSize = true;
-            this.label117.Location = new System.Drawing.Point(7, 79);
-            this.label117.Name = "label117";
-            this.label117.Size = new System.Drawing.Size(23, 12);
-            this.label117.TabIndex = 28;
-            this.label117.Text = "u：";
-            // 
-            // textBox_USV1_X_Kp
-            // 
-            this.textBox_USV1_X_Kp.Location = new System.Drawing.Point(66, 75);
-            this.textBox_USV1_X_Kp.Name = "textBox_USV1_X_Kp";
-            this.textBox_USV1_X_Kp.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV1_X_Kp.TabIndex = 26;
-            this.textBox_USV1_X_Kp.Text = "0.1";
-            this.textBox_USV1_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label118
-            // 
-            this.label118.AutoSize = true;
-            this.label118.Location = new System.Drawing.Point(42, 79);
-            this.label118.Name = "label118";
-            this.label118.Size = new System.Drawing.Size(17, 12);
-            this.label118.TabIndex = 27;
-            this.label118.Text = "Kp";
-            // 
-            // textBox_USV1_Y_Kd
-            // 
-            this.textBox_USV1_Y_Kd.Location = new System.Drawing.Point(241, 108);
-            this.textBox_USV1_Y_Kd.Name = "textBox_USV1_Y_Kd";
-            this.textBox_USV1_Y_Kd.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV1_Y_Kd.TabIndex = 38;
-            this.textBox_USV1_Y_Kd.Text = "0.1";
-            this.textBox_USV1_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label119
-            // 
-            this.label119.AutoSize = true;
-            this.label119.Location = new System.Drawing.Point(216, 111);
-            this.label119.Name = "label119";
-            this.label119.Size = new System.Drawing.Size(17, 12);
-            this.label119.TabIndex = 39;
-            this.label119.Text = "Kd";
-            // 
-            // textBox_USV1_Y_Ki
-            // 
-            this.textBox_USV1_Y_Ki.Location = new System.Drawing.Point(155, 106);
-            this.textBox_USV1_Y_Ki.Name = "textBox_USV1_Y_Ki";
-            this.textBox_USV1_Y_Ki.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV1_Y_Ki.TabIndex = 36;
-            this.textBox_USV1_Y_Ki.Text = "0.1";
-            this.textBox_USV1_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label120
-            // 
-            this.label120.AutoSize = true;
-            this.label120.Location = new System.Drawing.Point(131, 111);
-            this.label120.Name = "label120";
-            this.label120.Size = new System.Drawing.Size(17, 12);
-            this.label120.TabIndex = 37;
-            this.label120.Text = "Ki";
-            // 
-            // label121
-            // 
-            this.label121.AutoSize = true;
-            this.label121.Location = new System.Drawing.Point(8, 109);
-            this.label121.Name = "label121";
-            this.label121.Size = new System.Drawing.Size(23, 12);
-            this.label121.TabIndex = 35;
-            this.label121.Text = "r：";
-            // 
-            // textBox_USV1_Y_Kp
-            // 
-            this.textBox_USV1_Y_Kp.Location = new System.Drawing.Point(66, 106);
-            this.textBox_USV1_Y_Kp.Name = "textBox_USV1_Y_Kp";
-            this.textBox_USV1_Y_Kp.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV1_Y_Kp.TabIndex = 33;
-            this.textBox_USV1_Y_Kp.Text = "0.1";
-            this.textBox_USV1_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label122
-            // 
-            this.label122.AutoSize = true;
-            this.label122.Location = new System.Drawing.Point(42, 110);
-            this.label122.Name = "label122";
-            this.label122.Size = new System.Drawing.Size(17, 12);
-            this.label122.TabIndex = 34;
-            this.label122.Text = "Kp";
-            // 
-            // textBox_USV2_X_Kd
-            // 
-            this.textBox_USV2_X_Kd.Location = new System.Drawing.Point(241, 76);
-            this.textBox_USV2_X_Kd.Name = "textBox_USV2_X_Kd";
-            this.textBox_USV2_X_Kd.Size = new System.Drawing.Size(41, 21);
-            this.textBox_USV2_X_Kd.TabIndex = 32;
-            this.textBox_USV2_X_Kd.Text = "0.1";
-            this.textBox_USV2_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label123
-            // 
-            this.label123.AutoSize = true;
-            this.label123.Location = new System.Drawing.Point(215, 80);
-            this.label123.Name = "label123";
-            this.label123.Size = new System.Drawing.Size(17, 12);
-            this.label123.TabIndex = 33;
-            this.label123.Text = "Kd";
-            // 
-            // textBox_USV2_X_Ki
-            // 
-            this.textBox_USV2_X_Ki.Location = new System.Drawing.Point(152, 75);
-            this.textBox_USV2_X_Ki.Name = "textBox_USV2_X_Ki";
-            this.textBox_USV2_X_Ki.Size = new System.Drawing.Size(41, 21);
-            this.textBox_USV2_X_Ki.TabIndex = 30;
-            this.textBox_USV2_X_Ki.Text = "0.1";
-            this.textBox_USV2_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label124
-            // 
-            this.label124.AutoSize = true;
-            this.label124.Location = new System.Drawing.Point(128, 81);
-            this.label124.Name = "label124";
-            this.label124.Size = new System.Drawing.Size(17, 12);
-            this.label124.TabIndex = 31;
-            this.label124.Text = "Ki";
-            // 
-            // label125
-            // 
-            this.label125.AutoSize = true;
-            this.label125.Location = new System.Drawing.Point(5, 80);
-            this.label125.Name = "label125";
-            this.label125.Size = new System.Drawing.Size(23, 12);
-            this.label125.TabIndex = 29;
-            this.label125.Text = "u：";
-            // 
-            // textBox_USV2_X_Kp
-            // 
-            this.textBox_USV2_X_Kp.Location = new System.Drawing.Point(71, 76);
-            this.textBox_USV2_X_Kp.Name = "textBox_USV2_X_Kp";
-            this.textBox_USV2_X_Kp.Size = new System.Drawing.Size(41, 21);
-            this.textBox_USV2_X_Kp.TabIndex = 27;
-            this.textBox_USV2_X_Kp.Text = "0.1";
-            this.textBox_USV2_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label126
-            // 
-            this.label126.AutoSize = true;
-            this.label126.Location = new System.Drawing.Point(45, 81);
-            this.label126.Name = "label126";
-            this.label126.Size = new System.Drawing.Size(17, 12);
-            this.label126.TabIndex = 28;
-            this.label126.Text = "Kp";
-            // 
-            // textBox_USV2_Y_Kd
-            // 
-            this.textBox_USV2_Y_Kd.Location = new System.Drawing.Point(241, 104);
-            this.textBox_USV2_Y_Kd.Name = "textBox_USV2_Y_Kd";
-            this.textBox_USV2_Y_Kd.Size = new System.Drawing.Size(41, 21);
-            this.textBox_USV2_Y_Kd.TabIndex = 39;
-            this.textBox_USV2_Y_Kd.Text = "0.1";
-            this.textBox_USV2_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label127
-            // 
-            this.label127.AutoSize = true;
-            this.label127.Location = new System.Drawing.Point(215, 107);
-            this.label127.Name = "label127";
-            this.label127.Size = new System.Drawing.Size(17, 12);
-            this.label127.TabIndex = 40;
-            this.label127.Text = "Kd";
-            // 
-            // textBox_USV2_Y_Ki
-            // 
-            this.textBox_USV2_Y_Ki.Location = new System.Drawing.Point(152, 103);
-            this.textBox_USV2_Y_Ki.Name = "textBox_USV2_Y_Ki";
-            this.textBox_USV2_Y_Ki.Size = new System.Drawing.Size(41, 21);
-            this.textBox_USV2_Y_Ki.TabIndex = 37;
-            this.textBox_USV2_Y_Ki.Text = "0.1";
-            this.textBox_USV2_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label128
-            // 
-            this.label128.AutoSize = true;
-            this.label128.Location = new System.Drawing.Point(128, 108);
-            this.label128.Name = "label128";
-            this.label128.Size = new System.Drawing.Size(17, 12);
-            this.label128.TabIndex = 38;
-            this.label128.Text = "Ki";
-            // 
-            // label129
-            // 
-            this.label129.AutoSize = true;
-            this.label129.Location = new System.Drawing.Point(5, 105);
-            this.label129.Name = "label129";
-            this.label129.Size = new System.Drawing.Size(23, 12);
-            this.label129.TabIndex = 36;
-            this.label129.Text = "r：";
-            // 
-            // textBox_USV2_Y_Kp
-            // 
-            this.textBox_USV2_Y_Kp.Location = new System.Drawing.Point(71, 103);
-            this.textBox_USV2_Y_Kp.Name = "textBox_USV2_Y_Kp";
-            this.textBox_USV2_Y_Kp.Size = new System.Drawing.Size(41, 21);
-            this.textBox_USV2_Y_Kp.TabIndex = 34;
-            this.textBox_USV2_Y_Kp.Text = "0.1";
-            this.textBox_USV2_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label130
-            // 
-            this.label130.AutoSize = true;
-            this.label130.Location = new System.Drawing.Point(45, 106);
-            this.label130.Name = "label130";
-            this.label130.Size = new System.Drawing.Size(17, 12);
-            this.label130.TabIndex = 35;
-            this.label130.Text = "Kp";
-            // 
-            // textBox_USV3_X_Kd
-            // 
-            this.textBox_USV3_X_Kd.Location = new System.Drawing.Point(236, 77);
-            this.textBox_USV3_X_Kd.Name = "textBox_USV3_X_Kd";
-            this.textBox_USV3_X_Kd.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV3_X_Kd.TabIndex = 31;
-            this.textBox_USV3_X_Kd.Text = "0.1";
-            this.textBox_USV3_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label131
-            // 
-            this.label131.AutoSize = true;
-            this.label131.Location = new System.Drawing.Point(214, 84);
-            this.label131.Name = "label131";
-            this.label131.Size = new System.Drawing.Size(17, 12);
-            this.label131.TabIndex = 32;
-            this.label131.Text = "Kd";
-            // 
-            // textBox_USV3_X_Ki
-            // 
-            this.textBox_USV3_X_Ki.Location = new System.Drawing.Point(152, 79);
-            this.textBox_USV3_X_Ki.Name = "textBox_USV3_X_Ki";
-            this.textBox_USV3_X_Ki.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV3_X_Ki.TabIndex = 29;
-            this.textBox_USV3_X_Ki.Text = "0.1";
-            this.textBox_USV3_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label132
-            // 
-            this.label132.AutoSize = true;
-            this.label132.Location = new System.Drawing.Point(130, 84);
-            this.label132.Name = "label132";
-            this.label132.Size = new System.Drawing.Size(17, 12);
-            this.label132.TabIndex = 30;
-            this.label132.Text = "Ki";
-            // 
-            // label133
-            // 
-            this.label133.AutoSize = true;
-            this.label133.Location = new System.Drawing.Point(6, 80);
-            this.label133.Name = "label133";
-            this.label133.Size = new System.Drawing.Size(23, 12);
-            this.label133.TabIndex = 28;
-            this.label133.Text = "u：";
-            // 
-            // textBox_USV3_X_Kp
-            // 
-            this.textBox_USV3_X_Kp.Location = new System.Drawing.Point(68, 77);
-            this.textBox_USV3_X_Kp.Name = "textBox_USV3_X_Kp";
-            this.textBox_USV3_X_Kp.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV3_X_Kp.TabIndex = 26;
-            this.textBox_USV3_X_Kp.Text = "0.1";
-            this.textBox_USV3_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label134
-            // 
-            this.label134.AutoSize = true;
-            this.label134.Location = new System.Drawing.Point(46, 82);
-            this.label134.Name = "label134";
-            this.label134.Size = new System.Drawing.Size(17, 12);
-            this.label134.TabIndex = 27;
-            this.label134.Text = "Kp";
-            // 
-            // textBox_USV3_Y_Kd
-            // 
-            this.textBox_USV3_Y_Kd.Location = new System.Drawing.Point(236, 107);
-            this.textBox_USV3_Y_Kd.Name = "textBox_USV3_Y_Kd";
-            this.textBox_USV3_Y_Kd.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV3_Y_Kd.TabIndex = 38;
-            this.textBox_USV3_Y_Kd.Text = "0.1";
-            this.textBox_USV3_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label135
-            // 
-            this.label135.AutoSize = true;
-            this.label135.Location = new System.Drawing.Point(214, 115);
-            this.label135.Name = "label135";
-            this.label135.Size = new System.Drawing.Size(17, 12);
-            this.label135.TabIndex = 39;
-            this.label135.Text = "Kd";
-            // 
-            // textBox_USV3_Y_Ki
-            // 
-            this.textBox_USV3_Y_Ki.Location = new System.Drawing.Point(152, 108);
-            this.textBox_USV3_Y_Ki.Name = "textBox_USV3_Y_Ki";
-            this.textBox_USV3_Y_Ki.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV3_Y_Ki.TabIndex = 36;
-            this.textBox_USV3_Y_Ki.Text = "0.1";
-            this.textBox_USV3_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label136
-            // 
-            this.label136.AutoSize = true;
-            this.label136.Location = new System.Drawing.Point(130, 114);
-            this.label136.Name = "label136";
-            this.label136.Size = new System.Drawing.Size(17, 12);
-            this.label136.TabIndex = 37;
-            this.label136.Text = "Ki";
-            // 
-            // label137
-            // 
-            this.label137.AutoSize = true;
-            this.label137.Location = new System.Drawing.Point(6, 111);
-            this.label137.Name = "label137";
-            this.label137.Size = new System.Drawing.Size(23, 12);
-            this.label137.TabIndex = 35;
-            this.label137.Text = "r：";
-            // 
-            // textBox_USV3_Y_Kp
-            // 
-            this.textBox_USV3_Y_Kp.Location = new System.Drawing.Point(68, 108);
-            this.textBox_USV3_Y_Kp.Name = "textBox_USV3_Y_Kp";
-            this.textBox_USV3_Y_Kp.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV3_Y_Kp.TabIndex = 33;
-            this.textBox_USV3_Y_Kp.Text = "0.1";
-            this.textBox_USV3_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label138
-            // 
-            this.label138.AutoSize = true;
-            this.label138.Location = new System.Drawing.Point(46, 113);
-            this.label138.Name = "label138";
-            this.label138.Size = new System.Drawing.Size(17, 12);
-            this.label138.TabIndex = 34;
-            this.label138.Text = "Kp";
-            // 
-            // radioButton_Point
-            // 
-            this.radioButton_Point.AutoSize = true;
-            this.radioButton_Point.Location = new System.Drawing.Point(116, 16);
-            this.radioButton_Point.Name = "radioButton_Point";
-            this.radioButton_Point.Size = new System.Drawing.Size(35, 16);
-            this.radioButton_Point.TabIndex = 62;
-            this.radioButton_Point.Text = "点";
-            this.radioButton_Point.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -13103,7 +13098,6 @@
         private Steema.TeeChart.Styles.HorizLine horizLine20;
         private System.Windows.Forms.TextBox textBox_X;
         private System.Windows.Forms.TextBox textBox_Y;
-        public System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label28;
         public System.Windows.Forms.Button button3;
@@ -13370,6 +13364,7 @@
         private System.Windows.Forms.TextBox textBox_USV3_X_Kp;
         private System.Windows.Forms.Label label134;
         public System.Windows.Forms.RadioButton radioButton_Point;
+        private System.Windows.Forms.Button button17;
     }
 }
 

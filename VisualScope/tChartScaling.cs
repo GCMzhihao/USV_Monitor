@@ -25,49 +25,50 @@ namespace 地面站
         public Dot D_screen, P_ScreenToAxis;
         double LeftMinimum, LeftMaximum;
         double BottomMinimum, BottomMaximum;
+        TChart chart;
         public TChartScaling(TChart tchart)//构造函数
         {
-            tchart.MouseDown += new MouseEventHandler(TChart_MouseDown);
-            tchart.MouseMove += new MouseEventHandler(TChart_MouseMove);
-            tchart.MouseUp += new MouseEventHandler(TChart_MouseUp);
-            tchart.MouseWheel += new MouseEventHandler(TChart_MouseWheel);
-            tchart.MouseDoubleClick += new MouseEventHandler(TChart_MouseDoubleClick);
+            chart = tchart;
+            chart.MouseDown += new MouseEventHandler(TChart_MouseDown);
+            chart.MouseMove += new MouseEventHandler(TChart_MouseMove);
+            chart.MouseUp += new MouseEventHandler(TChart_MouseUp);
+            chart.MouseWheel += new MouseEventHandler(TChart_MouseWheel);
+            chart.MouseDoubleClick += new MouseEventHandler(TChart_MouseDoubleClick);
             
             MousePointLast = new Dot();
             MousePointNext = new Dot();
             D_screen = new Dot();
             P_ScreenToAxis = new Dot();
 
-            tchart.Axes.Bottom.SetMinMax(-100, 100);
-            tchart.Axes.Left.SetMinMax(-100, 100);
+            chart.Axes.Bottom.SetMinMax(-100, 100);
+            chart.Axes.Left.SetMinMax(-100, 100);
         }
 
         public void TChart_MouseDown(object sender, MouseEventArgs e)//鼠标被按下
         {
-            TChart tchart;
-            tchart = (TChart)sender;
-            MousePointLast.x = e.X;
-            MousePointLast.y = e.Y;
-            LeftMinimum = tchart.Axes.Left.Minimum;
-            LeftMaximum = tchart.Axes.Left.Maximum;
-            BottomMinimum = tchart.Axes.Bottom.Minimum;
-            BottomMaximum = tchart.Axes.Bottom.Maximum;
-            D_screen.x = tchart.Axes.Bottom.CalcPosValue(tchart.Axes.Bottom.Maximum) - tchart.Axes.Bottom.CalcPosValue(tchart.Axes.Bottom.Minimum);
-            D_screen.y = tchart.Axes.Left.CalcPosValue(tchart.Axes.Left.Minimum) - tchart.Axes.Left.CalcPosValue(tchart.Axes.Left.Maximum);
-            if (D_screen.x != 0 && D_screen.y != 0)
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
-                P_ScreenToAxis.x = (BottomMaximum - BottomMinimum) / D_screen.x;
-                P_ScreenToAxis.y = (LeftMaximum - LeftMinimum) / D_screen.y;
+                MousePointLast.x = e.X;
+                MousePointLast.y = e.Y;
+                LeftMinimum = chart.Axes.Left.Minimum;
+                LeftMaximum = chart.Axes.Left.Maximum;
+                BottomMinimum = chart.Axes.Bottom.Minimum;
+                BottomMaximum = chart.Axes.Bottom.Maximum;
+                D_screen.x = chart.Axes.Bottom.CalcPosValue(chart.Axes.Bottom.Maximum) - chart.Axes.Bottom.CalcPosValue(chart.Axes.Bottom.Minimum);
+                D_screen.y = chart.Axes.Left.CalcPosValue(chart.Axes.Left.Minimum) - chart.Axes.Left.CalcPosValue(chart.Axes.Left.Maximum);
+                if (D_screen.x != 0 && D_screen.y != 0)
+                {
+                    P_ScreenToAxis.x = (BottomMaximum - BottomMinimum) / D_screen.x;
+                    P_ScreenToAxis.y = (LeftMaximum - LeftMinimum) / D_screen.y;
+                }
+                chart.Cursor = Cursors.Hand;
+                TChartMouseDown = true;
             }
-            tchart.Cursor = Cursors.Hand;
-            TChartMouseDown = true;
         }
         public void TChart_MouseMove(object sender, MouseEventArgs e)
         {
-            TChart tchart;
             double err_x, err_y;
             Dot D_axis;
-            tchart = (TChart)sender;
 
             if (TChartMouseDown == false)
                 return;
@@ -77,42 +78,38 @@ namespace 地面站
             err_y = (MousePointNext.y - MousePointLast.y);
             D_axis.x = -err_x * P_ScreenToAxis.x;
             D_axis.y = err_y * P_ScreenToAxis.y;
-            tchart.Axes.Bottom.SetMinMax(BottomMinimum + D_axis.x, BottomMaximum + D_axis.x);
-            tchart.Axes.Left.SetMinMax(LeftMinimum + D_axis.y, LeftMaximum + D_axis.y);
+            chart.Axes.Bottom.SetMinMax(BottomMinimum + D_axis.x, BottomMaximum + D_axis.x);
+            chart.Axes.Left.SetMinMax(LeftMinimum + D_axis.y, LeftMaximum + D_axis.y);
         }
         public void TChart_MouseUp(object sender, MouseEventArgs e)
         {
-            TChart tchart;
-            tchart = (TChart)sender;
             TChartMouseDown = false;
-            tchart.Cursor = Cursors.Arrow;
+            chart.Cursor = Cursors.Arrow;
         }
         public void TChart_MouseWheel(object sender, MouseEventArgs e)
         {
-            TChart tchart;
-            tchart = (TChart)sender;
             double zoom_scale = 0.1;
             Dot Distance;
             Dot mouse_pos;
             Dot center;
             Dot bias;
-            Distance.x = (tchart.Axes.Bottom.Maximum - tchart.Axes.Bottom.Minimum) * zoom_scale;
-            Distance.y = (tchart.Axes.Left.Maximum - tchart.Axes.Left.Minimum) * zoom_scale;
-            center.x = (tchart.Axes.Bottom.Maximum + tchart.Axes.Bottom.Minimum) / 2;
-            center.y = (tchart.Axes.Left.Maximum + tchart.Axes.Left.Minimum) / 2;
-            mouse_pos.x = tchart.Axes.Bottom.CalcPosPoint(e.X);
-            mouse_pos.y = tchart.Axes.Left.CalcPosPoint(e.Y);
+            Distance.x = (chart.Axes.Bottom.Maximum - chart.Axes.Bottom.Minimum) * zoom_scale;
+            Distance.y = (chart.Axes.Left.Maximum - chart.Axes.Left.Minimum) * zoom_scale;
+            center.x = (chart.Axes.Bottom.Maximum + chart.Axes.Bottom.Minimum) / 2;
+            center.y = (chart.Axes.Left.Maximum + chart.Axes.Left.Minimum) / 2;
+            mouse_pos.x = chart.Axes.Bottom.CalcPosPoint(e.X);
+            mouse_pos.y = chart.Axes.Left.CalcPosPoint(e.Y);
             bias.x = (center.x - mouse_pos.x) * zoom_scale * 2;
             bias.y = (center.y - mouse_pos.y) * zoom_scale * 2;
             if (e.Delta > 0)//放大
             {
-                tchart.Axes.Bottom.SetMinMax(tchart.Axes.Bottom.Minimum + Distance.x - bias.x, tchart.Axes.Bottom.Maximum - Distance.x - bias.x);
-                tchart.Axes.Left.SetMinMax(tchart.Axes.Left.Minimum + Distance.y - bias.y, tchart.Axes.Left.Maximum - Distance.y - bias.y);
+                chart.Axes.Bottom.SetMinMax(chart.Axes.Bottom.Minimum + Distance.x - bias.x, chart.Axes.Bottom.Maximum - Distance.x - bias.x);
+                chart.Axes.Left.SetMinMax(chart.Axes.Left.Minimum + Distance.y - bias.y, chart.Axes.Left.Maximum - Distance.y - bias.y);
             }
             else
             {
-                tchart.Axes.Bottom.SetMinMax(tchart.Axes.Bottom.Minimum - Distance.x + bias.x, tchart.Axes.Bottom.Maximum + Distance.x + bias.x);
-                tchart.Axes.Left.SetMinMax(tchart.Axes.Left.Minimum - Distance.y + bias.y, tchart.Axes.Left.Maximum + Distance.y + bias.y);
+                chart.Axes.Bottom.SetMinMax(chart.Axes.Bottom.Minimum - Distance.x + bias.x, chart.Axes.Bottom.Maximum + Distance.x + bias.x);
+                chart.Axes.Left.SetMinMax(chart.Axes.Left.Minimum - Distance.y + bias.y, chart.Axes.Left.Maximum + Distance.y + bias.y);
             }
         }
         public void TChart_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -120,31 +117,29 @@ namespace 地面站
             double x_scale,y_scale,max_scale;
             double x_distance, y_distance;
             double x_mid, y_mid;
-            TChart tchart;
-            tchart = (TChart)sender;
-            x_scale = (tchart.Axes.Bottom.MaxXValue - tchart.Axes.Bottom.MinXValue) / Math.Abs(tchart.Axes.Bottom.IStartPos - tchart.Axes.Bottom.IEndPos);
-            y_scale = (tchart.Axes.Left.MaxYValue - tchart.Axes.Left.MinYValue) / Math.Abs(tchart.Axes.Left.IStartPos - tchart.Axes.Left.IEndPos);
+            x_scale = (chart.Axes.Bottom.MaxXValue - chart.Axes.Bottom.MinXValue) / Math.Abs(chart.Axes.Bottom.IStartPos - chart.Axes.Bottom.IEndPos);
+            y_scale = (chart.Axes.Left.MaxYValue - chart.Axes.Left.MinYValue) / Math.Abs(chart.Axes.Left.IStartPos - chart.Axes.Left.IEndPos);
             if (x_scale > y_scale)
                 max_scale = x_scale;
             else
                 max_scale = y_scale;
-            x_distance = max_scale * Math.Abs(tchart.Axes.Bottom.IStartPos - tchart.Axes.Bottom.IEndPos) * 1.1;
-            y_distance = max_scale * Math.Abs(tchart.Axes.Left.IStartPos - tchart.Axes.Left.IEndPos) * 1.1;
-            x_mid = (tchart.Axes.Bottom.MaxXValue + tchart.Axes.Bottom.MinXValue) / 2;
-            y_mid = (tchart.Axes.Left.MaxYValue + tchart.Axes.Left.MinYValue) / 2;
-            if(tchart.Axes.Bottom.MaxXValue == tchart.Axes.Bottom.MinXValue|| tchart.Axes.Left.MaxYValue ==tchart.Axes.Left.MinYValue)
+            x_distance = max_scale * Math.Abs(chart.Axes.Bottom.IStartPos - chart.Axes.Bottom.IEndPos) * 1.1;
+            y_distance = max_scale * Math.Abs(chart.Axes.Left.IStartPos - chart.Axes.Left.IEndPos) * 1.1;
+            x_mid = (chart.Axes.Bottom.MaxXValue + chart.Axes.Bottom.MinXValue) / 2;
+            y_mid = (chart.Axes.Left.MaxYValue + chart.Axes.Left.MinYValue) / 2;
+            if(chart.Axes.Bottom.MaxXValue == chart.Axes.Bottom.MinXValue|| chart.Axes.Left.MaxYValue ==chart.Axes.Left.MinYValue)
             {
-                if(tchart.Axes.Left.MaxYValue == tchart.Axes.Left.MinYValue)
-                    tchart.Axes.Left.SetMinMax(tchart.Axes.Left.MinYValue - (tchart.Axes.Left.Maximum - tchart.Axes.Left.Minimum) / 2,
-                            tchart.Axes.Left.MaxYValue + (tchart.Axes.Left.Maximum - tchart.Axes.Left.Minimum) / 2);
-                if(tchart.Axes.Bottom.MaxXValue == tchart.Axes.Bottom.MinXValue)
-                    tchart.Axes.Bottom.SetMinMax(tchart.Axes.Bottom.MinYValue - (tchart.Axes.Bottom.Maximum - tchart.Axes.Bottom.Minimum) / 2,
-                       tchart.Axes.Bottom.MaxYValue + (tchart.Axes.Bottom.Maximum - tchart.Axes.Bottom.Minimum) / 2);
+                if(chart.Axes.Left.MaxYValue == chart.Axes.Left.MinYValue)
+                    chart.Axes.Left.SetMinMax(chart.Axes.Left.MinYValue - (chart.Axes.Left.Maximum - chart.Axes.Left.Minimum) / 2,
+                            chart.Axes.Left.MaxYValue + (chart.Axes.Left.Maximum - chart.Axes.Left.Minimum) / 2);
+                if(chart.Axes.Bottom.MaxXValue == chart.Axes.Bottom.MinXValue)
+                    chart.Axes.Bottom.SetMinMax(chart.Axes.Bottom.MinYValue - (chart.Axes.Bottom.Maximum - chart.Axes.Bottom.Minimum) / 2,
+                       chart.Axes.Bottom.MaxYValue + (chart.Axes.Bottom.Maximum - chart.Axes.Bottom.Minimum) / 2);
             }
             else
             {
-                tchart.Axes.Bottom.SetMinMax(x_mid - x_distance / 2, x_mid + x_distance / 2);
-                tchart.Axes.Left.SetMinMax(y_mid - y_distance / 2, y_mid + y_distance / 2);
+                chart.Axes.Bottom.SetMinMax(x_mid - x_distance / 2, x_mid + x_distance / 2);
+                chart.Axes.Left.SetMinMax(y_mid - y_distance / 2, y_mid + y_distance / 2);
             }
             
         }

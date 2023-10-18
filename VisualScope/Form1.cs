@@ -41,8 +41,8 @@ namespace 地面站
         public double LongitudeStart;
         public double LatitudeStart;
 
-        public double X_Standard= 4052589.2780501638;
-        public double Y_Standard= 11726384.463664232;
+        public double X_Standard= 4052631.2627654546;
+        public double Y_Standard= 11726459.382366259;
         public double track_time;
 
 
@@ -77,7 +77,6 @@ namespace 地面站
         private VirtualLeader VirtualLeader;
         readonly UAV_Followers[] UAV_Followers = new UAV_Followers[UWB_Tag_Num];
 
-
         /*USV相关初始化*/
         static readonly byte USV_NUM = 6;
         public USV[] USVs = new USV[USV_NUM];
@@ -88,16 +87,23 @@ namespace 地面站
         public USV_PID_Info[] USVs_PID_Info = new USV_PID_Info[USV_NUM];
         public USV_Point_PID_INFO[] USVs_Point_PID_ = new USV_Point_PID_INFO[USV_NUM];
         
-
-
-
         List<Expression> Expressions = new List<Expression>();
         List<Expression> Expressions_Copy=new List<Expression>();
         List<byte> UWB_TagUsed = new List<byte>();
 
-       
         List<PointF>Points = new List<PointF>();
         List<PointF> Points_Copy = new List<PointF>();
+        public struct Dot
+        {
+            public double x;
+            public double y;
+        }
+        List<double> centerPointX = new List<double>();
+        List<double> centerPointY = new List<double>();
+        List<double> ClickX = new List<double>();
+        List<double> ClickY = new List<double>();
+        public Points sreLowerPoints = new Points();
+        public Points ClickPoints = new Points();
 
         float Current_Normal_k;//法向量斜率
         string Current_Normal_Expression;//法向量方程
@@ -238,7 +244,6 @@ namespace 地面站
         }
         private void TChartInit(Steema.TeeChart.TChart tchart)
         {
-            
             tchart.Aspect.View3D = false;
             tchart.Axes.Automatic = false;
             tchart.Axes.Bottom.Automatic = false;
@@ -359,6 +364,49 @@ namespace 地面站
             tchart.Zoom.MinPixels = 100;
             tchart.Zoom.Pen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             tchart.Zoom.Pen.Visible = true;
+        }
+        private void USVC_Init()//无人船搜救大赛起始点和球心位置初始化
+        {
+            sreLowerPoints.Title = "圆心点";
+            ClickPoints.Title = "轨迹点";
+            sreLowerPoints.Color = Color.Red;
+            ClickPoints.Color = Color.Black;
+            sreLowerPoints.Visible = true;
+            this.tChart6.Series.Add(sreLowerPoints);
+            this.tChart6.Series.Add(ClickPoints);
+            centerPointX.Add(27.9865432175596);//起点
+            centerPointY.Add(-43.213371877801);
+
+            centerPointX.Add(-2.5);//1
+            centerPointY.Add(-55);
+            DrawReferencePath(horizLine15, centerPointX[1], centerPointY[1],12);
+            centerPointX.Add(-29.0747157260024);//2
+            centerPointY.Add(-69.0184608449937);
+            DrawReferencePath(horizLine16, centerPointX[2], centerPointY[2], 12);
+            centerPointX.Add(-51.0284771510456);//3
+            centerPointY.Add(-85.6936196237245);
+            DrawReferencePath(horizLine17, centerPointX[3], centerPointY[3], 12);
+            centerPointX.Add(-73.8668147168769);//4
+            centerPointY.Add(-97.8641209621153);
+            DrawReferencePath(horizLine18, centerPointX[4], centerPointY[4], 12);
+
+            centerPointX.Add(27.9865432175596);//终点
+            centerPointY.Add(-43.213371877801);
+            for (int i = 0; i < 3; i++)
+            {
+                USVs[i].mmg.x_start = centerPointX[0];//仿真起点
+                USVs[i].mmg.y_start = centerPointY[0];
+            }
+            ClickPoints.Marks.Visible = true;
+            ClickPoints.UseAxis = false;
+            tChart6.Axes.Bottom.AutomaticMaximum = true;
+            tChart6.Axes.Bottom.Maximum = 200;
+            tChart6.Axes.Bottom.Visible = true;
+
+            for (int i = 0; i < centerPointX.Count; i++)
+            {
+                sreLowerPoints.Add(centerPointX[i], centerPointY[i]);
+            }
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -662,6 +710,12 @@ namespace 地面站
             horizLine14.Legend.Visible = true;
             horizLine15.Active = true;
             horizLine15.Legend.Visible = true;
+            horizLine16.Active = true;
+            horizLine16.Legend.Visible = true;
+            horizLine17.Active = true;
+            horizLine17.Legend.Visible = true;
+            horizLine18.Active = true;
+            horizLine18.Legend.Visible = true;
 
             VirtualLeader.horizLine = HorizLines[0];
 
@@ -692,6 +746,65 @@ namespace 地面站
             tabControl1.SelectedIndex = 6;//设置选项卡选中页
             new TBoxOnlyNumber(textBox4);
             new TBoxOnlyNumber(textBox5);
+            new TBoxOnlyNumber(textBox10);
+            new TBoxOnlyNumber(textBox11);
+            new TBoxOnlyNumber(textBox_Speed_Set);
+            new TBoxOnlyNumber(textBox_EXP_ID);
+
+
+            new TBoxOnlyNumber(textBox_USV1_angle);
+            new TBoxOnlyNumber(textBox_USV1_L);
+            new TBoxOnlyNumber(textBox_USV1_delta);
+            new TBoxOnlyNumber(textBox_USV1_kp );
+            new TBoxOnlyNumber(textBox_USV1_VEL_Kp );
+            new TBoxOnlyNumber(textBox_USV1_VEL_Ki);
+            new TBoxOnlyNumber(textBox_USV1_VEL_Kd);
+            new TBoxOnlyNumber(textBox_USV1_HEA_Kp);
+            new TBoxOnlyNumber(textBox_USV1_HEA_Ki);
+            new TBoxOnlyNumber(textBox_USV1_HEA_Kd);
+            new TBoxOnlyNumber(textBox_USV1_X_Kp);
+            new TBoxOnlyNumber(textBox_USV1_X_Ki);
+            new TBoxOnlyNumber(textBox_USV1_X_Kd);
+            new TBoxOnlyNumber(textBox_USV1_Y_Kp);
+            new TBoxOnlyNumber(textBox_USV1_Y_Ki);
+            new TBoxOnlyNumber(textBox_USV1_Y_Kd);
+
+
+            new TBoxOnlyNumber(textBox_USV2_angle);
+            new TBoxOnlyNumber(textBox_USV2_L);
+            new TBoxOnlyNumber(textBox_USV2_delta);
+            new TBoxOnlyNumber(textBox_USV2_kp);
+            new TBoxOnlyNumber(textBox_USV2_VEL_Kp);
+            new TBoxOnlyNumber(textBox_USV2_VEL_Ki);
+            new TBoxOnlyNumber(textBox_USV2_VEL_Kd);
+            new TBoxOnlyNumber(textBox_USV2_HEA_Kp);
+            new TBoxOnlyNumber(textBox_USV2_HEA_Ki);
+            new TBoxOnlyNumber(textBox_USV2_HEA_Kd);
+            new TBoxOnlyNumber(textBox_USV2_X_Kp);
+            new TBoxOnlyNumber(textBox_USV2_X_Ki);
+            new TBoxOnlyNumber(textBox_USV2_X_Kd);
+            new TBoxOnlyNumber(textBox_USV2_Y_Kp);
+            new TBoxOnlyNumber(textBox_USV2_Y_Ki);
+            new TBoxOnlyNumber(textBox_USV2_Y_Kd);
+
+            new TBoxOnlyNumber(textBox_USV3_angle);
+            new TBoxOnlyNumber(textBox_USV3_L);
+            new TBoxOnlyNumber(textBox_USV3_delta);
+            new TBoxOnlyNumber(textBox_USV3_kp);
+            new TBoxOnlyNumber(textBox_USV3_VEL_Kp);
+            new TBoxOnlyNumber(textBox_USV3_VEL_Ki);
+            new TBoxOnlyNumber(textBox_USV3_VEL_Kd);
+            new TBoxOnlyNumber(textBox_USV3_HEA_Kp);
+            new TBoxOnlyNumber(textBox_USV3_HEA_Ki);
+            new TBoxOnlyNumber(textBox_USV3_HEA_Kd);
+            new TBoxOnlyNumber(textBox_USV3_X_Kp);
+            new TBoxOnlyNumber(textBox_USV3_X_Ki);
+            new TBoxOnlyNumber(textBox_USV3_X_Kd);
+            new TBoxOnlyNumber(textBox_USV3_Y_Kp);
+            new TBoxOnlyNumber(textBox_USV3_Y_Ki);
+            new TBoxOnlyNumber(textBox_USV3_Y_Kd);
+
+
             RB_ProgramControlLeader.CheckedChanged += new EventHandler(VirtualLeaderSelectMode);
             RB_RockerControlLeader.CheckedChanged += new EventHandler(VirtualLeaderSelectMode);
             msg_Rocker.leftX = 1500;
@@ -716,6 +829,11 @@ namespace 地面站
 
             new TBoxOnlyNumber(TB_FormationGatherSpeed);
             tcpserver = new TCP((Form1)sender);//
+
+            GetWayponits();//获取存储航点
+
+            tabControl6.SelectedTab = tabPage20;//默认选择USV3
+            USVC_Init(); 
         }
 
         private void Button_USV2_LOCK_Click(object sender, EventArgs e)
@@ -1551,32 +1669,46 @@ namespace 地面站
             {
                 if (radioButton_Point.Checked)
                 {
-                    USVs[2].Los.Update_XY_F(Points_Copy[1].X, Points_Copy[1].Y, Points_Copy[0].X, Points_Copy[0].Y);//更新点
-                    USVs[2].LOS_Point_Leader(dt);
-                    USVs[0].LOS_Point_Follower(dt, USVs[2].Position.X, USVs[2].Position.Y, USVs[2].state.heading, USVs[2].state.speed);
-                    USVs[1].LOS_Point_Follower(dt, USVs[2].Position.X, USVs[2].Position.Y, USVs[2].state.heading, USVs[2].state.speed);
+                    if(Points_Copy.Count<2)
+                    {
+                        SystemInfo("请添加两个以上航点！");
+                        return;
+                    }
+                    USVs[0].Los.Update_XY_F(Points_Copy[1].X, Points_Copy[1].Y, Points_Copy[0].X, Points_Copy[0].Y);//更新点
+                    USVs[0].LOS_Point_Leader(dt);
+                    USVs[2].LOS_Point_Follower(dt, USVs[0].Position.X, USVs[0].Position.Y, USVs[0].state.heading, USVs[0].state.speed);
+                    USVs[1].LOS_Point_Follower(dt, USVs[0].Position.X, USVs[0].Position.Y, USVs[0].state.heading, USVs[0].state.speed);
                     if (Points_Copy.Count >= 2)
                     {
                         float distance, a, b, c;
-                        float X0 = Points_Copy[1].X;
+                        float X0 = Points_Copy[1].X;//目标点
                         float Y0 = Points_Copy[1].Y;
-                        double X = USVs[2].Position.X;
-                        double Y = USVs[2].Position.Y;
+                        double X = USVs[0].Position.X;//实时位置
+                        double Y = USVs[0].Position.Y;
 
-                        float k = (Points_Copy[1].Y - Points_Copy[0].Y) / (Points_Copy[1].X - Points_Copy[0].X);
-                        float X1 = Convert.ToSingle(Points_Copy[1].X - USVs[2].Position.X);
-                        float Y1 = Convert.ToSingle(Points_Copy[1].Y - USVs[2].Position.Y);
-                        float X2 = Convert.ToSingle(Points_Copy[1].X - Points_Copy[0].X);
+                        float X1 = Convert.ToSingle(Points_Copy[1].X - USVs[0].Position.X);//实时位置与目标误差
+                        float Y1 = Convert.ToSingle(Points_Copy[1].Y - USVs[0].Position.Y);
+                        float X2 = Convert.ToSingle(Points_Copy[1].X - Points_Copy[0].X);//起始位置与目标误差
                         float Y2 = Convert.ToSingle(Points_Copy[1].Y - Points_Copy[0].Y);
-                        a = 1; b = k; c = -X0 -k * Y0;
-                        distance = Convert.ToSingle(Math.Abs(a * X + b * Y + c) / Math.Sqrt(a * a + b * b));//船到法线的距离
-                        distance *= Math.Sign((X1 * X2 + Y1 * Y2) / (Math.Sqrt(X1 * X1 + Y1 * Y1) * Math.Sqrt(X2 * X2 + Y2 * Y2)));//船到法线的距离带方向，和起点同侧为正；
-                        if (distance < 0.5 )
+                        if ((Points_Copy[1].X - Points_Copy[0].X) != 0)
+                        {
+                            float k = (Points_Copy[1].Y - Points_Copy[0].Y) / (Points_Copy[1].X - Points_Copy[0].X);
+    
+                            a = 1; b = k; c = -X0 - k * Y0;
+                            distance = Convert.ToSingle(Math.Abs(a * X + b * Y + c) / Math.Sqrt(a * a + b * b));//船到法线的距离
+                            distance *= Math.Sign((X1 * X2 + Y1 * Y2) / (Math.Sqrt(X1 * X1 + Y1 * Y1) * Math.Sqrt(X2 * X2 + Y2 * Y2)));//船到法线的距离带方向，和起点同侧为正；
+                        }
+                        else 
+                        {
+                            distance = Y1;
+                        }
+                        if (distance < 3 )
                         {
                             Points_Copy.RemoveAt(0);
-                            USVs[0].Los.pid_u.Clear();
+                            USVs[0].Los.w = Points_Copy[0].X;
+                            USVs[2].Los.pid_u.Clear();
                             USVs[1].Los.pid_u.Clear();
-                            USVs[0].Los.pid_r.Clear();
+                            USVs[2].Los.pid_r.Clear();
                             USVs[1].Los.pid_r.Clear();
                         }
                         if(Points_Copy.Count<=1)
@@ -1872,7 +2004,7 @@ namespace 地面站
             yc = -1;
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        public void button3_Click(object sender, EventArgs e)
         {
             double course;
             double beta = 0 * Math.PI / 180;
@@ -1880,9 +2012,29 @@ namespace 地面站
             double y0 = 0;
             if (button3.Text == "开始实验")
             {
-                button3.Text = "结束实验";
+                if (radioButton_Real_USV.Checked)//实船
+                {
+                    if (serialPort1.IsOpen == false)//串口未打开
+                    {
+                        SystemInfo("请打开串口！");
+                        track_time = 0;
 
-                timer2.Enabled = true;
+                        return;
+                    }
+
+                    try
+                    {
+                        USVs[0].UNLOCK();
+                        USVs[1].UNLOCK();
+                        USVs[2].UNLOCK();
+                    }
+                    catch
+                    {
+
+                    }
+
+                }
+                button3.Text = "结束实验";
 
                 textBox10.Enabled = false;
                 textBox11.Enabled = false;
@@ -1906,54 +2058,16 @@ namespace 地面站
                 USVs[2].Clear();
                 timer2.Enabled = true;
 
-                //Expressions_Copy= (List<Expression>)DeepCopy.deepcopy(Expressions);
-
-                Points.Add(new PointF(20, 30));
-                Points.Add(new PointF(25, 35));
-                Points.Add(new PointF(70, 60));
-                Points.Add(new PointF(85, 100));
-                Points.Add(new PointF(160, 70));
-
-                //Points.Add(new PointF(0, 0));
-                //Points.Add(new PointF(1.3F, 3.49F));
-                //Points.Add(new PointF(3.22F, 5.21F));
-                //Points.Add(new PointF(6.17F, 6.93F));
-                //Points.Add(new PointF(9.39F, 5.66F));
-                //Points.Add(new PointF(11.98F, 2.67F));
-                //Points.Add(new PointF(14.58F, -1.40F));
-
-                //Points.Add(new PointF(16.17F,-2.63F));
-                //Points.Add(new PointF(18.39F, -2.86F));
-                //Points.Add(new PointF(20.55F, -1.70F));
-                //Points.Add(new PointF(22.09F, 2.17F));
-                //Points.Add(new PointF(23.43F, 6.08F));
-                //Points.Add(new PointF(25.58F, 7.94F));
-
-
-
-                Points_Copy = (List<PointF>)DeepCopy.deepcopy<List<PointF>>(Points);
-
-                if (radioButton_Real_USV.Checked)//实船
+                tchartscalings[1].TChart_MouseDoubleClick(null, null);//自动等比缩放
+                Points.Add(new PointF(Convert.ToSingle(USVs[2].Position.X), Convert.ToSingle(USVs[2].Position.Y)));
+                for (int p = 0; p<= ClickX.Count-1; p++) //添加航点
                 {
-                    if (serialPort1.IsOpen == false)//串口未打开
-                    {
-                        SystemInfo("请打开串口！");
-                        track_time = 0;
-                        return;
-                    }
-
-                    try
-                    {
-                        USVs[0].UNLOCK();
-                        USVs[1].UNLOCK();
-                        USVs[2].UNLOCK();
-                    }
-                    catch
-                    { 
-                    
-                    }
-
+                    Points.Add(new PointF(Convert.ToSingle(ClickX[p]), Convert.ToSingle(ClickY[p])));
                 }
+                
+                Points_Copy = (List<PointF>)DeepCopy.deepcopy<List<PointF>>(Points);
+              
+
 
                 if (radioButton_Single_USV.Checked)//单船
                 {
@@ -2300,5 +2414,104 @@ namespace 地面站
             textBox11.Text = textBox10.Text;
             UPdate_Expression();
         }//添加多轨迹
+
+        int clickcount = 0;
+        Dot mouse_pos;
+        private void tChart6_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && ((Control.ModifierKeys&Keys.Control)==Keys.Control))
+            {
+                mouse_pos.x = tChart6.Axes.Bottom.CalcPosPoint(e.X);
+                mouse_pos.y = tChart6.Axes.Left.CalcPosPoint(e.Y);
+                ClickX.Add(mouse_pos.x);
+                ClickY.Add(mouse_pos.y);
+                ClickPoints.Add(ClickX[clickcount], ClickY[clickcount], clickcount.ToString());
+                
+
+                
+                //存储当前点
+                savedata1 += ClickX[clickcount].ToString() + " " + ClickY[clickcount].ToString() + "\r\n";
+                
+
+                FileStream fs = new FileStream(clickreadFilePath  + "write.txt", FileMode.Create);
+                StreamWriter sw = new StreamWriter(fs, Encoding.Default);
+                sw.Write(savedata1);
+                //释放资源
+                sw.Close();
+                fs.Close();
+                SystemInfo("保存成功！");
+                clickcount++;
+            }
+        }
+        string clickFilePath = AppDomain.CurrentDomain.BaseDirectory + "/轨迹读取数据/write.txt";
+        string clicksaveFilePath = AppDomain.CurrentDomain.BaseDirectory + "/打点数据/";
+        string clickreadFilePath = AppDomain.CurrentDomain.BaseDirectory + "/轨迹读取数据/";
+        string savedata1;
+        private void GetWayponits()//获取所有存储航点
+        {//获取存储点
+            //建立文件读取流对象
+            StreamReader str = new StreamReader(clickFilePath);
+            
+            //获取每行字符
+            string line;
+            while ((line = str.ReadLine()) != null)
+            {
+                //通过','将行分裂为字符串组
+                string[] Q = line.Split(' ');
+                double x, y;
+                x = Convert.ToDouble(Q[0]);
+                y = Convert.ToDouble(Q[1]);
+                mouse_pos.x = x;
+                mouse_pos.y = y;
+                //存入点列
+                //textBox13.Text=mouse_pos.x.ToString() + mouse_pos.y.ToString();
+                ClickX.Add(mouse_pos.x);
+                ClickY.Add(mouse_pos.y);
+                ClickPoints.Add(ClickX[clickcount], ClickY[clickcount], clickcount.ToString());
+                clickcount++;
+            }
+            str.Close();
+            StreamReader s = new StreamReader(clickFilePath);
+            savedata1 = s.ReadToEnd();
+            s.Close();
+        }
+
+        private void button17_Click(object sender, EventArgs e)//清除所有航点
+        {
+            //清楚当前点
+            ClickPoints.Clear();
+            ClickX.Clear();
+            ClickY.Clear();
+            clickcount = 0;
+            savedata1 = "";
+            FileStream fs = new FileStream(clickreadFilePath + "write.txt", FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs, Encoding.Default);
+            sw.Write(savedata1);
+            //释放资源
+            sw.Close();
+            fs.Close();
+            SystemInfo("清除成功！");
+        }
+        /// <summary>
+        /// 绘制球心所在参考轨迹线
+        /// </summary>
+        /// <param name="horizLine">待绘制的线</param>
+        /// <param name="xr">圆心</param>
+        /// <param name="yr">圆心</param>
+        /// <param name="r">半径</param>
+        void DrawReferencePath(HorizLine horizLine,double xr,double yr,double r)//绘制球心所在参考轨迹线
+        {
+            double points = 500;
+            for (int i = 0; i < points; i++)
+            {
+                double w;
+                double x, y;
+                w = i * 2 * Math.PI / points;
+                x = xr + r * Math.Cos(w);
+                y = yr + r * Math.Sin(w);
+                horizLine.Add(x, y);
+            }
+        }
+
     }
 }

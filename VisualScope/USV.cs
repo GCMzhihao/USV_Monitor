@@ -209,6 +209,10 @@ namespace 地面站
         public void LOCK()
         {
             //Msg_cmd.DEV_ID = DEV_ID;
+            set.Speed = 0;
+            form1.mavlinkPacket.Message = set;
+            form1.SendMavMsgToRocker(form1.mavlinkPacket);
+
             form1.mavlinkPacket.ComponentId = DEV_ID;
             Msg_cmd.cmd_id = (byte)MavLink.CMD_TYPE.CMD_LOCK;
             form1.mavlinkPacket.Message = Msg_cmd;
@@ -274,7 +278,7 @@ namespace 地面站
         }
 
 
-        private void ll2XY()
+        public void ll2XY()
         {
             double X;
             double Y;
@@ -282,9 +286,17 @@ namespace 地面站
             Position.X = X - form1.X_Standard;
             Position.Y = Y - form1.Y_Standard;
         }
-        private void Draw_Line()
+        public void Draw_Line()
         {
-            horizLine.Add(Position.X, Position.Y);
+            try
+            {
+                horizLine.Add(Position.X, Position.Y);
+            }
+            catch
+            {
+                form1.SystemInfo("输出坐标为非法值！已结束本次实验！");
+                form1.button3_Click(null,null);
+            }
         }
 
         public void USV_Info_Display()
@@ -313,12 +325,6 @@ namespace 地面站
             {
                 heading = mmg.state.psi;
                 course = mmg.state.course;
-                beta = course - heading;
-                while (beta > Math.PI)
-                    beta -= Math.PI * 2;
-                while (beta < -Math.PI)
-                    beta += Math.PI * 2;
-
                 speed = mmg.state.U;
 
                 Los.UpdateData(Position.X, Position.Y, heading, course, speed);
@@ -328,7 +334,7 @@ namespace 地面站
 
                 double err;
                 err = result.psi_d - heading;
-                while (err > Math.PI)
+                while (err >= Math.PI)
                     err -= Math.PI * 2;
                 while (err < -Math.PI)
                     err += Math.PI * 2;
@@ -345,12 +351,9 @@ namespace 地面站
             }
             else if (form1.radioButton_Real_USV.Checked)//实船
             {
-                ll2XY();
-
                 heading = state.heading / 180 * Math.PI;//弧度
                 u = state.speed;
                 course = state.Track / 180 * Math.PI;//弧度
-
                 Draw_Line();
                 Los.UpdateData(Position.X, Position.Y, heading, course, u);
 
@@ -403,7 +406,7 @@ namespace 地面站
                 tau_u = Los.pid_u.Calculate(result.vel, speed, T);
                 double err;
                 err = result.psi_d - heading;
-                while (err > Math.PI)
+                while (err >= Math.PI)
                     err -= Math.PI * 2;
                 while (err < -Math.PI)
                     err += Math.PI * 2;

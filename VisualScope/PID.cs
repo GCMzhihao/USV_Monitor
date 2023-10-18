@@ -59,11 +59,12 @@ namespace 地面站
 
             pid.Err = setvalue - feedback;
             pid.Pout = pid.Kp * pid.Err;
-            pid.Integral +=  pid.Err * dt;
-            
+            pid.Integral += pid.Ki*pid.Err * dt;
+            if (pid.Ki < 0.00001)
+                pid.Integral = 0;
             if (pid.IntMax != 0)
                 pid.Integral = LIMIT(pid.Integral, -pid.IntMax, pid.IntMax);
-            pid.Iout = pid.Ki * pid.Integral;
+            pid.Iout =  pid.Integral;
             pid.Dout = pid.Kd * (pid.Err - pid.LastValue) / dt;
             pid.LastValue = pid.Err;
 

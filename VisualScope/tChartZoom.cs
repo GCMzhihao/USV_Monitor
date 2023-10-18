@@ -54,36 +54,39 @@ namespace 地面站
         }
         private void TChart_MouseDown(object sender, MouseEventArgs e)//鼠标被按下
         {
-            TChart tchart;
-            tchart = (TChart)sender;
-            if (ClickLegendFlag == true)//tchart被单击
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
+                TChart tchart;
+                tchart = (TChart)sender;
+                if (ClickLegendFlag == true)//tchart被单击
+                {
+                    tChartIsXAutoShowed = false;
+                    tChartIsYAutoShowed = true;
+                    ClickLegendFlag = false;
+                    return;
+                }
                 tChartIsXAutoShowed = false;
-                tChartIsYAutoShowed = true;
-                ClickLegendFlag = false;
-                return;
-            }
-            tChartIsXAutoShowed = false;
-            tChartIsYAutoShowed = false;
+                tChartIsYAutoShowed = false;
 
-            if (e.Button == MouseButtons.Left)//按下了左键
-                MouseLeftDown = true;
-            if (e.Button == MouseButtons.Right)
-                MouseRightDown = true;
-            MousePointLast.x = e.X;
-            MousePointLast.y = e.Y;
-            LeftMinimum = tchart.Axes.Left.Minimum;
-            LeftMaximum = tchart.Axes.Left.Maximum;
-            BottomMinimum = tchart.Axes.Bottom.Minimum;
-            BottomMaximum = tchart.Axes.Bottom.Maximum;
-            D_screen.x = tchart.Axes.Bottom.CalcPosValue(tchart.Axes.Bottom.Maximum) - tchart.Axes.Bottom.CalcPosValue(tchart.Axes.Bottom.Minimum);
-            D_screen.y = tchart.Axes.Left.CalcPosValue(tchart.Axes.Left.Minimum) - tchart.Axes.Left.CalcPosValue(tchart.Axes.Left.Maximum);
-            if (D_screen.x != 0 && D_screen.y != 0)
-            {
-                P_ScreenToAxis.x = (BottomMaximum - BottomMinimum) / D_screen.x;
-                P_ScreenToAxis.y = (LeftMaximum - LeftMinimum) / D_screen.y;
+                if (e.Button == MouseButtons.Left)//按下了左键
+                    MouseLeftDown = true;
+                if (e.Button == MouseButtons.Right)
+                    MouseRightDown = true;
+                MousePointLast.x = e.X;
+                MousePointLast.y = e.Y;
+                LeftMinimum = tchart.Axes.Left.Minimum;
+                LeftMaximum = tchart.Axes.Left.Maximum;
+                BottomMinimum = tchart.Axes.Bottom.Minimum;
+                BottomMaximum = tchart.Axes.Bottom.Maximum;
+                D_screen.x = tchart.Axes.Bottom.CalcPosValue(tchart.Axes.Bottom.Maximum) - tchart.Axes.Bottom.CalcPosValue(tchart.Axes.Bottom.Minimum);
+                D_screen.y = tchart.Axes.Left.CalcPosValue(tchart.Axes.Left.Minimum) - tchart.Axes.Left.CalcPosValue(tchart.Axes.Left.Maximum);
+                if (D_screen.x != 0 && D_screen.y != 0)
+                {
+                    P_ScreenToAxis.x = (BottomMaximum - BottomMinimum) / D_screen.x;
+                    P_ScreenToAxis.y = (LeftMaximum - LeftMinimum) / D_screen.y;
+                }
+                tchart.Cursor = Cursors.Hand;
             }
-            tchart.Cursor = Cursors.Hand;
         }
         private void TChart_MouseMove(object sender, MouseEventArgs e)
         {

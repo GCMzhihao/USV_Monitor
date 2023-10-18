@@ -1,5 +1,6 @@
 ﻿
 using MavLink;
+using Microsoft.VisualBasic;
 using Steema.TeeChart.Styles;
 using System;
 using System.Reflection;
@@ -56,6 +57,7 @@ namespace 地面站
                 int i = 0;
                 form1.USV_ID_List.Add((byte)e.ComponentId);
                 form1.USV_ID_List.Sort();
+                form1.USV_ID_List.Reverse();
                 form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].Init((byte)e.ComponentId);
                 foreach (var item in form1.USV_ID_List)
                 {   
@@ -79,6 +81,8 @@ namespace 地面站
                     while (form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state.Track < -180)
                         form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].state.Track += 360;
 
+                    form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].ll2XY();
+                    form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].Draw_Line();
                     form1.USVs[form1.USV_ID_List.IndexOf((byte)e.ComponentId)].USV_Info_Display();
                 }
 
