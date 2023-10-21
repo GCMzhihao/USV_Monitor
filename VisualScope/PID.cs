@@ -74,6 +74,29 @@ namespace 地面站
                 pid.OutPut = LIMIT((pid.Pout + pid.Iout+ pid.Dout), -pid.OutPutMax, pid.OutPutMax);
             return pid.OutPut;
         }
+        public double Calculate(double err, double dt)
+        {
+
+            if (pid.Kp == 0)
+                return 0;
+
+            pid.Err = err;
+            pid.Pout = pid.Kp * pid.Err;
+            pid.Integral += pid.Ki * pid.Err * dt;
+            if (pid.Ki < 0.00001)
+                pid.Integral = 0;
+            if (pid.IntMax != 0)
+                pid.Integral = LIMIT(pid.Integral, -pid.IntMax, pid.IntMax);
+            pid.Iout = pid.Integral;
+            pid.Dout = pid.Kd * (pid.Err - pid.LastValue) / dt;
+            pid.LastValue = pid.Err;
+
+            if (pid.OutPutMax == 0)
+                pid.OutPut = pid.Pout + pid.Iout + pid.Dout;
+            else
+                pid.OutPut = LIMIT((pid.Pout + pid.Iout + pid.Dout), -pid.OutPutMax, pid.OutPutMax);
+            return pid.OutPut;
+        }
         public void Clear()
         {
             pid.Integral = 0;

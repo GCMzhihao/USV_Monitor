@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -45,10 +46,9 @@ namespace 地面站
         public double Y_Standard= 11726459.382366259;
         public double track_time;
 
-
-        private StreamWriter usv_sw;
-
-        Norbbin norbbin;
+        System.Timers.Timer SysTimer1;
+        TimeSpan[] TimeStart=new TimeSpan[10];
+        TimeSpan[] TimeEnd = new TimeSpan[10];
         Form form1;
         public class USV_Position
         {
@@ -100,19 +100,20 @@ namespace 地面站
         }
         List<double> centerPointX = new List<double>();
         List<double> centerPointY = new List<double>();
+        List<double> goPointX = new List<double>();
+        List<double> goPointY = new List<double>();
         List<double> ClickX = new List<double>();
         List<double> ClickY = new List<double>();
         public Points sreLowerPoints = new Points();
+        public Points goPoints = new Points();
         public Points ClickPoints = new Points();
-
-        float Current_Normal_k;//法向量斜率
-        string Current_Normal_Expression;//法向量方程
 
         public HorizLine[] HorizLines = new HorizLine[30];
         public FastLine[] FastLines = new FastLine[30];
         bool PathTrackingEnable = false;
         TChartZoom[] tchartzooms = new TChartZoom[10];
         TChartScaling[] tchartscalings = new TChartScaling[10];
+
 
         readonly OpenFileDialog ofd = new OpenFileDialog
         {
@@ -148,6 +149,8 @@ namespace 地面站
         {   
             string name;
             string text;
+
+            SysTimer1.Enabled = false;
             string FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config.ini");
             if(!File.Exists(FilePath))
             {
@@ -369,35 +372,50 @@ namespace 地面站
         {
             sreLowerPoints.Title = "圆心点";
             ClickPoints.Title = "轨迹点";
-            sreLowerPoints.Color = Color.Red;
+            goPoints.Title = "出发线";
+
+           sreLowerPoints.Color = Color.Red;
             ClickPoints.Color = Color.Black;
+            goPoints.Color = Color.Green;
             sreLowerPoints.Visible = true;
+            sreLowerPoints.Legend.Visible = false;
+            ClickPoints.Legend.Visible = false;
+            goPoints.Visible = true;
+            goPoints.Legend.Visible = false;
+
             this.tChart6.Series.Add(sreLowerPoints);
             this.tChart6.Series.Add(ClickPoints);
-            centerPointX.Add(27.9865432175596);//起点
-            centerPointY.Add(-43.213371877801);
+            this.tChart6.Series.Add(goPoints);
+
 
             centerPointX.Add(-2.5);//1
             centerPointY.Add(-55);
-            DrawReferencePath(horizLine15, centerPointX[1], centerPointY[1],12);
+            DrawReferencePath(horizLine15, centerPointX[0], centerPointY[0],12);
             centerPointX.Add(-29.0747157260024);//2
             centerPointY.Add(-69.0184608449937);
-            DrawReferencePath(horizLine16, centerPointX[2], centerPointY[2], 12);
+            DrawReferencePath(horizLine16, centerPointX[1], centerPointY[1], 12);
             centerPointX.Add(-51.0284771510456);//3
             centerPointY.Add(-85.6936196237245);
-            DrawReferencePath(horizLine17, centerPointX[3], centerPointY[3], 12);
+            DrawReferencePath(horizLine17, centerPointX[2], centerPointY[2], 12);
             centerPointX.Add(-73.8668147168769);//4
             centerPointY.Add(-97.8641209621153);
-            DrawReferencePath(horizLine18, centerPointX[4], centerPointY[4], 12);
+            DrawReferencePath(horizLine18, centerPointX[3], centerPointY[3], 12);
 
-            centerPointX.Add(27.9865432175596);//终点
-            centerPointY.Add(-43.213371877801);
+
+            goPointX.Add(6.64393743508772);//起始线
+            goPointY.Add(-27.606749605082);
+            goPointX.Add(24.8287390549239);
+            goPointY.Add(-59.2126941269808);
 
             ClickPoints.Marks.Visible = true;
+            goPoints.Marks.Visible = false;
             ClickPoints.UseAxis = false;
             tChart6.Axes.Bottom.AutomaticMaximum = true;
             tChart6.Axes.Bottom.Maximum = 200;
             tChart6.Axes.Bottom.Visible = true;
+
+            goPoints.Add(goPointX[0], goPointY[0]);
+            goPoints.Add(goPointX[1], goPointY[1]);
 
             for (int i = 0; i < centerPointX.Count; i++)
             {
@@ -491,30 +509,37 @@ namespace 地面站
             USVs_LOS[5] = new LOS(sender, textBox13.Text, textBox12.Text, Convert.ToDouble(textBox7.Text), Convert.ToDouble(textBox6.Text));
 
             USVs[0] = new USV(form1, 16);
-            USVs[0].Init(horizLine12,horizLine20);
+            USVs[0].Init(horizLine12,horizLine24);
             USVs[0].Init(USVs_LOS[0]);
             USVs[0].Init(USVs_State_Info[0]);
             USVs[0].Init(USVs_PID_Info[0]);
             USVs[0].Init(USVs_Point_PID_[0]);
+            horizLine12.Title = "USV1实际位置";
+            horizLine24.Title = "USV1期望位置";
 
             USVs[1] = new USV(form1, 16);
-            USVs[1].Init(horizLine13,horizLine21);
+            USVs[1].Init(horizLine13,horizLine25);
             USVs[1].Init(USVs_LOS[1]);
             USVs[1].Init(USVs_State_Info[1]);
             USVs[1].Init(USVs_PID_Info[1]);
             USVs[1].Init(USVs_Point_PID_[1]);
+            horizLine13.Title = "USV2实际位置";
+            horizLine25.Title = "USV2期望位置";
 
             USVs[2] = new USV(form1, 16);
-            USVs[2].Init(horizLine14,horizLine22);
+            USVs[2].Init(horizLine14,horizLine26);
             USVs[2].Init(USVs_LOS[2]);
             USVs[2].Init(USVs_State_Info[2]);
             USVs[2].Init(USVs_PID_Info[2]);
             USVs[2].Init(USVs_Point_PID_[2]);
+            horizLine14.Title = "USV3实际位置";
+            horizLine26.Title = "USV3期望位置";
 
             USVs[5] = new USV(form1, 0);
-            USVs[5].Init(horizLine19,horizLine23);
+            USVs[5].Init(horizLine27,horizLine28);
             USVs[5].Init(USVs_LOS[5]);
             USVs[5].Init(USVs_Point_PID_[5]);
+            horizLine27.Title = "虚拟领航USV";
 
             USVs_LOS[0].pid_u.UpdateParam(Convert.ToDouble(textBox_USV1_X_Kp.Text), Convert.ToDouble(textBox_USV1_X_Ki.Text), Convert.ToDouble(textBox_USV1_X_Kd.Text), 0);
             USVs_LOS[0].pid_r.UpdateParam(Convert.ToDouble(textBox_USV1_Y_Kp.Text), Convert.ToDouble(textBox_USV1_Y_Ki.Text), Convert.ToDouble(textBox_USV1_Y_Kd.Text), 0);
@@ -708,7 +733,7 @@ namespace 地面站
             }
 
             horizLine11.Active = true;
-            horizLine11.Legend.Visible = true;
+            horizLine11.Legend.Visible = false ;
             horizLine12.Active = true;
             horizLine12.Legend.Visible = true;
             horizLine13.Active = true;
@@ -716,24 +741,41 @@ namespace 地面站
             horizLine14.Active = true;
             horizLine14.Legend.Visible = true;
             horizLine15.Active = true;
-            horizLine15.Legend.Visible = true;
+            horizLine15.Legend.Visible = false;
             horizLine16.Active = true;
-            horizLine16.Legend.Visible = true;
+            horizLine16.Legend.Visible = false;
             horizLine17.Active = true;
-            horizLine17.Legend.Visible = true;
+            horizLine17.Legend.Visible = false;
             horizLine18.Active = true;
-            horizLine18.Legend.Visible = true;
+            horizLine18.Legend.Visible = false;
             horizLine19.Active = true;
-            horizLine19.Legend.Visible = true;
+            horizLine19.Legend.Visible = false;
+
             horizLine20.Active = true;
-            horizLine20.Legend.Visible = true;
+            horizLine20.Legend.Visible = false;
             horizLine21.Active = true;
             horizLine21.Legend.Visible = true;
             horizLine22.Active = true;
             horizLine22.Legend.Visible = true;
             horizLine23.Active = true;
             horizLine23.Legend.Visible = true;
-            
+
+
+            horizLine24.Active = true;
+            horizLine24.Legend.Visible = true;
+            horizLine25.Active = true;
+            horizLine25.Legend.Visible = true;
+            horizLine26.Active = true;
+            horizLine26.Legend.Visible = true;
+            horizLine27.Active = true;
+            horizLine27.Legend.Visible = true;
+            horizLine28.Active = false;
+            horizLine28.Legend.Visible = false;
+            horizLine29.Active = false;
+            horizLine29.Legend.Visible = false;
+
+
+
             VirtualLeader.horizLine = HorizLines[0];
 
             VirtualLeader.horizLine.Legend.Visible = true;
@@ -859,6 +901,16 @@ namespace 地面站
             USVC_Init();
             textBox_Speed_Set.Leave+= new EventHandler(UpdateVirtualLeaderSpeedExp);
             USVs[5].speed_exp = Convert.ToDouble(textBox_Speed_Set.Text);
+
+            SysTimer1 = new System.Timers.Timer(20);//实例化Timer类，设置间隔时间为20毫秒；
+            SysTimer1.Elapsed += new System.Timers.ElapsedEventHandler(SysTimer1_Tick);//到达时间的时候执行事件；
+            SysTimer1.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
+
+            TimeStart[1] = new TimeSpan();//用于计算定时器调用间隔
+            TimeEnd[1] = new TimeSpan();
+            TimeStart[2] = new TimeSpan();
+            TimeEnd[2] = new TimeSpan();
+
         }
 
         private void Button_USV2_LOCK_Click(object sender, EventArgs e)
@@ -963,7 +1015,6 @@ namespace 地面站
                 }
                 mavlink.ParseBytes(rx_data);
             }
-            
             if(!serialPort2.IsOpen)//检查UWB是否连接
             {
                 button13.Text = "连接UWB";
@@ -1045,10 +1096,19 @@ namespace 地面站
             for(int i=0;i<20;i++)
             {
                 FastLines[i].Clear();
-                HorizLines[i].Clear();
                 FastLines[i].Active = false;
                 FastLines[i].Legend.Visible = false;
             }
+
+            horizLine12.Clear();
+            horizLine13.Clear();
+            horizLine14.Clear();
+            horizLine24.Clear();
+            horizLine25.Clear();
+            horizLine26.Clear();
+            horizLine27.Clear();
+            horizLine28.Clear();
+
             line1.Clear();
             line2.Clear();
             line3.Clear();
@@ -1678,12 +1738,13 @@ namespace 地面站
                 DrawPath(VirtualLeader.horizLine, VirtualLeader.x, VirtualLeader.y);
             }
         }
-        private void Timer2_Tick(object sender, EventArgs e)
+        private void Timer2_Tick(object sender, EventArgs e)//定时器2运行
         {
             double dt;
-            dt = timer2.Interval * 0.001;
+            TimeEnd[1] = TimeSpan.FromTicks(DateTime.Now.Ticks);
+            dt = TimeEnd[1].Subtract(TimeStart[1]).Duration().TotalMilliseconds * 0.001;
+            TimeStart[1] = TimeSpan.FromTicks(DateTime.Now.Ticks);
 
-            // LOS_Control(dt);
             textBox_X.Text = USVs[0].Position.X.ToString("0.00");
             textBox_Y.Text = USVs[0].Position.Y.ToString("0.00");
             if (radioButton_Single_USV.Checked)//单船
@@ -1699,12 +1760,9 @@ namespace 地面站
                         SystemInfo("请添加两个以上航点！");
                         return;
                     }
-                    USVs[5].Los.Update_XY_F(Points_Copy[1].X, Points_Copy[1].Y, Points_Copy[0].X, Points_Copy[0].Y);//更新点
-                    USVs[5].Point_VirtualLeader(dt);
-
-                    USVs[0].LOS_Point_Follower(dt, USVs[5].Position.X, USVs[5].Position.Y, USVs[5].state.heading, USVs[5].state.speed);
-                    //USVs[1].LOS_Point_Follower(dt, USVs[5].Position.X, USVs[5].Position.Y, USVs[5].state.heading, USVs[5].state.speed);
-                    //USVs[2].LOS_Point_Follower(dt, USVs[5].Position.X, USVs[5].Position.Y, USVs[5].state.heading, USVs[5].state.speed);
+                    USVs[0].LOS_Point_Follower(dt);
+                    USVs[1].LOS_Point_Follower(dt);
+                    USVs[2].LOS_Point_Follower(dt);
                     if (Points_Copy.Count >=2)
                     {
                         float distance, a, b, c;
@@ -1729,7 +1787,7 @@ namespace 地面站
                         {
                             distance = Y1;
                         }
-                        if (distance < 0 )
+                        if (distance < 0.5 )
                         {
                             Points_Copy.RemoveAt(0);
                             USVs[5].Los.Update_w(Points_Copy[0].X);
@@ -1744,6 +1802,7 @@ namespace 地面站
                         }
                         if(Points_Copy.Count<=1)
                         {
+                            SysTimer1.Enabled = false;
                             button3_Click(null, null);//结束实验
                         }
                     }
@@ -1756,7 +1815,6 @@ namespace 地面站
                 {
                     track_time = Expressions_Copy[0].Min * Math.PI;
                     Expressions_Copy.RemoveAt(0);
-
                 }
                 USVs_LOS[0].UpdateExpectedPath(Expressions_Copy[0].X_Expression, Expressions_Copy[0].Y_Expression);
                 USVs_LOS[1].UpdateExpectedPath(Expressions_Copy[0].X_Expression, Expressions_Copy[0].Y_Expression);
@@ -1769,9 +1827,57 @@ namespace 地面站
                 track_time++;
                 DrawExpectedTrack(horizLine11,dt);
             }
+            
+        }
+        private void SysTimer1_Tick(object sender, EventArgs e)//系统定时器运行
+        {
 
+            double dt;
+            SysTimer1.Stop(); 
 
-        }//定时器运行
+            TimeEnd[2]= TimeSpan.FromTicks(DateTime.Now.Ticks);
+            dt= TimeEnd[2].Subtract(TimeStart[2]).Duration().TotalMilliseconds*0.001;
+            TimeStart[2] = TimeSpan.FromTicks(DateTime.Now.Ticks);
+            if (Points_Copy.Count < 2)
+            {
+                return;
+            }
+            try
+            {
+                USVs[5].Los.Update_XY_F(Points_Copy[1].X, Points_Copy[1].Y, Points_Copy[0].X, Points_Copy[0].Y);//更新点
+                USVs[5].Point_VirtualLeader(dt);
+
+                USVs[0].Los.Calculate_Point_Follower_Pre(
+                    USVs[5].Position.X,
+                    USVs[5].Position.Y,
+                    USVs[5].state.heading,
+                    dt,
+                    Convert.ToDouble(USVs[0].usv_state_info.L.Text),
+                    Convert.ToDouble(USVs[0].usv_state_info.angle.Text));
+
+                USVs[1].Los.Calculate_Point_Follower_Pre(
+                    USVs[5].Position.X,
+                    USVs[5].Position.Y,
+                    USVs[5].state.heading,
+                    dt,
+                    Convert.ToDouble(USVs[1].usv_state_info.L.Text),
+                    Convert.ToDouble(USVs[1].usv_state_info.angle.Text));
+
+                USVs[2].Los.Calculate_Point_Follower_Pre(
+                    USVs[5].Position.X,
+                    USVs[5].Position.Y,
+                    USVs[5].state.heading,
+                    dt,
+                    Convert.ToDouble(USVs[2].usv_state_info.L.Text),
+                    Convert.ToDouble(USVs[2].usv_state_info.angle.Text));
+            }
+            catch
+            {
+
+            }
+
+            SysTimer1.Start();
+        }
         private void Button1_Click(object sender, EventArgs e)//编队开始
         {
             
@@ -2034,13 +2140,8 @@ namespace 地面站
             xc = -1;
             yc = -1;
         }
-
-        public void button3_Click(object sender, EventArgs e)
+        public void button3_Click(object sender, EventArgs e)//开始实验
         {
-            double course;
-            double beta = 0 * Math.PI / 180;
-            double x0 = 0;
-            double y0 = 0;
             if (button3.Text == "开始实验")
             {
                 if (radioButton_Real_USV.Checked)//实船
@@ -2080,7 +2181,11 @@ namespace 地面站
                 horizLine12.Clear();
                 horizLine13.Clear();
                 horizLine14.Clear();
-                horizLine19.Clear();
+                horizLine24.Clear();
+                horizLine25.Clear();
+                horizLine26.Clear();
+                horizLine27.Clear();
+                horizLine28.Clear();
 
                 USVs_LOS[0].LOS_Clear();
                 USVs_LOS[1].LOS_Clear();
@@ -2092,8 +2197,6 @@ namespace 地面站
                 USVs[1].Clear(0,0,0);
                 USVs[2].Clear(0,0,0);
 
-                timer2.Enabled = true;
-
                 tchartscalings[1].TChart_MouseDoubleClick(null, null);//自动等比缩放
                 Points.Add(new PointF(Convert.ToSingle(USVs[0].Position.X), Convert.ToSingle(USVs[0].Position.Y)));
                 for (int p = 0; p<= ClickX.Count-1; p++) //添加航点
@@ -2104,8 +2207,10 @@ namespace 地面站
                 Points_Copy = (List<PointF>)DeepCopy.deepcopy<List<PointF>>(Points);
                 USVs[5].Los.Update_XY_F(Points_Copy[1].X, Points_Copy[1].Y, Points_Copy[0].X, Points_Copy[0].Y);//更新点
                 USVs_LOS[5].Update_w(Points_Copy[0].X);//虚拟领航起始点w
-                USVs[5].mmg.Clear(USVs[0].Position.X, USVs[0].Position.Y, USVs[0].state.heading / 180 * Math.PI);
+                USVs[5].mmg.Clear(USVs[0].Position.X, USVs[0].Position.Y, Math.Atan2(Points_Copy[0].Y- USVs[0].Position.Y, Points_Copy[0].X - USVs[0].Position.X));//起点和和第一个目标点夹角为模型的初始角度
+                //USVs[5].mmg.Clear(0, 0, 0);
 
+                
 
                 if (radioButton_Single_USV.Checked)//单船
                 {
@@ -2123,11 +2228,17 @@ namespace 地面站
                     horizLine11.Clear();
                  
                 }
-
+                timer2.Enabled = true;
+                SysTimer1.Enabled = true;
+                TimeStart[1] = TimeSpan.FromTicks(DateTime.Now.Ticks);
+                TimeStart[2] = TimeSpan.FromTicks(DateTime.Now.Ticks);
             }
             else if (button3.Text == "结束实验")
             {
                 button3.Text = "开始实验";
+                track_time = 0;
+                timer2.Enabled = false;
+                SysTimer1.Enabled = false;
                 textBox10.Enabled = true;
                 textBox11.Enabled = true;
                 textBox12.Enabled = true;
@@ -2137,8 +2248,7 @@ namespace 地面站
                 groupBox17.Enabled = true;
                 groupBox19.Enabled = true;
 
-                track_time = 0;
-                timer2.Enabled = false;
+
                 Points_Copy.Clear();
                 Points.Clear();
 
@@ -2161,7 +2271,7 @@ namespace 地面站
             }
 
 
-        }//开始实验
+        }
         private void DrawExpectedTrack(HorizLine horizLine,double T)
         {
             double x, y;
@@ -2514,7 +2624,6 @@ namespace 地面站
             savedata1 = s.ReadToEnd();
             s.Close();
         }
-
         private void button17_Click(object sender, EventArgs e)//清除所有航点
         {
             //清楚当前点
@@ -2551,7 +2660,6 @@ namespace 地面站
                 horizLine.Add(x, y);
             }
         }
-
         private void UpdateVirtualLeaderSpeedExp(object sender, EventArgs e)//更新虚拟领航速度
         {
             USVs[5].speed_exp = Convert.ToDouble(textBox_Speed_Set.Text);

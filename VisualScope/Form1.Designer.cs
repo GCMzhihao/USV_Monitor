@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -43,7 +44,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -257,6 +257,19 @@
             this.radioButton_Trace = new System.Windows.Forms.RadioButton();
             this.radioButton_Trajectory = new System.Windows.Forms.RadioButton();
             this.tabControl6 = new System.Windows.Forms.TabControl();
+            this.tabPage19 = new System.Windows.Forms.TabPage();
+            this.groupBox29 = new System.Windows.Forms.GroupBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.label139 = new System.Windows.Forms.Label();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.label140 = new System.Windows.Forms.Label();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.label142 = new System.Windows.Forms.Label();
+            this.groupBox28 = new System.Windows.Forms.GroupBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label143 = new System.Windows.Forms.Label();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.label144 = new System.Windows.Forms.Label();
             this.tabPage20 = new System.Windows.Forms.TabPage();
             this.button_USV1_LOCK = new System.Windows.Forms.Button();
             this.groupBox_USV1_PID = new System.Windows.Forms.GroupBox();
@@ -267,6 +280,13 @@
             this.label121 = new System.Windows.Forms.Label();
             this.textBox_USV1_Y_Kp = new System.Windows.Forms.TextBox();
             this.label122 = new System.Windows.Forms.Label();
+            this.textBox_USV1_X_Kd = new System.Windows.Forms.TextBox();
+            this.label115 = new System.Windows.Forms.Label();
+            this.textBox_USV1_X_Ki = new System.Windows.Forms.TextBox();
+            this.label116 = new System.Windows.Forms.Label();
+            this.label117 = new System.Windows.Forms.Label();
+            this.textBox_USV1_X_Kp = new System.Windows.Forms.TextBox();
+            this.label118 = new System.Windows.Forms.Label();
             this.textBox_USV1_HEA_Kd = new System.Windows.Forms.TextBox();
             this.label92 = new System.Windows.Forms.Label();
             this.textBox_USV1_VEL_Kd = new System.Windows.Forms.TextBox();
@@ -423,6 +443,7 @@
             this.label86 = new System.Windows.Forms.Label();
             this.textBox_USV3_L = new System.Windows.Forms.TextBox();
             this.tabPage18 = new System.Windows.Forms.TabPage();
+            this.richTextBox_EXpression = new System.Windows.Forms.RichTextBox();
             this.button17 = new System.Windows.Forms.Button();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.radioButton_USV_LOCK = new System.Windows.Forms.RadioButton();
@@ -463,6 +484,12 @@
             this.horizLine18 = new Steema.TeeChart.Styles.HorizLine();
             this.horizLine19 = new Steema.TeeChart.Styles.HorizLine();
             this.horizLine20 = new Steema.TeeChart.Styles.HorizLine();
+            this.horizLine24 = new Steema.TeeChart.Styles.HorizLine();
+            this.horizLine25 = new Steema.TeeChart.Styles.HorizLine();
+            this.horizLine26 = new Steema.TeeChart.Styles.HorizLine();
+            this.horizLine27 = new Steema.TeeChart.Styles.HorizLine();
+            this.horizLine28 = new Steema.TeeChart.Styles.HorizLine();
+            this.horizLine29 = new Steema.TeeChart.Styles.HorizLine();
             this.tabPage17 = new System.Windows.Forms.TabPage();
             this.button14 = new System.Windows.Forms.Button();
             this.textBox16 = new System.Windows.Forms.TextBox();
@@ -528,34 +555,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CB_Port_Sel = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.Lab_ErrBytesCnt = new System.Windows.Forms.Label();
             this.Lab_ErrRate = new System.Windows.Forms.Label();
             this.serialPort2 = new System.IO.Ports.SerialPort(this.components);
-            this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.timer4 = new System.Windows.Forms.Timer(this.components);
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox_USV1_X_Kd = new System.Windows.Forms.TextBox();
-            this.label115 = new System.Windows.Forms.Label();
-            this.textBox_USV1_X_Ki = new System.Windows.Forms.TextBox();
-            this.label116 = new System.Windows.Forms.Label();
-            this.textBox_USV1_X_Kp = new System.Windows.Forms.TextBox();
-            this.label118 = new System.Windows.Forms.Label();
-            this.label117 = new System.Windows.Forms.Label();
-            this.tabPage19 = new System.Windows.Forms.TabPage();
-            this.richTextBox_EXpression = new System.Windows.Forms.RichTextBox();
-            this.groupBox28 = new System.Windows.Forms.GroupBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.label143 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.label144 = new System.Windows.Forms.Label();
-            this.groupBox29 = new System.Windows.Forms.GroupBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.label139 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.label140 = new System.Windows.Forms.Label();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.label142 = new System.Windows.Forms.Label();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -602,6 +607,9 @@
             this.groupBox19.SuspendLayout();
             this.groupBox17.SuspendLayout();
             this.tabControl6.SuspendLayout();
+            this.tabPage19.SuspendLayout();
+            this.groupBox29.SuspendLayout();
+            this.groupBox28.SuspendLayout();
             this.tabPage20.SuspendLayout();
             this.groupBox_USV1_PID.SuspendLayout();
             this.groupBox24.SuspendLayout();
@@ -619,9 +627,6 @@
             this.groupBox16.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.tabPage17.SuspendLayout();
-            this.tabPage19.SuspendLayout();
-            this.groupBox28.SuspendLayout();
-            this.groupBox29.SuspendLayout();
             this.SuspendLayout();
             // 
             // serialPort1
@@ -632,7 +637,7 @@
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 10;
+            this.timer1.Interval = 50;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // tabControl1
@@ -6659,6 +6664,136 @@
             this.tabControl6.TabIndex = 59;
             this.tabControl6.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.TabControl_DrawItem);
             // 
+            // tabPage19
+            // 
+            this.tabPage19.Controls.Add(this.groupBox29);
+            this.tabPage19.Controls.Add(this.groupBox28);
+            this.tabPage19.Location = new System.Drawing.Point(4, 4);
+            this.tabPage19.Name = "tabPage19";
+            this.tabPage19.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage19.Size = new System.Drawing.Size(354, 357);
+            this.tabPage19.TabIndex = 4;
+            this.tabPage19.Text = "虚拟领航";
+            this.tabPage19.UseVisualStyleBackColor = true;
+            // 
+            // groupBox29
+            // 
+            this.groupBox29.Controls.Add(this.textBox8);
+            this.groupBox29.Controls.Add(this.label139);
+            this.groupBox29.Controls.Add(this.textBox9);
+            this.groupBox29.Controls.Add(this.label140);
+            this.groupBox29.Controls.Add(this.textBox14);
+            this.groupBox29.Controls.Add(this.label142);
+            this.groupBox29.Location = new System.Drawing.Point(26, 126);
+            this.groupBox29.Name = "groupBox29";
+            this.groupBox29.Size = new System.Drawing.Size(292, 65);
+            this.groupBox29.TabIndex = 67;
+            this.groupBox29.TabStop = false;
+            this.groupBox29.Text = "PID参数";
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(220, 24);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(46, 21);
+            this.textBox8.TabIndex = 38;
+            this.textBox8.Text = "0.1";
+            this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label139
+            // 
+            this.label139.AutoSize = true;
+            this.label139.Location = new System.Drawing.Point(197, 30);
+            this.label139.Name = "label139";
+            this.label139.Size = new System.Drawing.Size(17, 12);
+            this.label139.TabIndex = 39;
+            this.label139.Text = "Kd";
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(131, 27);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(46, 21);
+            this.textBox9.TabIndex = 36;
+            this.textBox9.Text = "0.1";
+            this.textBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label140
+            // 
+            this.label140.AutoSize = true;
+            this.label140.Location = new System.Drawing.Point(112, 30);
+            this.label140.Name = "label140";
+            this.label140.Size = new System.Drawing.Size(17, 12);
+            this.label140.TabIndex = 37;
+            this.label140.Text = "Ki";
+            // 
+            // textBox14
+            // 
+            this.textBox14.Location = new System.Drawing.Point(46, 27);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(46, 21);
+            this.textBox14.TabIndex = 33;
+            this.textBox14.Text = "0.1";
+            this.textBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label142
+            // 
+            this.label142.AutoSize = true;
+            this.label142.Location = new System.Drawing.Point(23, 27);
+            this.label142.Name = "label142";
+            this.label142.Size = new System.Drawing.Size(17, 12);
+            this.label142.TabIndex = 34;
+            this.label142.Text = "Kp";
+            // 
+            // groupBox28
+            // 
+            this.groupBox28.Controls.Add(this.textBox6);
+            this.groupBox28.Controls.Add(this.label143);
+            this.groupBox28.Controls.Add(this.textBox7);
+            this.groupBox28.Controls.Add(this.label144);
+            this.groupBox28.Location = new System.Drawing.Point(26, 24);
+            this.groupBox28.Name = "groupBox28";
+            this.groupBox28.Size = new System.Drawing.Size(292, 77);
+            this.groupBox28.TabIndex = 66;
+            this.groupBox28.TabStop = false;
+            this.groupBox28.Text = "LOS参数";
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(63, 50);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(56, 21);
+            this.textBox6.TabIndex = 2;
+            this.textBox6.Text = "0.1";
+            this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label143
+            // 
+            this.label143.AutoSize = true;
+            this.label143.Location = new System.Drawing.Point(28, 52);
+            this.label143.Name = "label143";
+            this.label143.Size = new System.Drawing.Size(17, 12);
+            this.label143.TabIndex = 3;
+            this.label143.Text = "Δ";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(62, 19);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(57, 21);
+            this.textBox7.TabIndex = 0;
+            this.textBox7.Text = "6";
+            this.textBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label144
+            // 
+            this.label144.AutoSize = true;
+            this.label144.Location = new System.Drawing.Point(28, 22);
+            this.label144.Name = "label144";
+            this.label144.Size = new System.Drawing.Size(17, 12);
+            this.label144.TabIndex = 1;
+            this.label144.Text = "Kp";
+            // 
             // tabPage20
             // 
             this.tabPage20.BackColor = System.Drawing.Color.White;
@@ -6792,6 +6927,69 @@
             this.label122.Size = new System.Drawing.Size(17, 12);
             this.label122.TabIndex = 34;
             this.label122.Text = "Kp";
+            // 
+            // textBox_USV1_X_Kd
+            // 
+            this.textBox_USV1_X_Kd.Location = new System.Drawing.Point(241, 77);
+            this.textBox_USV1_X_Kd.Name = "textBox_USV1_X_Kd";
+            this.textBox_USV1_X_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Kd.TabIndex = 31;
+            this.textBox_USV1_X_Kd.Text = "0.1";
+            this.textBox_USV1_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label115
+            // 
+            this.label115.AutoSize = true;
+            this.label115.Location = new System.Drawing.Point(216, 80);
+            this.label115.Name = "label115";
+            this.label115.Size = new System.Drawing.Size(17, 12);
+            this.label115.TabIndex = 32;
+            this.label115.Text = "Kd";
+            // 
+            // textBox_USV1_X_Ki
+            // 
+            this.textBox_USV1_X_Ki.Location = new System.Drawing.Point(155, 75);
+            this.textBox_USV1_X_Ki.Name = "textBox_USV1_X_Ki";
+            this.textBox_USV1_X_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Ki.TabIndex = 29;
+            this.textBox_USV1_X_Ki.Text = "0.1";
+            this.textBox_USV1_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label116
+            // 
+            this.label116.AutoSize = true;
+            this.label116.Location = new System.Drawing.Point(131, 80);
+            this.label116.Name = "label116";
+            this.label116.Size = new System.Drawing.Size(17, 12);
+            this.label116.TabIndex = 30;
+            this.label116.Text = "Ki";
+            // 
+            // label117
+            // 
+            this.label117.AutoSize = true;
+            this.label117.Location = new System.Drawing.Point(7, 79);
+            this.label117.Name = "label117";
+            this.label117.Size = new System.Drawing.Size(23, 12);
+            this.label117.TabIndex = 28;
+            this.label117.Text = "u：";
+            // 
+            // textBox_USV1_X_Kp
+            // 
+            this.textBox_USV1_X_Kp.Location = new System.Drawing.Point(66, 75);
+            this.textBox_USV1_X_Kp.Name = "textBox_USV1_X_Kp";
+            this.textBox_USV1_X_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Kp.TabIndex = 26;
+            this.textBox_USV1_X_Kp.Text = "0.1";
+            this.textBox_USV1_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label118
+            // 
+            this.label118.AutoSize = true;
+            this.label118.Location = new System.Drawing.Point(42, 79);
+            this.label118.Name = "label118";
+            this.label118.Size = new System.Drawing.Size(17, 12);
+            this.label118.TabIndex = 27;
+            this.label118.Text = "Kp";
             // 
             // textBox_USV1_HEA_Kd
             // 
@@ -8353,6 +8551,14 @@
             this.tabPage18.Text = "设置";
             this.tabPage18.UseVisualStyleBackColor = true;
             // 
+            // richTextBox_EXpression
+            // 
+            this.richTextBox_EXpression.Location = new System.Drawing.Point(47, 82);
+            this.richTextBox_EXpression.Name = "richTextBox_EXpression";
+            this.richTextBox_EXpression.Size = new System.Drawing.Size(240, 96);
+            this.richTextBox_EXpression.TabIndex = 66;
+            this.richTextBox_EXpression.Text = "";
+            // 
             // button17
             // 
             this.button17.Location = new System.Drawing.Point(92, 315);
@@ -8938,7 +9144,7 @@
             // 
             // 
             // 
-            this.tChart6.Legend.Font.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.tChart6.Legend.Font.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(128)))));
             this.tChart6.Legend.Font.Size = 9;
             this.tChart6.Legend.Font.SizeFloat = 9F;
             this.tChart6.Legend.FontSeriesColor = true;
@@ -9007,6 +9213,12 @@
             this.tChart6.Series.Add(this.horizLine18);
             this.tChart6.Series.Add(this.horizLine19);
             this.tChart6.Series.Add(this.horizLine20);
+            this.tChart6.Series.Add(this.horizLine24);
+            this.tChart6.Series.Add(this.horizLine25);
+            this.tChart6.Series.Add(this.horizLine26);
+            this.tChart6.Series.Add(this.horizLine27);
+            this.tChart6.Series.Add(this.horizLine28);
+            this.tChart6.Series.Add(this.horizLine29);
             this.tChart6.Size = new System.Drawing.Size(861, 654);
             this.tChart6.TabIndex = 35;
             // 
@@ -9737,6 +9949,414 @@
             this.horizLine20.YValues.DataMember = "Y";
             this.horizLine20.YValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
             // 
+            // horizLine24
+            // 
+            // 
+            // 
+            // 
+            this.horizLine24.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.horizLine24.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.horizLine24.ColorEach = false;
+            // 
+            // 
+            // 
+            this.horizLine24.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(77)))), ((int)(((byte)(0)))));
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine24.Marks.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            // 
+            // 
+            // 
+            this.horizLine24.Marks.Brush.Gradient.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.horizLine24.Marks.Brush.Gradient.MiddleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.horizLine24.Marks.Brush.Gradient.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
+            this.horizLine24.Marks.Brush.Gradient.UseMiddle = true;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine24.Marks.Font.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            // 
+            // 
+            // 
+            this.horizLine24.Marks.Pen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(115)))), ((int)(((byte)(0)))));
+            // 
+            // 
+            // 
+            this.horizLine24.Marks.Shadow.Visible = false;
+            // 
+            // 
+            // 
+            this.horizLine24.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
+            this.horizLine24.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos50")));
+            this.horizLine24.Marks.TailParams.Margin = 0F;
+            this.horizLine24.Marks.TailParams.PointerHeight = 5D;
+            this.horizLine24.Marks.TailParams.PointerWidth = 8D;
+            this.horizLine24.Marks.TailStyle = Steema.TeeChart.Styles.MarksTail.WithPointer;
+            this.horizLine24.OriginalCursor = null;
+            // 
+            // 
+            // 
+            this.horizLine24.Pointer.SizeDouble = 0D;
+            this.horizLine24.Pointer.SizeUnits = Steema.TeeChart.Styles.PointerSizeUnits.Pixels;
+            this.horizLine24.Title = "horizLine11";
+            this.horizLine24.UseExtendedNumRange = false;
+            // 
+            // 
+            // 
+            this.horizLine24.XValues.DataMember = "X";
+            // 
+            // 
+            // 
+            this.horizLine24.YValues.DataMember = "Y";
+            this.horizLine24.YValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
+            // 
+            // horizLine25
+            // 
+            // 
+            // 
+            // 
+            this.horizLine25.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.horizLine25.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
+            this.horizLine25.ColorEach = false;
+            // 
+            // 
+            // 
+            this.horizLine25.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine25.Marks.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            // 
+            // 
+            // 
+            this.horizLine25.Marks.Brush.Gradient.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.horizLine25.Marks.Brush.Gradient.MiddleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.horizLine25.Marks.Brush.Gradient.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
+            this.horizLine25.Marks.Brush.Gradient.UseMiddle = true;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine25.Marks.Font.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            // 
+            // 
+            // 
+            this.horizLine25.Marks.Pen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(0)))));
+            // 
+            // 
+            // 
+            this.horizLine25.Marks.Shadow.Visible = false;
+            // 
+            // 
+            // 
+            this.horizLine25.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
+            this.horizLine25.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos51")));
+            this.horizLine25.Marks.TailParams.Margin = 0F;
+            this.horizLine25.Marks.TailParams.PointerHeight = 5D;
+            this.horizLine25.Marks.TailParams.PointerWidth = 8D;
+            this.horizLine25.Marks.TailStyle = Steema.TeeChart.Styles.MarksTail.WithPointer;
+            this.horizLine25.OriginalCursor = null;
+            // 
+            // 
+            // 
+            this.horizLine25.Pointer.SizeDouble = 0D;
+            this.horizLine25.Pointer.SizeUnits = Steema.TeeChart.Styles.PointerSizeUnits.Pixels;
+            this.horizLine25.Title = "horizLine12";
+            this.horizLine25.UseExtendedNumRange = false;
+            // 
+            // 
+            // 
+            this.horizLine25.XValues.DataMember = "X";
+            // 
+            // 
+            // 
+            this.horizLine25.YValues.DataMember = "Y";
+            this.horizLine25.YValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
+            // 
+            // horizLine26
+            // 
+            // 
+            // 
+            // 
+            this.horizLine26.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.horizLine26.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.horizLine26.ColorEach = false;
+            // 
+            // 
+            // 
+            this.horizLine26.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(153)))));
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine26.Marks.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            // 
+            // 
+            // 
+            this.horizLine26.Marks.Brush.Gradient.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.horizLine26.Marks.Brush.Gradient.MiddleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.horizLine26.Marks.Brush.Gradient.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
+            this.horizLine26.Marks.Brush.Gradient.UseMiddle = true;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine26.Marks.Font.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            // 
+            // 
+            // 
+            this.horizLine26.Marks.Pen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(230)))));
+            // 
+            // 
+            // 
+            this.horizLine26.Marks.Shadow.Visible = false;
+            // 
+            // 
+            // 
+            this.horizLine26.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
+            this.horizLine26.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos52")));
+            this.horizLine26.Marks.TailParams.Margin = 0F;
+            this.horizLine26.Marks.TailParams.PointerHeight = 5D;
+            this.horizLine26.Marks.TailParams.PointerWidth = 8D;
+            this.horizLine26.Marks.TailStyle = Steema.TeeChart.Styles.MarksTail.WithPointer;
+            this.horizLine26.OriginalCursor = null;
+            // 
+            // 
+            // 
+            this.horizLine26.Pointer.SizeDouble = 0D;
+            this.horizLine26.Pointer.SizeUnits = Steema.TeeChart.Styles.PointerSizeUnits.Pixels;
+            this.horizLine26.Title = "horizLine13";
+            this.horizLine26.UseExtendedNumRange = false;
+            // 
+            // 
+            // 
+            this.horizLine26.XValues.DataMember = "X";
+            // 
+            // 
+            // 
+            this.horizLine26.YValues.DataMember = "Y";
+            this.horizLine26.YValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
+            // 
+            // horizLine27
+            // 
+            // 
+            // 
+            // 
+            this.horizLine27.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.horizLine27.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+            this.horizLine27.ColorEach = false;
+            // 
+            // 
+            // 
+            this.horizLine27.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(0)))), ((int)(((byte)(153)))));
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine27.Marks.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            // 
+            // 
+            // 
+            this.horizLine27.Marks.Brush.Gradient.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.horizLine27.Marks.Brush.Gradient.MiddleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.horizLine27.Marks.Brush.Gradient.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
+            this.horizLine27.Marks.Brush.Gradient.UseMiddle = true;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine27.Marks.Font.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            // 
+            // 
+            // 
+            this.horizLine27.Marks.Pen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(0)))), ((int)(((byte)(230)))));
+            // 
+            // 
+            // 
+            this.horizLine27.Marks.Shadow.Visible = false;
+            // 
+            // 
+            // 
+            this.horizLine27.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
+            this.horizLine27.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos53")));
+            this.horizLine27.Marks.TailParams.Margin = 0F;
+            this.horizLine27.Marks.TailParams.PointerHeight = 5D;
+            this.horizLine27.Marks.TailParams.PointerWidth = 8D;
+            this.horizLine27.Marks.TailStyle = Steema.TeeChart.Styles.MarksTail.WithPointer;
+            this.horizLine27.OriginalCursor = null;
+            // 
+            // 
+            // 
+            this.horizLine27.Pointer.SizeDouble = 0D;
+            this.horizLine27.Pointer.SizeUnits = Steema.TeeChart.Styles.PointerSizeUnits.Pixels;
+            this.horizLine27.Title = "horizLine14";
+            this.horizLine27.UseExtendedNumRange = false;
+            // 
+            // 
+            // 
+            this.horizLine27.XValues.DataMember = "X";
+            // 
+            // 
+            // 
+            this.horizLine27.YValues.DataMember = "Y";
+            this.horizLine27.YValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
+            // 
+            // horizLine28
+            // 
+            // 
+            // 
+            // 
+            this.horizLine28.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.horizLine28.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.horizLine28.ColorEach = false;
+            // 
+            // 
+            // 
+            this.horizLine28.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(77)))), ((int)(((byte)(0)))));
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine28.Marks.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            // 
+            // 
+            // 
+            this.horizLine28.Marks.Brush.Gradient.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.horizLine28.Marks.Brush.Gradient.MiddleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.horizLine28.Marks.Brush.Gradient.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
+            this.horizLine28.Marks.Brush.Gradient.UseMiddle = true;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine28.Marks.Font.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            // 
+            // 
+            // 
+            this.horizLine28.Marks.Pen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(115)))), ((int)(((byte)(0)))));
+            // 
+            // 
+            // 
+            this.horizLine28.Marks.Shadow.Visible = false;
+            // 
+            // 
+            // 
+            this.horizLine28.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
+            this.horizLine28.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos54")));
+            this.horizLine28.Marks.TailParams.Margin = 0F;
+            this.horizLine28.Marks.TailParams.PointerHeight = 5D;
+            this.horizLine28.Marks.TailParams.PointerWidth = 8D;
+            this.horizLine28.Marks.TailStyle = Steema.TeeChart.Styles.MarksTail.WithPointer;
+            this.horizLine28.OriginalCursor = null;
+            // 
+            // 
+            // 
+            this.horizLine28.Pointer.SizeDouble = 0D;
+            this.horizLine28.Pointer.SizeUnits = Steema.TeeChart.Styles.PointerSizeUnits.Pixels;
+            this.horizLine28.Title = "horizLine15";
+            this.horizLine28.UseExtendedNumRange = false;
+            // 
+            // 
+            // 
+            this.horizLine28.XValues.DataMember = "X";
+            // 
+            // 
+            // 
+            this.horizLine28.YValues.DataMember = "Y";
+            this.horizLine28.YValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
+            // 
+            // horizLine29
+            // 
+            // 
+            // 
+            // 
+            this.horizLine29.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(128)))));
+            this.horizLine29.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(0)))), ((int)(((byte)(128)))));
+            this.horizLine29.ColorEach = false;
+            // 
+            // 
+            // 
+            this.horizLine29.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(0)))), ((int)(((byte)(77)))));
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine29.Marks.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            // 
+            // 
+            // 
+            this.horizLine29.Marks.Brush.Gradient.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.horizLine29.Marks.Brush.Gradient.MiddleColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.horizLine29.Marks.Brush.Gradient.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(215)))), ((int)(((byte)(0)))));
+            this.horizLine29.Marks.Brush.Gradient.UseMiddle = true;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.horizLine29.Marks.Font.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            // 
+            // 
+            // 
+            this.horizLine29.Marks.Pen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(115)))), ((int)(((byte)(0)))), ((int)(((byte)(115)))));
+            // 
+            // 
+            // 
+            this.horizLine29.Marks.Shadow.Visible = false;
+            // 
+            // 
+            // 
+            this.horizLine29.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
+            this.horizLine29.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos55")));
+            this.horizLine29.Marks.TailParams.Margin = 0F;
+            this.horizLine29.Marks.TailParams.PointerHeight = 5D;
+            this.horizLine29.Marks.TailParams.PointerWidth = 8D;
+            this.horizLine29.Marks.TailStyle = Steema.TeeChart.Styles.MarksTail.WithPointer;
+            this.horizLine29.OriginalCursor = null;
+            // 
+            // 
+            // 
+            this.horizLine29.Pointer.SizeDouble = 0D;
+            this.horizLine29.Pointer.SizeUnits = Steema.TeeChart.Styles.PointerSizeUnits.Pixels;
+            this.horizLine29.Title = "horizLine16";
+            this.horizLine29.UseExtendedNumRange = false;
+            // 
+            // 
+            // 
+            this.horizLine29.XValues.DataMember = "X";
+            // 
+            // 
+            // 
+            this.horizLine29.YValues.DataMember = "Y";
+            this.horizLine29.YValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
+            // 
             // tabPage17
             // 
             this.tabPage17.Controls.Add(this.button14);
@@ -10267,7 +10887,7 @@
             // 
             // 
             this.fastLine25.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine25.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos50")));
+            this.fastLine25.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos56")));
             this.fastLine25.Marks.TailParams.Margin = 0F;
             this.fastLine25.Marks.TailParams.PointerHeight = 5D;
             this.fastLine25.Marks.TailParams.PointerWidth = 8D;
@@ -10327,7 +10947,7 @@
             // 
             // 
             this.fastLine26.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine26.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos51")));
+            this.fastLine26.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos57")));
             this.fastLine26.Marks.TailParams.Margin = 0F;
             this.fastLine26.Marks.TailParams.PointerHeight = 5D;
             this.fastLine26.Marks.TailParams.PointerWidth = 8D;
@@ -10387,7 +11007,7 @@
             // 
             // 
             this.fastLine30.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine30.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos52")));
+            this.fastLine30.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos58")));
             this.fastLine30.Marks.TailParams.Margin = 0F;
             this.fastLine30.Marks.TailParams.PointerHeight = 5D;
             this.fastLine30.Marks.TailParams.PointerWidth = 8D;
@@ -10447,7 +11067,7 @@
             // 
             // 
             this.fastLine35.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine35.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos53")));
+            this.fastLine35.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos59")));
             this.fastLine35.Marks.TailParams.Margin = 0F;
             this.fastLine35.Marks.TailParams.PointerHeight = 5D;
             this.fastLine35.Marks.TailParams.PointerWidth = 8D;
@@ -10507,7 +11127,7 @@
             // 
             // 
             this.fastLine36.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine36.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos54")));
+            this.fastLine36.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos60")));
             this.fastLine36.Marks.TailParams.Margin = 0F;
             this.fastLine36.Marks.TailParams.PointerHeight = 5D;
             this.fastLine36.Marks.TailParams.PointerWidth = 8D;
@@ -10917,7 +11537,7 @@
             // 
             // 
             this.fastLine27.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine27.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos55")));
+            this.fastLine27.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos61")));
             this.fastLine27.Marks.TailParams.Margin = 0F;
             this.fastLine27.Marks.TailParams.PointerHeight = 5D;
             this.fastLine27.Marks.TailParams.PointerWidth = 8D;
@@ -10977,7 +11597,7 @@
             // 
             // 
             this.fastLine28.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine28.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos56")));
+            this.fastLine28.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos62")));
             this.fastLine28.Marks.TailParams.Margin = 0F;
             this.fastLine28.Marks.TailParams.PointerHeight = 5D;
             this.fastLine28.Marks.TailParams.PointerWidth = 8D;
@@ -11037,7 +11657,7 @@
             // 
             // 
             this.fastLine29.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine29.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos57")));
+            this.fastLine29.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos63")));
             this.fastLine29.Marks.TailParams.Margin = 0F;
             this.fastLine29.Marks.TailParams.PointerHeight = 5D;
             this.fastLine29.Marks.TailParams.PointerWidth = 8D;
@@ -11097,7 +11717,7 @@
             // 
             // 
             this.fastLine33.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine33.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos58")));
+            this.fastLine33.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos64")));
             this.fastLine33.Marks.TailParams.Margin = 0F;
             this.fastLine33.Marks.TailParams.PointerHeight = 5D;
             this.fastLine33.Marks.TailParams.PointerWidth = 8D;
@@ -11157,7 +11777,7 @@
             // 
             // 
             this.fastLine34.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine34.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos59")));
+            this.fastLine34.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos65")));
             this.fastLine34.Marks.TailParams.Margin = 0F;
             this.fastLine34.Marks.TailParams.PointerHeight = 5D;
             this.fastLine34.Marks.TailParams.PointerWidth = 8D;
@@ -11578,7 +12198,7 @@
             // 
             // 
             this.horizLine21.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.horizLine21.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos60")));
+            this.horizLine21.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos66")));
             this.horizLine21.Marks.TailParams.Margin = 0F;
             this.horizLine21.Marks.TailParams.PointerHeight = 5D;
             this.horizLine21.Marks.TailParams.PointerWidth = 8D;
@@ -11646,7 +12266,7 @@
             // 
             // 
             this.horizLine22.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.horizLine22.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos61")));
+            this.horizLine22.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos67")));
             this.horizLine22.Marks.TailParams.Margin = 0F;
             this.horizLine22.Marks.TailParams.PointerHeight = 5D;
             this.horizLine22.Marks.TailParams.PointerWidth = 8D;
@@ -11714,7 +12334,7 @@
             // 
             // 
             this.horizLine23.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.horizLine23.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos62")));
+            this.horizLine23.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos68")));
             this.horizLine23.Marks.TailParams.Margin = 0F;
             this.horizLine23.Marks.TailParams.PointerHeight = 5D;
             this.horizLine23.Marks.TailParams.PointerWidth = 8D;
@@ -12111,7 +12731,7 @@
             // 
             // 
             this.fastLine22.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine22.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos63")));
+            this.fastLine22.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos69")));
             this.fastLine22.Marks.TailParams.Margin = 0F;
             this.fastLine22.Marks.TailParams.PointerHeight = 5D;
             this.fastLine22.Marks.TailParams.PointerWidth = 8D;
@@ -12171,7 +12791,7 @@
             // 
             // 
             this.fastLine23.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine23.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos64")));
+            this.fastLine23.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos70")));
             this.fastLine23.Marks.TailParams.Margin = 0F;
             this.fastLine23.Marks.TailParams.PointerHeight = 5D;
             this.fastLine23.Marks.TailParams.PointerWidth = 8D;
@@ -12231,7 +12851,7 @@
             // 
             // 
             this.fastLine24.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine24.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos65")));
+            this.fastLine24.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos71")));
             this.fastLine24.Marks.TailParams.Margin = 0F;
             this.fastLine24.Marks.TailParams.PointerHeight = 5D;
             this.fastLine24.Marks.TailParams.PointerWidth = 8D;
@@ -12291,7 +12911,7 @@
             // 
             // 
             this.fastLine31.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine31.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos66")));
+            this.fastLine31.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos72")));
             this.fastLine31.Marks.TailParams.Margin = 0F;
             this.fastLine31.Marks.TailParams.PointerHeight = 5D;
             this.fastLine31.Marks.TailParams.PointerWidth = 8D;
@@ -12351,7 +12971,7 @@
             // 
             // 
             this.fastLine32.Marks.TailParams.Align = Steema.TeeChart.Styles.TailAlignment.Auto;
-            this.fastLine32.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos67")));
+            this.fastLine32.Marks.TailParams.CustomPointPos = ((System.Drawing.PointF)(resources.GetObject("resource.CustomPointPos73")));
             this.fastLine32.Marks.TailParams.Margin = 0F;
             this.fastLine32.Marks.TailParams.PointerHeight = 5D;
             this.fastLine32.Marks.TailParams.PointerWidth = 8D;
@@ -12619,11 +13239,6 @@
             this.label1.TabIndex = 33;
             this.label1.Text = "端口号";
             // 
-            // timer2
-            // 
-            this.timer2.Interval = 200;
-            this.timer2.Tick += new System.EventHandler(this.Timer2_Tick);
-            // 
             // Lab_ErrBytesCnt
             // 
             this.Lab_ErrBytesCnt.AutoSize = true;
@@ -12647,11 +13262,6 @@
             this.serialPort2.ReadBufferSize = 1000000;
             this.serialPort2.WriteBufferSize = 1000000;
             // 
-            // timer3
-            // 
-            this.timer3.Enabled = true;
-            this.timer3.Interval = 200;
-            // 
             // timer4
             // 
             this.timer4.Interval = 200;
@@ -12666,206 +13276,10 @@
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox1.Visible = false;
             // 
-            // textBox_USV1_X_Kd
+            // timer2
             // 
-            this.textBox_USV1_X_Kd.Location = new System.Drawing.Point(241, 77);
-            this.textBox_USV1_X_Kd.Name = "textBox_USV1_X_Kd";
-            this.textBox_USV1_X_Kd.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV1_X_Kd.TabIndex = 31;
-            this.textBox_USV1_X_Kd.Text = "0.1";
-            this.textBox_USV1_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label115
-            // 
-            this.label115.AutoSize = true;
-            this.label115.Location = new System.Drawing.Point(216, 80);
-            this.label115.Name = "label115";
-            this.label115.Size = new System.Drawing.Size(17, 12);
-            this.label115.TabIndex = 32;
-            this.label115.Text = "Kd";
-            // 
-            // textBox_USV1_X_Ki
-            // 
-            this.textBox_USV1_X_Ki.Location = new System.Drawing.Point(155, 75);
-            this.textBox_USV1_X_Ki.Name = "textBox_USV1_X_Ki";
-            this.textBox_USV1_X_Ki.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV1_X_Ki.TabIndex = 29;
-            this.textBox_USV1_X_Ki.Text = "0.1";
-            this.textBox_USV1_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label116
-            // 
-            this.label116.AutoSize = true;
-            this.label116.Location = new System.Drawing.Point(131, 80);
-            this.label116.Name = "label116";
-            this.label116.Size = new System.Drawing.Size(17, 12);
-            this.label116.TabIndex = 30;
-            this.label116.Text = "Ki";
-            // 
-            // textBox_USV1_X_Kp
-            // 
-            this.textBox_USV1_X_Kp.Location = new System.Drawing.Point(66, 75);
-            this.textBox_USV1_X_Kp.Name = "textBox_USV1_X_Kp";
-            this.textBox_USV1_X_Kp.Size = new System.Drawing.Size(46, 21);
-            this.textBox_USV1_X_Kp.TabIndex = 26;
-            this.textBox_USV1_X_Kp.Text = "0.1";
-            this.textBox_USV1_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label118
-            // 
-            this.label118.AutoSize = true;
-            this.label118.Location = new System.Drawing.Point(42, 79);
-            this.label118.Name = "label118";
-            this.label118.Size = new System.Drawing.Size(17, 12);
-            this.label118.TabIndex = 27;
-            this.label118.Text = "Kp";
-            // 
-            // label117
-            // 
-            this.label117.AutoSize = true;
-            this.label117.Location = new System.Drawing.Point(7, 79);
-            this.label117.Name = "label117";
-            this.label117.Size = new System.Drawing.Size(23, 12);
-            this.label117.TabIndex = 28;
-            this.label117.Text = "u：";
-            // 
-            // tabPage19
-            // 
-            this.tabPage19.Controls.Add(this.groupBox29);
-            this.tabPage19.Controls.Add(this.groupBox28);
-            this.tabPage19.Location = new System.Drawing.Point(4, 4);
-            this.tabPage19.Name = "tabPage19";
-            this.tabPage19.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage19.Size = new System.Drawing.Size(354, 357);
-            this.tabPage19.TabIndex = 4;
-            this.tabPage19.Text = "虚拟领航";
-            this.tabPage19.UseVisualStyleBackColor = true;
-            // 
-            // richTextBox_EXpression
-            // 
-            this.richTextBox_EXpression.Location = new System.Drawing.Point(47, 82);
-            this.richTextBox_EXpression.Name = "richTextBox_EXpression";
-            this.richTextBox_EXpression.Size = new System.Drawing.Size(240, 96);
-            this.richTextBox_EXpression.TabIndex = 66;
-            this.richTextBox_EXpression.Text = "";
-            // 
-            // groupBox28
-            // 
-            this.groupBox28.Controls.Add(this.textBox6);
-            this.groupBox28.Controls.Add(this.label143);
-            this.groupBox28.Controls.Add(this.textBox7);
-            this.groupBox28.Controls.Add(this.label144);
-            this.groupBox28.Location = new System.Drawing.Point(26, 24);
-            this.groupBox28.Name = "groupBox28";
-            this.groupBox28.Size = new System.Drawing.Size(292, 77);
-            this.groupBox28.TabIndex = 66;
-            this.groupBox28.TabStop = false;
-            this.groupBox28.Text = "LOS参数";
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(63, 50);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(56, 21);
-            this.textBox6.TabIndex = 2;
-            this.textBox6.Text = "0.1";
-            this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label143
-            // 
-            this.label143.AutoSize = true;
-            this.label143.Location = new System.Drawing.Point(28, 52);
-            this.label143.Name = "label143";
-            this.label143.Size = new System.Drawing.Size(17, 12);
-            this.label143.TabIndex = 3;
-            this.label143.Text = "Δ";
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(62, 19);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(57, 21);
-            this.textBox7.TabIndex = 0;
-            this.textBox7.Text = "6";
-            this.textBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label144
-            // 
-            this.label144.AutoSize = true;
-            this.label144.Location = new System.Drawing.Point(28, 22);
-            this.label144.Name = "label144";
-            this.label144.Size = new System.Drawing.Size(17, 12);
-            this.label144.TabIndex = 1;
-            this.label144.Text = "Kp";
-            // 
-            // groupBox29
-            // 
-            this.groupBox29.Controls.Add(this.textBox8);
-            this.groupBox29.Controls.Add(this.label139);
-            this.groupBox29.Controls.Add(this.textBox9);
-            this.groupBox29.Controls.Add(this.label140);
-            this.groupBox29.Controls.Add(this.textBox14);
-            this.groupBox29.Controls.Add(this.label142);
-            this.groupBox29.Location = new System.Drawing.Point(26, 126);
-            this.groupBox29.Name = "groupBox29";
-            this.groupBox29.Size = new System.Drawing.Size(292, 65);
-            this.groupBox29.TabIndex = 67;
-            this.groupBox29.TabStop = false;
-            this.groupBox29.Text = "PID参数";
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(220, 24);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(46, 21);
-            this.textBox8.TabIndex = 38;
-            this.textBox8.Text = "0.1";
-            this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label139
-            // 
-            this.label139.AutoSize = true;
-            this.label139.Location = new System.Drawing.Point(197, 30);
-            this.label139.Name = "label139";
-            this.label139.Size = new System.Drawing.Size(17, 12);
-            this.label139.TabIndex = 39;
-            this.label139.Text = "Kd";
-            // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(131, 27);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(46, 21);
-            this.textBox9.TabIndex = 36;
-            this.textBox9.Text = "0.1";
-            this.textBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label140
-            // 
-            this.label140.AutoSize = true;
-            this.label140.Location = new System.Drawing.Point(112, 30);
-            this.label140.Name = "label140";
-            this.label140.Size = new System.Drawing.Size(17, 12);
-            this.label140.TabIndex = 37;
-            this.label140.Text = "Ki";
-            // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(46, 27);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(46, 21);
-            this.textBox14.TabIndex = 33;
-            this.textBox14.Text = "0.1";
-            this.textBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label142
-            // 
-            this.label142.AutoSize = true;
-            this.label142.Location = new System.Drawing.Point(23, 27);
-            this.label142.Name = "label142";
-            this.label142.Size = new System.Drawing.Size(17, 12);
-            this.label142.TabIndex = 34;
-            this.label142.Text = "Kp";
+            this.timer2.Interval = 200;
+            this.timer2.Tick += new System.EventHandler(this.Timer2_Tick);
             // 
             // Form1
             // 
@@ -12972,6 +13386,11 @@
             this.groupBox17.ResumeLayout(false);
             this.groupBox17.PerformLayout();
             this.tabControl6.ResumeLayout(false);
+            this.tabPage19.ResumeLayout(false);
+            this.groupBox29.ResumeLayout(false);
+            this.groupBox29.PerformLayout();
+            this.groupBox28.ResumeLayout(false);
+            this.groupBox28.PerformLayout();
             this.tabPage20.ResumeLayout(false);
             this.tabPage20.PerformLayout();
             this.groupBox_USV1_PID.ResumeLayout(false);
@@ -13005,11 +13424,6 @@
             this.groupBox13.PerformLayout();
             this.tabPage17.ResumeLayout(false);
             this.tabPage17.PerformLayout();
-            this.tabPage19.ResumeLayout(false);
-            this.groupBox28.ResumeLayout(false);
-            this.groupBox28.PerformLayout();
-            this.groupBox29.ResumeLayout(false);
-            this.groupBox29.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -13089,7 +13503,6 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox TB_SetLeaderSpeed;
-        private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.GroupBox groupBox15;
         private System.Windows.Forms.RadioButton radioButton6;
         public System.Windows.Forms.RadioButton radioButton7;
@@ -13224,7 +13637,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox TB_FormationGatherSpeed;
-        private System.Windows.Forms.Timer timer3;
         private System.Windows.Forms.TabPage tabPage16;
         public Steema.TeeChart.TChart tChart6;
         private Steema.TeeChart.Styles.HorizLine horizLine1;
@@ -13529,6 +13941,13 @@
         private System.Windows.Forms.Label label143;
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label144;
+        private Steema.TeeChart.Styles.HorizLine horizLine24;
+        private Steema.TeeChart.Styles.HorizLine horizLine25;
+        private Steema.TeeChart.Styles.HorizLine horizLine26;
+        private Steema.TeeChart.Styles.HorizLine horizLine27;
+        private Steema.TeeChart.Styles.HorizLine horizLine28;
+        private Steema.TeeChart.Styles.HorizLine horizLine29;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

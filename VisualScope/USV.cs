@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Xml.Linq;
@@ -16,6 +17,9 @@ using static Steema.TeeChart.Styles.SeriesMarks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using static 地面站.Form1;
 using static 地面站.LOS;
+using Button = System.Windows.Forms.Button;
+using Label = System.Windows.Forms.Label;
+using TextBox = System.Windows.Forms.TextBox;
 
 namespace 地面站
 {
@@ -140,7 +144,7 @@ namespace 地面站
         LOS.Result result;
         //public Norbbin norbbin = new Norbbin(0, 0);
         public CyberShip_ii_MMG mmg = new CyberShip_ii_MMG();
-        USV_State_Info usv_state_info;
+        public USV_State_Info usv_state_info;
         public USV_PID_Info usv_PID_info;
         public USV_Point_PID_INFO usv_Point_PID_info;
         public double speed_exp;
@@ -346,6 +350,8 @@ namespace 地面站
 
             Position.X = mmg.state.x;
             Position.Y = mmg.state.y;
+            state.heading = Convert.ToSingle( mmg.state.psi);
+            state.speed = Convert.ToSingle(U);
             Draw_Line();
 
         }
@@ -356,7 +362,7 @@ namespace 地面站
         /// <param name="x_l">领航者X坐标</param>
         /// <param name="y_l">领航者Y坐标</param>
         /// <param name="psi_l">领航者艏向角</param>
-        public void LOS_Point_Follower(double T,double x_l,double y_l,double psi_l,double Vel_L)
+        public void LOS_Point_Follower(double T)
         {
             double beta;//漂角
             double u;//船速
@@ -373,11 +379,7 @@ namespace 地面站
                 course = mmg.state.course;
                 speed = mmg.state.U;
                 Los.UpdateData(Position.X, Position.Y, heading, course, speed);
-                result = Los.Calculate_Point_Follower(x_l,y_l,psi_l,T, 
-                                        Convert.ToDouble(usv_state_info.L.Text), 
-                                        Convert.ToDouble(usv_state_info.angle.Text),
-                                        Vel_L
-                                        );
+                result = Los.Calculate_Point_Follower();
                 tau_u = Los.pid_u.Calculate(result.vel, speed, T);
                 double err;
                 err = result.psi_d - heading;
@@ -408,13 +410,11 @@ namespace 地面站
                 
                 Los.UpdateData(Position.X, Position.Y, heading, course, u);
 
-                result = Los.Calculate_Point_Follower(x_l, y_l, psi_l, T,
-                                        Convert.ToDouble(usv_state_info.L.Text),
-                                        Convert.ToDouble(usv_state_info.angle.Text),
-                                        Vel_L );
+                result = Los.Calculate_Point_Follower();
                 result.psi_d = result.psi_d * 180 / Math.PI;
                 set.Heading = (float)result.psi_d;
                 set.Speed = (float)result.vel;
+                //set.Speed = (float)Los.U_d;
                 set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
                 set.DEV_ID = DEV_ID;
 

@@ -5,6 +5,7 @@ using Steema.TeeChart.Themes;
 using System;
 using System.Web.UI.WebControls;
 using System.Windows;
+using System.Windows.Media.Media3D;
 using static 地面站.LOS;
 
 namespace 地面站
@@ -22,12 +23,12 @@ namespace 地面站
         double psi_F;//期望路径切向角ψF
         double psi_F_last;//上一时刻期望路径切向角ψF
         double psi_F_deriv;//期望路径切向角ψF的导数
-        double x_Start,y_Start;
+        double x_Start, y_Start;
         double x_End, y_End;
-        
-
+        public double U_d;//期望轨迹切向速度
+        double U_d_Last;//期望轨迹切向速度
         private readonly Form1 form1;
-        public  PID pid_u, pid_r;
+        public PID pid_u, pid_r;
 
         public struct Result
         {
@@ -73,15 +74,15 @@ namespace 地面站
             //x_err_est_err = 0;
             //y_err_est_err = 0;
             result.psi_d = 0;
-            result.vel=0;
+            result.vel = 0;
             pid_u.Clear();
             pid_r.Clear();
         }
-        public LOS(object sender, string x,string y, double kp_, double delta_)
+        public LOS(object sender, string x, string y, double kp_, double delta_)
         {
             form1 = (Form1)sender;
             UpdateExpectedPath(x, y);
-            
+
             kp = kp_;
             delta = delta_;
             pid_u = new PID();
@@ -93,12 +94,12 @@ namespace 地面站
         {
             w = w0;
         }
-        public void UpadataParam(double kp_,double delta_)
+        public void UpadataParam(double kp_, double delta_)
         {
             kp = kp_;
             delta = delta_;
         }
-        public void Update_XY_F(double X_E,double Y_E, double X_S, double Y_S)
+        public void Update_XY_F(double X_E, double Y_E, double X_S, double Y_S)
         {
             x_End = X_E;
             y_End = Y_E;
@@ -113,7 +114,7 @@ namespace 地面站
         /// <param name="heading">艏向角</param>
         /// <param name="course">航向角</param>
         /// <param name="speed">航速</param>
-        public void UpdateData(double x_,double y_, double heading, double course, double speed)//heading艏向角；course航向角；speed船速
+        public void UpdateData(double x_, double y_, double heading, double course, double speed)//heading艏向角；course航向角；speed船速
         {
             x = x_;
             y = y_;
@@ -122,7 +123,7 @@ namespace 地面站
             beta = course - heading;
             while (beta >= Math.PI)
                 beta -= Math.PI * 2;
-            while(beta<-Math.PI)
+            while (beta < -Math.PI)
                 beta += Math.PI * 2;
         }
         public void UpdateExpectedPath(string x, string y)
@@ -141,17 +142,17 @@ namespace 地面站
             double y_sig;
 
             x_F = Eval.Calculate(w, x_F_expression);
-            y_F = Eval.Calculate(w, y_F_expression); 
+            y_F = Eval.Calculate(w, y_F_expression);
             x_F_1 = Eval.Calculate(w + h, x_F_expression);
             y_F_1 = Eval.Calculate(w + h, y_F_expression);
             x_F_deriv_w = (x_F_1 - x_F) / h;//对参数w求导
             y_F_deriv_w = (y_F_1 - y_F) / h;//对参数w求导
             psi_F = Math.Atan2(y_F_deriv_w, x_F_deriv_w);
             psi_F_deriv = (psi_F - psi_F_last) / T;
-            x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) *(y - y_F);
+            x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) * (y - y_F);
             y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
 
-            
+
 
             //x_err_est_err = x_err_est - x_err;
             //y_err_est_err = y_err_est - y_err;
@@ -162,8 +163,8 @@ namespace 地面站
             //x_err_est += x_err_est_deriv * T;
             //y_err_est += y_err_est_deriv * T;
 
-            x_sig = Math.Pow(Math.Abs(x_err), 1.2) * Math.Sign(x_err)+Math.Pow(Math.Abs(x_err), 0.8) * Math.Sign(x_err);
-            y_sig = Math.Pow(Math.Abs(y_err), 1.2) * Math.Sign(y_err)+Math.Pow(Math.Abs(y_err),0.8) * Math.Sign(y_err);
+            x_sig = Math.Pow(Math.Abs(x_err), 1.2) * Math.Sign(x_err) + Math.Pow(Math.Abs(x_err), 0.8) * Math.Sign(x_err);
+            y_sig = Math.Pow(Math.Abs(y_err), 1.2) * Math.Sign(y_err) + Math.Pow(Math.Abs(y_err), 0.8) * Math.Sign(y_err);
             //los
             psi_d = psi_F + Math.Atan(-y_err / delta - beta);
             w_deriv = (U * Math.Cos(psi - psi_F) - U * Math.Sin(psi - psi_F) * beta + kp * x_err) / (Math.Sqrt(x_F_deriv_w * x_F_deriv_w + y_F_deriv_w * y_F_deriv_w));
@@ -199,10 +200,10 @@ namespace 地面站
             x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) * (y - y_F);
             y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
 
-            result.psi_d=psi_F+Math.Atan(-y_err/delta)-beta;
-            U_d = Math.Sqrt(x_F_deriv_w*x_F_deriv_w+y_F_deriv_w*y_F_deriv_w);
-            U_p = ((U_d-kp*x_err)*Math.Sqrt(y_err*y_err+delta*delta)) / delta;
-            result.vel = U_p*Math.Cos(beta);
+            result.psi_d = psi_F + Math.Atan(-y_err / delta) - beta;
+            U_d = Math.Sqrt(x_F_deriv_w * x_F_deriv_w + y_F_deriv_w * y_F_deriv_w);
+            U_p = ((U_d - kp * x_err) * Math.Sqrt(y_err * y_err + delta * delta)) / delta;
+            result.vel = U_p * Math.Cos(beta);
             if (result.vel > U_d * 2.5)//限制输出速度，防止初始误差过大，设定值太大
                 result.vel = U_d * 2.5;
             else if (result.vel < 0)
@@ -213,11 +214,11 @@ namespace 地面站
         }
         public Result Calculate_Point_Leader(double T)
         {
-            double k,b;
+            double k, b;
 
             x_F = w;
-            psi_F = Math.Atan2(y_End-y_Start, x_End-x_Start);
-            if (x_End - x_Start ==0)
+            psi_F = Math.Atan2(y_End - y_Start, x_End - x_Start);
+            if (x_End - x_Start == 0)
             {
                 y_F = y_Start;
                 k = 0;
@@ -236,7 +237,7 @@ namespace 地面站
             psi_d = psi_F + Math.Atan(-y_err / delta - beta);
 
             w_deriv = (U * Math.Cos(psi - psi_F)
-                - U * Math.Sin(psi - psi_F) * beta + kp * x_err) / (Math.Sqrt(1 
+                - U * Math.Sin(psi - psi_F) * beta + kp * x_err) / (Math.Sqrt(1
                 + k * k));
             w_deriv *= Math.Sign(x_End - x_Start);
             w += w_deriv * T;//更新路径参数
@@ -249,58 +250,120 @@ namespace 地面站
                 result.psi_d += Math.PI * 2;
             return result;
         }
-        public Result Calculate_Point_Follower(double x_l, double y_l, double psi_l,
-                        double dt, double L, double Theta, double ud)
+        double[] fbuf = { 1.5, 1.5, 1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5,};
+        int cnt;
+        double num=10;
+        double winfilter(double x)
+        {
+            double res=0;
+            fbuf[cnt] = x;
+            cnt++;
+            if(cnt==num)
+            {
+                cnt= 0;
+            }
+            for(int i=0; i < num;i++)
+            {
+                res += fbuf[i++];
+            }
+            res /= num;
+
+            return res;
+        }
+        public void Calculate_Point_Follower_Pre(double x_l, double y_l, double psi_l,
+                        double dt, double L, double Theta)
         {
             double x_f_d, y_f_d;
             double x_F_deriv, y_F_deriv;
             double theta;
-            double U_d;
-            double U_p;
-            double d;
-
+            double speed;
             theta = Theta * Math.PI / 180;//弧度
-            psi_l = psi_l * Math.PI / 180;//弧度
-
             x_f_d = x_l + L * Math.Cos(theta + psi_l);
             y_f_d = y_l + L * Math.Sin(theta + psi_l);
-
             x_F = x_f_d;
             y_F = y_f_d;
-            d = Math.Sqrt((x - x_F) * (x - x_F) + (y - y_F) * (y - y_F));//与虚拟船距离
-            //if (d > 10)//距离较远
-            //    psi_F = Math.Atan2(y_F - y, x_F - x);
-            //else
+            if (x_F_last == 0 && y_F_last == 0)
             {
-                //psi_F = psi_l;
-                x_F_deriv = (x_F-x_F_last) /dt;
-                y_F_deriv = (y_F-y_F_last )/dt;
-                psi_F = Math.Atan2(y_F_deriv, x_F_deriv);
+                x_F_last = x_F;
+                y_F_last = y_F;
             }
+            x_F_deriv = (x_F - x_F_last) / dt;
+            y_F_deriv = (y_F - y_F_last) / dt;
+            psi_F = Math.Atan2(y_F_deriv, x_F_deriv);
+            speed = Math.Sqrt(x_F_deriv * x_F_deriv + y_F_deriv * y_F_deriv);
+            U_d = winfilter(speed);
+            //if (speed > 3)
+            //    U_d = 1;
+            x_F_last = x_F;
+            y_F_last = y_F;
+            U_d_Last = U_d;
+        }
+        //public Result Calculate_Point_Follower(double x_l, double y_l, double psi_l,
+        //                double dt, double L, double Theta)
+        //{
+        //    double x_f_d, y_f_d;
+        //    double theta;
+        //    double vx, vy;
+        //    double angle;
+        //    theta = Theta * Math.PI / 180;//弧度
+        //    x_f_d = x_l + L * Math.Cos(theta + psi_l);
+        //    y_f_d = y_l + L * Math.Sin(theta + psi_l);
+
+
+        //    vx = pid_u.Calculate(x_f_d - x, dt);
+        //    vy = pid_r.Calculate(y_f_d - y, dt);
+        //    angle = Math.Atan2(y_f_d - y, x_f_d - x);
+        //    double err = angle - psi;
+        //    while (err >= Math.PI)
+        //        err -= Math.PI * 2;
+        //    while (err < -Math.PI)
+        //        err += Math.PI * 2;
+        //    if (err > -Math.PI / 2 && err < Math.PI / 2)
+        //        result.vel = Math.Sqrt(vx * vx + vy + vy);
+        //    else
+        //        result.vel = 0;
+        //    psi_F = psi_l;
+        //    x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) * (y - y_F);
+        //    y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
+        //    if (beta > 20 * Math.PI / 180)
+        //    {
+        //        beta = 0;
+        //    }
+        //    result.psi_d = psi_F + Math.Atan(-y_err / delta) - beta;
+        //    while (result.psi_d >= Math.PI)
+        //        result.psi_d -= Math.PI * 2;
+        //    while (result.psi_d < -Math.PI)
+        //        result.psi_d += Math.PI * 2;
+        //    if (result.vel >= 6)
+        //        result.vel = 6;
+        //    return result;
+        //}
+
+        public Result Calculate_Point_Follower()
+        {
+            double U_p;
             x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) * (y - y_F);
             y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
-            if(beta>20*Math.PI/180)
+            if (beta > 20 * Math.PI / 180)
             {
                 beta = 0;
             }
             result.psi_d = psi_F + Math.Atan(-y_err / delta) - beta;//
 
-            U_d = Math.Sqrt(x_F_deriv * x_F_deriv + y_F_deriv * y_F_deriv);
             U_p = ((U_d - kp * x_err) * Math.Sqrt(y_err * y_err + delta * delta)) / delta;
             if (U_p <= 0)
-                U_p = U_d ;
+                U_p = U_d * 0.5;
+            result.vel = U_p;
+            if (result.vel > U_d * 2)//限制输出速度，防止初始误差过大，设定值太大
+                result.vel = U_d * 2;
 
-            result.vel = U_p;//* Math.Cos(beta)
-            if (result.vel > U_d * 1.5)//限制输出速度，防止初始误差过大，设定值太大
-                result.vel = U_d * 1.5;
-            else if (result.vel < 0)
-                result.vel = 0;
             while (result.psi_d >= Math.PI)
                 result.psi_d -= Math.PI * 2;
             while (result.psi_d < -Math.PI)
                 result.psi_d += Math.PI * 2;
             x_F_last = x_F;
             y_F_last = y_F;
+
             return result;
         }
 

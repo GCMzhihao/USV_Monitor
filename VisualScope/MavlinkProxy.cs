@@ -45,7 +45,7 @@ namespace 地面站
         {
             string msg = e.Message.ToString().Substring(12).ToLower();
 
-            
+
             foreach (var info in (e.Message.GetType()).GetFields())//添加到波形显示
             {
                 string WaveName = ((SYS_TYPE)e.SystemId).ToString().Substring(4).ToLower() + e.ComponentId.ToString() + "." + msg + '.' + info.Name;
@@ -111,9 +111,6 @@ namespace 地面站
                 form1.dataGridView1.Rows[index].Cells[0].Value = ((MavLink.Msg_param_read_ack)e.Message).param_id.ToString();
                 form1.dataGridView1.Rows[index].Cells[1].Value = (PARAM_TYPE)(((MavLink.Msg_param_read_ack)e.Message).param_id);
                 form1.dataGridView1.Rows[index].Cells[2].Value = ((MavLink.Msg_param_read_ack)e.Message).value;
-
-
-
             }
             else if (e.Message.ToString().Contains("Msg_param_write_ack"))
             {
@@ -164,8 +161,6 @@ namespace 地面站
                     form1.msg_usv_state.Track -= 360;
                 while (form1.msg_usv_state.Track < -180)
                     form1.msg_usv_state.Track += 360;
-                form1.MCT84Bl2xy(form1.msg_usv_state.longitude, form1.msg_usv_state.latitude, out form1.Usv_Position.X, out form1.Usv_Position.Y);
-                //form1.Tchart6_Draw(form1.HorizLines[11], form1.Usv_Position.X-form1.X_Standard, form1.Usv_Position.Y-form1.Y_Standard);
             }
 
         }

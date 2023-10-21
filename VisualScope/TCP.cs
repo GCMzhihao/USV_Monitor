@@ -113,14 +113,6 @@ namespace 地面站
                     form1.connectstate.AppendText(System.DateTime.Now.ToString() + $" 服务端已打开：" + ipEndPoint + "\r\n");
                 }));
 
-
-                aTimer = new System.Timers.Timer();
-                aTimer.Elapsed += new ElapsedEventHandler(TimerEvent);  //到达时间的时候执行事件；
-                                                                        // 设置引发时间的时间间隔　此处设置为１秒（１０００毫秒）
-                aTimer.Interval = 1000;
-                aTimer.AutoReset = true;//设置是执行一次（false）还是一直执行(true)；
-                aTimer.Enabled = true; //是否执行System.Timers.Timer.Elapsed事件；
-                aTimer.Start();
             }
         }
 
@@ -158,7 +150,6 @@ namespace 地面站
                         }));
                     }
                     }
-                
             }
         }
 
@@ -242,51 +233,9 @@ namespace 地面站
                     }//不清楚这里break是否有影响？0905
                 }
             }
-
-            
+            Task.Delay(100);
         }
 
-        private void TimerEvent(object source, ElapsedEventArgs e)
-        {
-            try
-            {
-                if (ClientSockets.Contains(ClientSocketIndex[0]))
-                {
-                    //ClientSocketIndex[0].Send(cmd, cmd.Length, SocketFlags.None);
-                }
-            }
-            catch (Exception ex)//通讯出现异常
-            {
-                form1.connectstate.Invoke(new MethodInvoker(delegate ()
-                {
-                    form1.connectstate.AppendText($"{DateTime.Now} 客户端{ClientSocketIndex[0].RemoteEndPoint}从服务器断开,断开原因:{ex.Message}  \r\n");
-                }));
-                //从客户端列表中移除该客户端
-                this.ClientSockets.Remove(ClientSocketIndex[0]);
-                //断开连接
-                ClientSocketIndex[0].Shutdown(SocketShutdown.Both);
-                ClientSocketIndex[0].Close();
-            }
-            try
-            {
-                if (ClientSockets.Contains(ClientSocketIndex[2]))
-                {
-                    //ClientSocketIndex[2].Send(cmd, cmd.Length, SocketFlags.None);
-                }
-            }
-            catch (Exception ex)//通讯出现异常
-            {
-                form1.connectstate.Invoke(new MethodInvoker(delegate ()
-                {
-                    form1.connectstate.AppendText($"{DateTime.Now} 客户端{ClientSocketIndex[2].RemoteEndPoint}从服务器断开,断开原因:{ex.Message}  \r\n");
-                }));
-                //从客户端列表中移除该客户端
-                this.ClientSockets.Remove(ClientSocketIndex[2]);
-                //断开连接
-                ClientSocketIndex[2].Shutdown(SocketShutdown.Both);
-                ClientSocketIndex[2].Close();
-            }
-        }
 
         public void Mavlink_DTU_PacketReceived(object sender, MavLink.MavlinkPacket e)
         {
