@@ -28,7 +28,11 @@ namespace 地面站
         public double U_d;//期望轨迹切向速度
         double U_d_Last;//期望轨迹切向速度
         private readonly Form1 form1;
+<<<<<<< HEAD
         public PID pid_u, pid_r;
+=======
+        public  PID pid_x, pid_y;
+>>>>>>> parent of 432293c (10.15 加打点前)
 
         public struct Result
         {
@@ -74,21 +78,27 @@ namespace 地面站
             //x_err_est_err = 0;
             //y_err_est_err = 0;
             result.psi_d = 0;
+<<<<<<< HEAD
             result.vel = 0;
             pid_u.Clear();
             pid_r.Clear();
+=======
+            result.vel=0;
+>>>>>>> parent of 432293c (10.15 加打点前)
         }
         public LOS(object sender, string x, string y, double kp_, double delta_)
         {
             form1 = (Form1)sender;
             UpdateExpectedPath(x, y);
+<<<<<<< HEAD
 
+=======
+            LOS_Clear();
+>>>>>>> parent of 432293c (10.15 加打点前)
             kp = kp_;
             delta = delta_;
-            pid_u = new PID();
-            pid_r = new PID();
-
-            LOS_Clear();
+            pid_x = new PID();
+            pid_y = new PID();
         }
         public void Update_w(double w0)
         {
@@ -99,7 +109,11 @@ namespace 地面站
             kp = kp_;
             delta = delta_;
         }
+<<<<<<< HEAD
         public void Update_XY_F(double X_E, double Y_E, double X_S, double Y_S)
+=======
+        public void Update_XY_F(double X_F,double Y_F,double X_S,double Y_S)
+>>>>>>> parent of 432293c (10.15 加打点前)
         {
             x_End = X_E;
             y_End = Y_E;
@@ -214,6 +228,7 @@ namespace 地面站
         }
         public Result Calculate_Point_Leader(double T)
         {
+<<<<<<< HEAD
             double k, b;
 
             x_F = w;
@@ -230,11 +245,15 @@ namespace 地面站
                 y_F = k * x_F + b;
             }
 
+=======
+            psi_F = Math.Atan2(y_F-y,  x_F-x);
+>>>>>>> parent of 432293c (10.15 加打点前)
             x_err = Math.Cos(psi_F) * (x - x_F) + Math.Sin(psi_F) * (y - y_F);
             y_err = -Math.Sin(psi_F) * (x - x_F) + Math.Cos(psi_F) * (y - y_F);
 
             //los
             psi_d = psi_F + Math.Atan(-y_err / delta - beta);
+<<<<<<< HEAD
 
             w_deriv = (U * Math.Cos(psi - psi_F)
                 - U * Math.Sin(psi - psi_F) * beta + kp * x_err) / (Math.Sqrt(1
@@ -272,14 +291,27 @@ namespace 地面站
         }
         public void Calculate_Point_Follower_Pre(double x_l, double y_l, double psi_l,
                         double dt, double L, double Theta)
+=======
+            result.psi_d=psi_d;
+            result.vel= Convert.ToSingle(form1.textBox_Speed_Set.Text);
+            return result;
+        }
+        public Result Calculate_Point_Follower(double x_l, double y_l, double psi_l,
+                                double dt, double L, double Theta)
+>>>>>>> parent of 432293c (10.15 加打点前)
         {
             double x_f_d, y_f_d;
             double x_F_deriv, y_F_deriv;
             double theta;
+<<<<<<< HEAD
             double speed;
+=======
+            double ud_x, ud_y;
+>>>>>>> parent of 432293c (10.15 加打点前)
             theta = Theta * Math.PI / 180;//弧度
             x_f_d = x_l + L * Math.Cos(theta + psi_l);
             y_f_d = y_l + L * Math.Sin(theta + psi_l);
+<<<<<<< HEAD
             x_F = x_f_d;
             y_F = y_f_d;
             if (x_F_last == 0 && y_F_last == 0)
@@ -364,6 +396,12 @@ namespace 地面站
             x_F_last = x_F;
             y_F_last = y_F;
 
+=======
+            ud_x = pid_x.Calculate(x_f_d, x, dt);
+            ud_y = pid_y.Calculate(y_f_d, y, dt);
+            result.vel = Math.Sqrt(ud_x*ud_x+ud_y*ud_y);
+            result.psi_d = Math.Atan2(ud_y,ud_x);
+>>>>>>> parent of 432293c (10.15 加打点前)
             return result;
         }
 

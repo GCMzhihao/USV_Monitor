@@ -11,8 +11,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
+<<<<<<< HEAD
 using System.Windows.Media;
 using System.Xml.Linq;
+=======
+>>>>>>> parent of 432293c (10.15 加打点前)
 using static Steema.TeeChart.Styles.SeriesMarks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using static 地面站.Form1;
@@ -142,9 +145,15 @@ namespace 地面站
         HorizLine horizLine1;
         public MavlinkPacket mavlinkPacket;
         LOS.Result result;
+<<<<<<< HEAD
         //public Norbbin norbbin = new Norbbin(0, 0);
         public CyberShip_ii_MMG mmg = new CyberShip_ii_MMG();
         public USV_State_Info usv_state_info;
+=======
+        public Norbbin norbbin = new Norbbin(0, 0);
+
+        USV_State_Info usv_state_info;
+>>>>>>> parent of 432293c (10.15 加打点前)
         public USV_PID_Info usv_PID_info;
         public USV_Point_PID_INFO usv_Point_PID_info;
         public double speed_exp;
@@ -154,10 +163,14 @@ namespace 地面站
             form1 = (Form1)sender;
             DEV_ID = DEV_ID_;
         }
+<<<<<<< HEAD
         public void Clear(double x0, double y0,double psi0)
         {
             mmg.Clear(x0, y0,psi0);
         }
+=======
+
+>>>>>>> parent of 432293c (10.15 加打点前)
         public void Init(byte DEV_ID_)
         {
             DEV_ID = DEV_ID_;
@@ -321,14 +334,19 @@ namespace 地面站
             usv_state_info.X.Text = Position.X.ToString("0.00");
             usv_state_info.Y.Text = Position.Y.ToString("0.00");
         }
+<<<<<<< HEAD
 
         public void Point_VirtualLeader(double T)
+=======
+        public void LOS_Point_Leader(double T)
+>>>>>>> parent of 432293c (10.15 加打点前)
         {
             double U;
             double beta=0*Math.PI/180;//漂角
 
             double heading;
             double course;
+<<<<<<< HEAD
             double tau_r;//仿真mmg模型 pid输出
 
             heading = mmg.state.psi;
@@ -353,6 +371,54 @@ namespace 地面站
             state.heading = Convert.ToSingle( mmg.state.psi);
             state.speed = Convert.ToSingle(U);
             Draw_Line();
+=======
+
+            USV_Info_Display();
+            if (form1.radioButton_Simulation.Checked)//仿真
+            {
+                beta = 0.1;
+                heading = Los.psi;
+                course = heading + beta;
+
+                Position.X = Los.x;
+                Position.Y = Los.y;
+
+                Los.UpdateData(Position.X, Position.Y, heading, course, result.vel);
+                result = Los.Calculate_Point_Leader(T);
+                state.speed = (float)result.vel;
+                Los.psi=result.psi_d;
+                state.heading =Convert.ToSingle(result.psi_d);
+                Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
+                Draw_Line();
+
+            }
+            else if (form1.radioButton_Real_USV.Checked)//实船
+            {
+                ll2XY();
+
+                heading = state.heading / 180 * Math.PI;//弧度
+                u = state.speed;
+                course = state.Track / 180 * Math.PI;//弧度
+
+                Draw_Line();
+                Los.UpdateData(Position.X, Position.Y, heading, course, u);
+
+                result = Los.Calculate_Point_Leader(T);
+                result.psi_d = result.psi_d * 180 / Math.PI;
+                set.Heading = (float)result.psi_d;
+                set.Speed = (float)result.vel;
+                set.SYS_TYPE = (byte)SYS_TYPE.SYS_USV;
+                set.DEV_ID = DEV_ID;
+
+                form1.mavlinkPacket.ComponentId = DEV_ID;
+                form1.mavlinkPacket.Message = set;
+                form1.SendMavMsgToRocker(form1.mavlinkPacket);
+                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.speed", set.Speed);//添加到波形显示
+                form1.mavlinkProxy.TChart1Display("usv" + DEV_ID.ToString() + ".set.heading", set.Heading);//添加到波形显示
+
+
+            }
+>>>>>>> parent of 432293c (10.15 加打点前)
 
         }
         /// <summary>
@@ -362,19 +428,22 @@ namespace 地面站
         /// <param name="x_l">领航者X坐标</param>
         /// <param name="y_l">领航者Y坐标</param>
         /// <param name="psi_l">领航者艏向角</param>
+<<<<<<< HEAD
         public void LOS_Point_Follower(double T)
+=======
+        public void LOS_Point_Follower(double T,double x_l,double y_l,double psi_l)
+>>>>>>> parent of 432293c (10.15 加打点前)
         {
             double beta;//漂角
             double u;//船速
             double x, y;
             double heading;
             double course;
-            double speed;
-            double tau_u, tau_r;//仿真mmg模型 pid输出
 
             USV_Info_Display();
             if (form1.radioButton_Simulation.Checked)//仿真
             {
+<<<<<<< HEAD
                 heading = mmg.state.psi;
                 course = mmg.state.course;
                 speed = mmg.state.U;
@@ -396,6 +465,23 @@ namespace 地面站
                 state.speed = Convert.ToSingle(mmg.state.U);
                 state.heading = Convert.ToSingle(mmg.state.psi * 180 / Math.PI);
                 state.battery_voltage = Convert.ToSingle(err * 180 / Math.PI);
+=======
+                beta = 0.1;
+                heading = Los.psi;
+                course = heading + beta;
+
+                Position.X = Los.x;
+                Position.Y = Los.y;
+
+                Los.UpdateData(Position.X, Position.Y, heading, course, result.vel);
+                psi_l = psi_l * 180 / Math.PI;
+                result = Los.Calculate_Point_Follower(x_l,y_l,psi_l,T, 
+                                        Convert.ToDouble(usv_state_info.L.Text), 
+                                        Convert.ToDouble(usv_state_info.angle.Text));
+                state.speed = (float)result.vel;
+                Los.psi = result.psi_d;
+                Los.UpdateSimulationPosition(result.psi_d, beta, T);//更新 x y 的值
+>>>>>>> parent of 432293c (10.15 加打点前)
                 Draw_Line();
 
             }
@@ -410,8 +496,14 @@ namespace 地面站
                 
                 Los.UpdateData(Position.X, Position.Y, heading, course, u);
 
+<<<<<<< HEAD
                 result = Los.Calculate_Point_Follower();
                 result.psi_d = result.psi_d * 180 / Math.PI;
+=======
+                result = Los.Calculate_Point_Follower(x_l, y_l, psi_l, T,
+                                        Convert.ToDouble(usv_state_info.L.Text),
+                                        Convert.ToDouble(usv_state_info.angle.Text)); result.psi_d = result.psi_d * 180 / Math.PI;
+>>>>>>> parent of 432293c (10.15 加打点前)
                 set.Heading = (float)result.psi_d;
                 set.Speed = (float)result.vel;
                 //set.Speed = (float)Los.U_d;
@@ -499,8 +591,8 @@ namespace 地面站
             if (form1.radioButton_Simulation.Checked)//仿真
             {
 
-                //Position.X = norbbin.state.x;
-                //Position.Y = norbbin.state.y;
+                Position.X = norbbin.state.x;
+                Position.Y = norbbin.state.y;
 
                 beta = 0.1;
                 heading = state.heading ;

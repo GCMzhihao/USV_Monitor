@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+<<<<<<< HEAD
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -44,6 +45,22 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+=======
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -3121,6 +3138,7 @@
             this.dataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView2.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridView2.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+<<<<<<< HEAD
             dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle29.BackColor = System.Drawing.Color.Aquamarine;
             dataGridViewCellStyle29.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -3129,12 +3147,23 @@
             dataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle29;
+=======
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Aquamarine;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.dataGridView2.ColumnHeadersHeight = 30;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column4,
             this.Column5,
             this.Column6});
+<<<<<<< HEAD
             dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle33.BackColor = System.Drawing.SystemColors.Info;
             dataGridViewCellStyle33.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -3143,6 +3172,16 @@
             dataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle33;
+=======
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle5;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.dataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView2.EnableHeadersVisualStyles = false;
             this.dataGridView2.GridColor = System.Drawing.Color.Silver;
@@ -3152,6 +3191,7 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+<<<<<<< HEAD
             dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle34.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -3165,6 +3205,21 @@
             this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle35;
+=======
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            this.dataGridView2.RowHeadersVisible = false;
+            this.dataGridView2.RowHeadersWidth = 51;
+            this.dataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle7;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.dataGridView2.RowTemplate.Height = 30;
             this.dataGridView2.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3178,8 +3233,13 @@
             // 
             // Column4
             // 
+<<<<<<< HEAD
             dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.Column4.DefaultCellStyle = dataGridViewCellStyle30;
+=======
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle2;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.Column4.HeaderText = "ID";
             this.Column4.MinimumWidth = 6;
             this.Column4.Name = "Column4";
@@ -3190,8 +3250,13 @@
             // 
             // Column5
             // 
+<<<<<<< HEAD
             dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.Column5.DefaultCellStyle = dataGridViewCellStyle31;
+=======
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Column5.DefaultCellStyle = dataGridViewCellStyle3;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.Column5.HeaderText = "命令名";
             this.Column5.MinimumWidth = 6;
             this.Column5.Name = "Column5";
@@ -3202,11 +3267,19 @@
             // 
             // Column6
             // 
+<<<<<<< HEAD
             dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle32.BackColor = System.Drawing.Color.Aqua;
             dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.Red;
             dataGridViewCellStyle32.SelectionForeColor = System.Drawing.Color.Blue;
             this.Column6.DefaultCellStyle = dataGridViewCellStyle32;
+=======
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Aqua;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Red;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Blue;
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle4;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.Column6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Column6.HeaderText = "";
             this.Column6.MinimumWidth = 6;
@@ -3237,6 +3310,7 @@
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+<<<<<<< HEAD
             dataGridViewCellStyle36.BackColor = System.Drawing.Color.Aquamarine;
             dataGridViewCellStyle36.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle36.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -3244,12 +3318,22 @@
             dataGridViewCellStyle36.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle36.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle36;
+=======
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.Aquamarine;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.dataGridView1.ColumnHeadersHeight = 30;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
             this.Column3});
+<<<<<<< HEAD
             dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             dataGridViewCellStyle40.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -3258,6 +3342,16 @@
             dataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle40;
+=======
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle12;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.GridColor = System.Drawing.Color.Silver;
@@ -3266,6 +3360,7 @@
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+<<<<<<< HEAD
             dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle41.BackColor = System.Drawing.Color.Maroon;
             dataGridViewCellStyle41.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -3280,6 +3375,22 @@
             dataGridViewCellStyle42.BackColor = System.Drawing.SystemColors.Info;
             dataGridViewCellStyle42.ForeColor = System.Drawing.Color.Black;
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle42;
+=======
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.Maroon;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowHeadersWidth = 4;
+            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle14;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.dataGridView1.RowTemplate.Height = 30;
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -3297,9 +3408,15 @@
             // 
             // Column1
             // 
+<<<<<<< HEAD
             dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle37.BackColor = System.Drawing.Color.Red;
             this.Column1.DefaultCellStyle = dataGridViewCellStyle37;
+=======
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.Red;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle9;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.Column1.HeaderText = "ID";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
@@ -3310,10 +3427,17 @@
             // 
             // Column2
             // 
+<<<<<<< HEAD
             dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle38.BackColor = System.Drawing.Color.LightGray;
             dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.Column2.DefaultCellStyle = dataGridViewCellStyle38;
+=======
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle10;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.Column2.HeaderText = "参数名";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
@@ -3324,9 +3448,15 @@
             // 
             // Column3
             // 
+<<<<<<< HEAD
             dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle39.BackColor = System.Drawing.Color.LightGray;
             this.Column3.DefaultCellStyle = dataGridViewCellStyle39;
+=======
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.LightGray;
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle11;
+>>>>>>> parent of 432293c (10.15 加打点前)
             this.Column3.HeaderText = "值";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
@@ -13278,8 +13408,396 @@
             // 
             // timer2
             // 
+<<<<<<< HEAD
             this.timer2.Interval = 200;
             this.timer2.Tick += new System.EventHandler(this.Timer2_Tick);
+=======
+            this.textBox_USV1_X_Kd.Location = new System.Drawing.Point(241, 77);
+            this.textBox_USV1_X_Kd.Name = "textBox_USV1_X_Kd";
+            this.textBox_USV1_X_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Kd.TabIndex = 31;
+            this.textBox_USV1_X_Kd.Text = "0.1";
+            this.textBox_USV1_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label115
+            // 
+            this.label115.AutoSize = true;
+            this.label115.Location = new System.Drawing.Point(216, 80);
+            this.label115.Name = "label115";
+            this.label115.Size = new System.Drawing.Size(17, 12);
+            this.label115.TabIndex = 32;
+            this.label115.Text = "Kd";
+            // 
+            // textBox_USV1_X_Ki
+            // 
+            this.textBox_USV1_X_Ki.Location = new System.Drawing.Point(155, 75);
+            this.textBox_USV1_X_Ki.Name = "textBox_USV1_X_Ki";
+            this.textBox_USV1_X_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Ki.TabIndex = 29;
+            this.textBox_USV1_X_Ki.Text = "0.1";
+            this.textBox_USV1_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label116
+            // 
+            this.label116.AutoSize = true;
+            this.label116.Location = new System.Drawing.Point(131, 80);
+            this.label116.Name = "label116";
+            this.label116.Size = new System.Drawing.Size(17, 12);
+            this.label116.TabIndex = 30;
+            this.label116.Text = "Ki";
+            // 
+            // label117
+            // 
+            this.label117.AutoSize = true;
+            this.label117.Location = new System.Drawing.Point(7, 79);
+            this.label117.Name = "label117";
+            this.label117.Size = new System.Drawing.Size(23, 12);
+            this.label117.TabIndex = 28;
+            this.label117.Text = "X：";
+            // 
+            // textBox_USV1_X_Kp
+            // 
+            this.textBox_USV1_X_Kp.Location = new System.Drawing.Point(66, 75);
+            this.textBox_USV1_X_Kp.Name = "textBox_USV1_X_Kp";
+            this.textBox_USV1_X_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_X_Kp.TabIndex = 26;
+            this.textBox_USV1_X_Kp.Text = "0.1";
+            this.textBox_USV1_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label118
+            // 
+            this.label118.AutoSize = true;
+            this.label118.Location = new System.Drawing.Point(42, 79);
+            this.label118.Name = "label118";
+            this.label118.Size = new System.Drawing.Size(17, 12);
+            this.label118.TabIndex = 27;
+            this.label118.Text = "Kp";
+            // 
+            // textBox_USV1_Y_Kd
+            // 
+            this.textBox_USV1_Y_Kd.Location = new System.Drawing.Point(241, 108);
+            this.textBox_USV1_Y_Kd.Name = "textBox_USV1_Y_Kd";
+            this.textBox_USV1_Y_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_Y_Kd.TabIndex = 38;
+            this.textBox_USV1_Y_Kd.Text = "0.1";
+            this.textBox_USV1_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label119
+            // 
+            this.label119.AutoSize = true;
+            this.label119.Location = new System.Drawing.Point(216, 111);
+            this.label119.Name = "label119";
+            this.label119.Size = new System.Drawing.Size(17, 12);
+            this.label119.TabIndex = 39;
+            this.label119.Text = "Kd";
+            // 
+            // textBox_USV1_Y_Ki
+            // 
+            this.textBox_USV1_Y_Ki.Location = new System.Drawing.Point(155, 106);
+            this.textBox_USV1_Y_Ki.Name = "textBox_USV1_Y_Ki";
+            this.textBox_USV1_Y_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_Y_Ki.TabIndex = 36;
+            this.textBox_USV1_Y_Ki.Text = "0.1";
+            this.textBox_USV1_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label120
+            // 
+            this.label120.AutoSize = true;
+            this.label120.Location = new System.Drawing.Point(131, 111);
+            this.label120.Name = "label120";
+            this.label120.Size = new System.Drawing.Size(17, 12);
+            this.label120.TabIndex = 37;
+            this.label120.Text = "Ki";
+            // 
+            // label121
+            // 
+            this.label121.AutoSize = true;
+            this.label121.Location = new System.Drawing.Point(8, 109);
+            this.label121.Name = "label121";
+            this.label121.Size = new System.Drawing.Size(23, 12);
+            this.label121.TabIndex = 35;
+            this.label121.Text = "Y：";
+            // 
+            // textBox_USV1_Y_Kp
+            // 
+            this.textBox_USV1_Y_Kp.Location = new System.Drawing.Point(66, 106);
+            this.textBox_USV1_Y_Kp.Name = "textBox_USV1_Y_Kp";
+            this.textBox_USV1_Y_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV1_Y_Kp.TabIndex = 33;
+            this.textBox_USV1_Y_Kp.Text = "0.1";
+            this.textBox_USV1_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label122
+            // 
+            this.label122.AutoSize = true;
+            this.label122.Location = new System.Drawing.Point(42, 110);
+            this.label122.Name = "label122";
+            this.label122.Size = new System.Drawing.Size(17, 12);
+            this.label122.TabIndex = 34;
+            this.label122.Text = "Kp";
+            // 
+            // textBox_USV2_X_Kd
+            // 
+            this.textBox_USV2_X_Kd.Location = new System.Drawing.Point(241, 76);
+            this.textBox_USV2_X_Kd.Name = "textBox_USV2_X_Kd";
+            this.textBox_USV2_X_Kd.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_X_Kd.TabIndex = 32;
+            this.textBox_USV2_X_Kd.Text = "0.1";
+            this.textBox_USV2_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label123
+            // 
+            this.label123.AutoSize = true;
+            this.label123.Location = new System.Drawing.Point(215, 80);
+            this.label123.Name = "label123";
+            this.label123.Size = new System.Drawing.Size(17, 12);
+            this.label123.TabIndex = 33;
+            this.label123.Text = "Kd";
+            // 
+            // textBox_USV2_X_Ki
+            // 
+            this.textBox_USV2_X_Ki.Location = new System.Drawing.Point(152, 75);
+            this.textBox_USV2_X_Ki.Name = "textBox_USV2_X_Ki";
+            this.textBox_USV2_X_Ki.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_X_Ki.TabIndex = 30;
+            this.textBox_USV2_X_Ki.Text = "0.1";
+            this.textBox_USV2_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label124
+            // 
+            this.label124.AutoSize = true;
+            this.label124.Location = new System.Drawing.Point(128, 81);
+            this.label124.Name = "label124";
+            this.label124.Size = new System.Drawing.Size(17, 12);
+            this.label124.TabIndex = 31;
+            this.label124.Text = "Ki";
+            // 
+            // label125
+            // 
+            this.label125.AutoSize = true;
+            this.label125.Location = new System.Drawing.Point(5, 80);
+            this.label125.Name = "label125";
+            this.label125.Size = new System.Drawing.Size(23, 12);
+            this.label125.TabIndex = 29;
+            this.label125.Text = "X：";
+            // 
+            // textBox_USV2_X_Kp
+            // 
+            this.textBox_USV2_X_Kp.Location = new System.Drawing.Point(71, 76);
+            this.textBox_USV2_X_Kp.Name = "textBox_USV2_X_Kp";
+            this.textBox_USV2_X_Kp.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_X_Kp.TabIndex = 27;
+            this.textBox_USV2_X_Kp.Text = "0.1";
+            this.textBox_USV2_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label126
+            // 
+            this.label126.AutoSize = true;
+            this.label126.Location = new System.Drawing.Point(45, 81);
+            this.label126.Name = "label126";
+            this.label126.Size = new System.Drawing.Size(17, 12);
+            this.label126.TabIndex = 28;
+            this.label126.Text = "Kp";
+            // 
+            // textBox_USV2_Y_Kd
+            // 
+            this.textBox_USV2_Y_Kd.Location = new System.Drawing.Point(241, 104);
+            this.textBox_USV2_Y_Kd.Name = "textBox_USV2_Y_Kd";
+            this.textBox_USV2_Y_Kd.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_Y_Kd.TabIndex = 39;
+            this.textBox_USV2_Y_Kd.Text = "0.1";
+            this.textBox_USV2_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label127
+            // 
+            this.label127.AutoSize = true;
+            this.label127.Location = new System.Drawing.Point(215, 107);
+            this.label127.Name = "label127";
+            this.label127.Size = new System.Drawing.Size(17, 12);
+            this.label127.TabIndex = 40;
+            this.label127.Text = "Kd";
+            // 
+            // textBox_USV2_Y_Ki
+            // 
+            this.textBox_USV2_Y_Ki.Location = new System.Drawing.Point(152, 103);
+            this.textBox_USV2_Y_Ki.Name = "textBox_USV2_Y_Ki";
+            this.textBox_USV2_Y_Ki.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_Y_Ki.TabIndex = 37;
+            this.textBox_USV2_Y_Ki.Text = "0.1";
+            this.textBox_USV2_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label128
+            // 
+            this.label128.AutoSize = true;
+            this.label128.Location = new System.Drawing.Point(128, 108);
+            this.label128.Name = "label128";
+            this.label128.Size = new System.Drawing.Size(17, 12);
+            this.label128.TabIndex = 38;
+            this.label128.Text = "Ki";
+            // 
+            // label129
+            // 
+            this.label129.AutoSize = true;
+            this.label129.Location = new System.Drawing.Point(5, 105);
+            this.label129.Name = "label129";
+            this.label129.Size = new System.Drawing.Size(23, 12);
+            this.label129.TabIndex = 36;
+            this.label129.Text = "Y：";
+            // 
+            // textBox_USV2_Y_Kp
+            // 
+            this.textBox_USV2_Y_Kp.Location = new System.Drawing.Point(71, 103);
+            this.textBox_USV2_Y_Kp.Name = "textBox_USV2_Y_Kp";
+            this.textBox_USV2_Y_Kp.Size = new System.Drawing.Size(41, 21);
+            this.textBox_USV2_Y_Kp.TabIndex = 34;
+            this.textBox_USV2_Y_Kp.Text = "0.1";
+            this.textBox_USV2_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label130
+            // 
+            this.label130.AutoSize = true;
+            this.label130.Location = new System.Drawing.Point(45, 106);
+            this.label130.Name = "label130";
+            this.label130.Size = new System.Drawing.Size(17, 12);
+            this.label130.TabIndex = 35;
+            this.label130.Text = "Kp";
+            // 
+            // textBox_USV3_X_Kd
+            // 
+            this.textBox_USV3_X_Kd.Location = new System.Drawing.Point(236, 77);
+            this.textBox_USV3_X_Kd.Name = "textBox_USV3_X_Kd";
+            this.textBox_USV3_X_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_X_Kd.TabIndex = 31;
+            this.textBox_USV3_X_Kd.Text = "0.1";
+            this.textBox_USV3_X_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label131
+            // 
+            this.label131.AutoSize = true;
+            this.label131.Location = new System.Drawing.Point(214, 84);
+            this.label131.Name = "label131";
+            this.label131.Size = new System.Drawing.Size(17, 12);
+            this.label131.TabIndex = 32;
+            this.label131.Text = "Kd";
+            // 
+            // textBox_USV3_X_Ki
+            // 
+            this.textBox_USV3_X_Ki.Location = new System.Drawing.Point(152, 79);
+            this.textBox_USV3_X_Ki.Name = "textBox_USV3_X_Ki";
+            this.textBox_USV3_X_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_X_Ki.TabIndex = 29;
+            this.textBox_USV3_X_Ki.Text = "0.1";
+            this.textBox_USV3_X_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label132
+            // 
+            this.label132.AutoSize = true;
+            this.label132.Location = new System.Drawing.Point(130, 84);
+            this.label132.Name = "label132";
+            this.label132.Size = new System.Drawing.Size(17, 12);
+            this.label132.TabIndex = 30;
+            this.label132.Text = "Ki";
+            // 
+            // label133
+            // 
+            this.label133.AutoSize = true;
+            this.label133.Location = new System.Drawing.Point(6, 80);
+            this.label133.Name = "label133";
+            this.label133.Size = new System.Drawing.Size(23, 12);
+            this.label133.TabIndex = 28;
+            this.label133.Text = "X：";
+            // 
+            // textBox_USV3_X_Kp
+            // 
+            this.textBox_USV3_X_Kp.Location = new System.Drawing.Point(68, 77);
+            this.textBox_USV3_X_Kp.Name = "textBox_USV3_X_Kp";
+            this.textBox_USV3_X_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_X_Kp.TabIndex = 26;
+            this.textBox_USV3_X_Kp.Text = "0.1";
+            this.textBox_USV3_X_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label134
+            // 
+            this.label134.AutoSize = true;
+            this.label134.Location = new System.Drawing.Point(46, 82);
+            this.label134.Name = "label134";
+            this.label134.Size = new System.Drawing.Size(17, 12);
+            this.label134.TabIndex = 27;
+            this.label134.Text = "Kp";
+            // 
+            // textBox_USV3_Y_Kd
+            // 
+            this.textBox_USV3_Y_Kd.Location = new System.Drawing.Point(236, 107);
+            this.textBox_USV3_Y_Kd.Name = "textBox_USV3_Y_Kd";
+            this.textBox_USV3_Y_Kd.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_Y_Kd.TabIndex = 38;
+            this.textBox_USV3_Y_Kd.Text = "0.1";
+            this.textBox_USV3_Y_Kd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label135
+            // 
+            this.label135.AutoSize = true;
+            this.label135.Location = new System.Drawing.Point(214, 115);
+            this.label135.Name = "label135";
+            this.label135.Size = new System.Drawing.Size(17, 12);
+            this.label135.TabIndex = 39;
+            this.label135.Text = "Kd";
+            // 
+            // textBox_USV3_Y_Ki
+            // 
+            this.textBox_USV3_Y_Ki.Location = new System.Drawing.Point(152, 108);
+            this.textBox_USV3_Y_Ki.Name = "textBox_USV3_Y_Ki";
+            this.textBox_USV3_Y_Ki.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_Y_Ki.TabIndex = 36;
+            this.textBox_USV3_Y_Ki.Text = "0.1";
+            this.textBox_USV3_Y_Ki.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label136
+            // 
+            this.label136.AutoSize = true;
+            this.label136.Location = new System.Drawing.Point(130, 114);
+            this.label136.Name = "label136";
+            this.label136.Size = new System.Drawing.Size(17, 12);
+            this.label136.TabIndex = 37;
+            this.label136.Text = "Ki";
+            // 
+            // label137
+            // 
+            this.label137.AutoSize = true;
+            this.label137.Location = new System.Drawing.Point(6, 111);
+            this.label137.Name = "label137";
+            this.label137.Size = new System.Drawing.Size(23, 12);
+            this.label137.TabIndex = 35;
+            this.label137.Text = "Y：";
+            // 
+            // textBox_USV3_Y_Kp
+            // 
+            this.textBox_USV3_Y_Kp.Location = new System.Drawing.Point(68, 108);
+            this.textBox_USV3_Y_Kp.Name = "textBox_USV3_Y_Kp";
+            this.textBox_USV3_Y_Kp.Size = new System.Drawing.Size(46, 21);
+            this.textBox_USV3_Y_Kp.TabIndex = 33;
+            this.textBox_USV3_Y_Kp.Text = "0.1";
+            this.textBox_USV3_Y_Kp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label138
+            // 
+            this.label138.AutoSize = true;
+            this.label138.Location = new System.Drawing.Point(46, 113);
+            this.label138.Name = "label138";
+            this.label138.Size = new System.Drawing.Size(17, 12);
+            this.label138.TabIndex = 34;
+            this.label138.Text = "Kp";
+            // 
+            // radioButton_Point
+            // 
+            this.radioButton_Point.AutoSize = true;
+            this.radioButton_Point.Location = new System.Drawing.Point(116, 16);
+            this.radioButton_Point.Name = "radioButton_Point";
+            this.radioButton_Point.Size = new System.Drawing.Size(35, 16);
+            this.radioButton_Point.TabIndex = 62;
+            this.radioButton_Point.Text = "点";
+            this.radioButton_Point.UseVisualStyleBackColor = true;
+>>>>>>> parent of 432293c (10.15 加打点前)
             // 
             // Form1
             // 
